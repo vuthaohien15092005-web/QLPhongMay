@@ -8,6 +8,8 @@ namespace QLPhongMay.DTO
 
         public string Email { get; set; }
 
+        public string MatKhau { get; set; }
+
         public int MaVaiTro { get; set; }
 
         public string TenVaiTro { get; set; }

@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
+using QLPhongMay.BLL;
 using QLPhongMay.DAL;
 using QLPhongMay.DTO;
 
@@ -12,9 +13,11 @@ namespace QLPhongMay.GUI.Forms.Users
 {
     public partial class frmQLTaiKhoan : Form
     {
+        private const int PageSize = 5;
         private readonly UserRepository userRepository;
         private readonly ToolTip actionToolTip;
         private List<AccountRow> accounts;
+        private int currentPage = 1;
 
         private Guna2Panel pnlRoot;
         private Guna2Button btnBack;
@@ -37,7 +40,6 @@ namespace QLPhongMay.GUI.Forms.Users
             this.actionToolTip = new ToolTip();
 
             InitializeComponent();
-            BuildPagination();
             this.Load += new EventHandler(this.frmQLTaiKhoan_Load);
         }
 
@@ -111,7 +113,7 @@ namespace QLPhongMay.GUI.Forms.Users
             this.btnBack.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.btnBack.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.btnBack.Location = new System.Drawing.Point(0, 9);
+            this.btnBack.Location = new System.Drawing.Point(0, 4);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(128, 46);
             this.btnBack.TabIndex = 0;
@@ -121,7 +123,7 @@ namespace QLPhongMay.GUI.Forms.Users
             // lblTitle
             // 
             this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 21F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.lblTitle.Location = new System.Drawing.Point(146, 0);
             this.lblTitle.Name = "lblTitle";
@@ -134,7 +136,7 @@ namespace QLPhongMay.GUI.Forms.Users
             this.lblSubtitle.BackColor = System.Drawing.Color.Transparent;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(150, 55);
+            this.lblSubtitle.Location = new System.Drawing.Point(150, 48);
             this.lblSubtitle.Name = "lblSubtitle";
             this.lblSubtitle.Size = new System.Drawing.Size(386, 25);
             this.lblSubtitle.TabIndex = 2;
@@ -150,7 +152,7 @@ namespace QLPhongMay.GUI.Forms.Users
             this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
             this.btnAdd.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
-            this.btnAdd.Location = new System.Drawing.Point(930, 9);
+            this.btnAdd.Location = new System.Drawing.Point(930, 92);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(194, 46);
             this.btnAdd.TabIndex = 3;
@@ -162,12 +164,11 @@ namespace QLPhongMay.GUI.Forms.Users
             this.pnlStats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlStats.BackColor = System.Drawing.Color.Transparent;
-            this.pnlStats.Location = new System.Drawing.Point(0, 104);
+            this.pnlStats.Location = new System.Drawing.Point(0, 82);
             this.pnlStats.Name = "pnlStats";
-            this.pnlStats.Size = new System.Drawing.Size(1124, 118);
+            this.pnlStats.Size = new System.Drawing.Size(850, 88);
             this.pnlStats.TabIndex = 3;
             this.pnlStats.WrapContents = false;
-            this.pnlStats.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlStats_Paint);
             // 
             // pnlFilter
             // 
@@ -179,9 +180,9 @@ namespace QLPhongMay.GUI.Forms.Users
             this.pnlFilter.Controls.Add(this.txtSearch);
             this.pnlFilter.Controls.Add(this.cboRole);
             this.pnlFilter.FillColor = System.Drawing.Color.White;
-            this.pnlFilter.Location = new System.Drawing.Point(0, 246);
+            this.pnlFilter.Location = new System.Drawing.Point(0, 188);
             this.pnlFilter.Name = "pnlFilter";
-            this.pnlFilter.Size = new System.Drawing.Size(1124, 78);
+            this.pnlFilter.Size = new System.Drawing.Size(1124, 66);
             this.pnlFilter.TabIndex = 4;
             // 
             // txtSearch
@@ -197,7 +198,7 @@ namespace QLPhongMay.GUI.Forms.Users
             this.txtSearch.IconLeft = ((System.Drawing.Image)(resources.GetObject("txtSearch.IconLeft")));
             this.txtSearch.IconLeftOffset = new System.Drawing.Point(6, 0);
             this.txtSearch.IconLeftSize = new System.Drawing.Size(16, 16);
-            this.txtSearch.Location = new System.Drawing.Point(22, 17);
+            this.txtSearch.Location = new System.Drawing.Point(22, 11);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
@@ -224,8 +225,8 @@ namespace QLPhongMay.GUI.Forms.Users
             this.cboRole.Items.AddRange(new object[] {
             "Tất cả vai trò",
             "Admin",
-            "NV phòng máy"});
-            this.cboRole.Location = new System.Drawing.Point(912, 17);
+            "Quản lý phòng máy"});
+            this.cboRole.Location = new System.Drawing.Point(912, 11);
             this.cboRole.Name = "cboRole";
             this.cboRole.Size = new System.Drawing.Size(190, 42);
             this.cboRole.StartIndex = 0;
@@ -250,8 +251,8 @@ namespace QLPhongMay.GUI.Forms.Users
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvAccounts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvAccounts.ColumnHeadersHeight = 48;
@@ -261,13 +262,13 @@ namespace QLPhongMay.GUI.Forms.Users
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
             dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvAccounts.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvAccounts.EnableHeadersVisualStyles = false;
             this.dgvAccounts.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.dgvAccounts.Location = new System.Drawing.Point(0, 346);
+            this.dgvAccounts.Location = new System.Drawing.Point(0, 270);
             this.dgvAccounts.MultiSelect = false;
             this.dgvAccounts.Name = "dgvAccounts";
             this.dgvAccounts.ReadOnly = true;
@@ -275,8 +276,9 @@ namespace QLPhongMay.GUI.Forms.Users
             this.dgvAccounts.RowHeadersWidth = 51;
             this.dgvAccounts.RowTemplate.Height = 44;
             this.dgvAccounts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAccounts.Size = new System.Drawing.Size(1124, 408);
+            this.dgvAccounts.Size = new System.Drawing.Size(1124, 484);
             this.dgvAccounts.TabIndex = 5;
+            this.dgvAccounts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvAccounts_CellClick);
             this.dgvAccounts.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvAccounts_CellMouseLeave);
             this.dgvAccounts.CellMouseMove += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvAccounts_CellMouseMove);
             this.dgvAccounts.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DgvAccounts_CellPainting);
@@ -341,21 +343,88 @@ namespace QLPhongMay.GUI.Forms.Users
 
         private void frmQLTaiKhoan_Load(object sender, EventArgs e)
         {
-            LoadAccountDataFromDatabase();
-            BuildStatCards();
-            LoadAccounts();
+            RefreshAccounts(true);
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             using (FrmAddAccount dialog = new FrmAddAccount())
             {
-                dialog.ShowDialog(this);
+                dialog.ExternalValidator = ValidateCreateAccount;
+                if (dialog.ShowDialog(this) != DialogResult.OK)
+                {
+                    return;
+                }
+
+                try
+                {
+                    this.userRepository.CreateAccount(
+                        dialog.Username,
+                        PasswordHasher.HashPassword(dialog.Password),
+                        dialog.FullName,
+                        dialog.Email,
+                        dialog.RoleId);
+
+                    RefreshAccounts(true);
+                    MessageBox.Show(
+                        "Đã thêm tài khoản thành công.",
+                        "Thành công",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    ShowDataError("Không thể thêm tài khoản.", ex);
+                }
             }
+        }
+
+        private FrmAddAccount.AccountValidationError ValidateCreateAccount(FrmAddAccount dialog)
+        {
+            try
+            {
+                if (this.userRepository.UsernameExists(dialog.Username))
+                {
+                    return new FrmAddAccount.AccountValidationError(
+                        "Tên đăng nhập đã tồn tại.",
+                        FrmAddAccount.AccountField.Username);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new FrmAddAccount.AccountValidationError(
+                    "Không thể kiểm tra tên đăng nhập: " + ex.Message,
+                    FrmAddAccount.AccountField.Username);
+            }
+
+            try
+            {
+                if (this.userRepository.EmailExists(dialog.Email))
+                {
+                    return new FrmAddAccount.AccountValidationError(
+                        "Email đã tồn tại.",
+                        FrmAddAccount.AccountField.Email);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new FrmAddAccount.AccountValidationError(
+                    "Không thể kiểm tra email: " + ex.Message,
+                    FrmAddAccount.AccountField.Email);
+            }
+
+            return null;
         }
         private void BtnBack_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void RefreshAccounts(bool resetPage)
+        {
+            LoadAccountDataFromDatabase();
+            BuildStatCards();
+            LoadAccounts(resetPage);
         }
 
         private void LoadAccountDataFromDatabase()
@@ -380,23 +449,62 @@ namespace QLPhongMay.GUI.Forms.Users
         private void BuildStatCards()
         {
             int totalAccounts = this.accounts.Count;
-            int adminAccounts = this.accounts.Count(item => IsAdminRole(item.Role));
+            int adminAccounts = this.accounts.Count(item => item.RoleId == 1);
+            int staffAccounts = this.accounts.Count(item => item.RoleId == 2);
 
             this.pnlStats.Controls.Clear();
             AddStatCard("Tổng tài khoản", totalAccounts.ToString(), Color.FromArgb(37, 99, 235), Color.FromArgb(239, 246, 255));
             AddStatCard("Admin", adminAccounts.ToString(), Color.FromArgb(124, 58, 237), Color.FromArgb(245, 243, 255));
+            AddStatCard("Quản lý phòng máy", staffAccounts.ToString(), Color.FromArgb(22, 163, 74), Color.FromArgb(240, 253, 244));
         }
 
-        private void BuildPagination()
+        private void BuildPagination(int totalPages)
         {
             this.pnlPageButtons.Controls.Clear();
-            AddPageButton("<", false);
-            AddPageButton("1", true);
-            AddPageButton("2", false);
-            AddPageButton("3", false);
-            AddPageButton("...", false);
-            AddPageButton("16", false);
-            AddPageButton(">", false);
+            AddPageButton("<", this.currentPage > 1, this.currentPage - 1, false);
+
+            int startPage = Math.Max(1, this.currentPage - 2);
+            int endPage = Math.Min(totalPages, startPage + 4);
+            startPage = Math.Max(1, endPage - 4);
+
+            if (startPage > 1)
+            {
+                AddPageButton("1", true, 1, this.currentPage == 1);
+                if (startPage > 2)
+                {
+                    AddPageButton("...", false, 0, false);
+                }
+            }
+
+            for (int page = startPage; page <= endPage; page++)
+            {
+                AddPageButton(page.ToString(), true, page, page == this.currentPage);
+            }
+
+            if (endPage < totalPages)
+            {
+                if (endPage < totalPages - 1)
+                {
+                    AddPageButton("...", false, 0, false);
+                }
+
+                AddPageButton(totalPages.ToString(), true, totalPages, this.currentPage == totalPages);
+            }
+
+            AddPageButton(">", this.currentPage < totalPages, this.currentPage + 1, false);
+            AlignPageButtonsRight();
+        }
+
+        private void AlignPageButtonsRight()
+        {
+            int totalWidth = 0;
+            foreach (Control control in this.pnlPageButtons.Controls)
+            {
+                totalWidth += control.Width + control.Margin.Left + control.Margin.Right;
+            }
+
+            this.pnlPageButtons.Width = totalWidth;
+            this.pnlPageButtons.Left = this.pnlPaging.Width - this.pnlPageButtons.Width - 18;
         }
 
         private void AddStatCard(string title, string value, Color accentColor, Color iconBackColor)
@@ -410,28 +518,28 @@ namespace QLPhongMay.GUI.Forms.Users
             card.BorderRadius = 8;
             card.BorderThickness = 1;
             card.FillColor = Color.White;
-            card.Margin = new Padding(0, 0, 18, 0);
-            card.Size = new Size(263, 106);
+            card.Margin = new Padding(0, 0, 14, 0);
+            card.Size = new Size(248, 78);
 
             icon.BackColor = iconBackColor;
             icon.Font = new Font("Segoe UI", 13F, FontStyle.Bold, GraphicsUnit.Point, 0);
             icon.ForeColor = accentColor;
-            icon.Location = new Point(20, 22);
-            icon.Size = new Size(42, 42);
+            icon.Location = new Point(18, 18);
+            icon.Size = new Size(38, 38);
             icon.Text = GetStatIcon(title);
             icon.TextAlign = ContentAlignment.MiddleCenter;
             icon.Paint += new PaintEventHandler(this.RoundLabel_Paint);
 
             lblValue.BackColor = Color.Transparent;
-            lblValue.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblValue.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblValue.ForeColor = Color.FromArgb(15, 23, 42);
-            lblValue.Location = new Point(82, 18);
+            lblValue.Location = new Point(74, 12);
             lblValue.Text = value;
 
             lblTitle.BackColor = Color.Transparent;
             lblTitle.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblTitle.Location = new Point(84, 62);
+            lblTitle.Location = new Point(76, 47);
             lblTitle.Text = title;
 
             card.Controls.Add(icon);
@@ -440,12 +548,13 @@ namespace QLPhongMay.GUI.Forms.Users
             this.pnlStats.Controls.Add(card);
         }
 
-        private void AddPageButton(string text, bool active)
+        private void AddPageButton(string text, bool enabled, int targetPage, bool active)
         {
             Guna2Button button = new Guna2Button();
             button.BorderColor = active ? Color.FromArgb(37, 99, 235) : Color.FromArgb(226, 232, 240);
             button.BorderRadius = 6;
             button.BorderThickness = 1;
+            button.Enabled = enabled;
             button.FillColor = active ? Color.FromArgb(37, 99, 235) : Color.White;
             button.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button.ForeColor = active ? Color.White : Color.FromArgb(71, 85, 105);
@@ -453,20 +562,61 @@ namespace QLPhongMay.GUI.Forms.Users
             button.Margin = new Padding(0, 0, 6, 0);
             button.Size = new Size(text.Length > 1 ? 42 : 32, 32);
             button.Text = text;
+            button.Tag = targetPage;
+            button.Click += new EventHandler(this.PageButton_Click);
             this.pnlPageButtons.Controls.Add(button);
+        }
+
+        private void PageButton_Click(object sender, EventArgs e)
+        {
+            Guna2Button button = (Guna2Button)sender;
+            int page = Convert.ToInt32(button.Tag);
+            if (page < 1 || page == this.currentPage)
+            {
+                return;
+            }
+
+            this.currentPage = page;
+            LoadAccounts(false);
         }
 
         private static string GetStatIcon(string title)
         {
             if (title.StartsWith("Tổng", StringComparison.OrdinalIgnoreCase))
             {
-                return "Î£";
+                return "Σ";
             }
 
-            return "A";
+            return title.StartsWith("Admin", StringComparison.OrdinalIgnoreCase) ? "A" : "Q";
         }
 
-        private void LoadAccounts()
+        private void LoadAccounts(bool resetPage)
+        {
+            if (resetPage)
+            {
+                this.currentPage = 1;
+            }
+
+            List<AccountRow> filteredRows = GetFilteredRows().ToList();
+            int totalFiltered = filteredRows.Count;
+            int totalPages = Math.Max(1, (int)Math.Ceiling(totalFiltered / (double)PageSize));
+            this.currentPage = Math.Max(1, Math.Min(this.currentPage, totalPages));
+            int skip = (this.currentPage - 1) * PageSize;
+            List<AccountRow> rows = filteredRows
+                .Skip(skip)
+                .Take(PageSize)
+                .Select((item, index) => item.CloneWithStt(skip + index + 1))
+                .ToList();
+
+            this.dgvAccounts.DataSource = rows;
+            ConfigureGridColumns();
+            BuildPagination(totalPages);
+            this.lblPagingInfo.Text = totalFiltered == 0
+                ? "Không có dữ liệu phù hợp"
+                : string.Format("Hiển thị {0}-{1} trong {2} kết quả", skip + 1, skip + rows.Count, totalFiltered);
+        }
+
+        private IEnumerable<AccountRow> GetFilteredRows()
         {
             IEnumerable<AccountRow> source = this.accounts;
             string keyword = this.txtSearch.Text.Trim().ToLowerInvariant();
@@ -485,27 +635,12 @@ namespace QLPhongMay.GUI.Forms.Users
                 source = source.Where(item => string.Equals(item.Role, selectedRole, StringComparison.OrdinalIgnoreCase));
             }
 
-            List<AccountRow> rows = source.Select((item, index) => new AccountRow
-            {
-                Stt = index + 1,
-                FullName = item.FullName,
-                Username = item.Username,
-                Email = item.Email,
-                Role = item.Role,
-                Initials = item.Initials,
-                AvatarColor = item.AvatarColor
-            }).ToList();
-
-            this.dgvAccounts.DataSource = rows;
-            ConfigureGridColumns();
-            this.lblPagingInfo.Text = rows.Count == 0
-                ? "Không có dữ liệu phù hợp"
-                : string.Format("Hiển thị 1-{0} trong {1}", rows.Count, this.accounts.Count);
+            return source;
         }
 
         private static AccountRow ToAccountRow(AccountListItem item)
         {
-            string role = string.IsNullOrWhiteSpace(item.TenVaiTro) ? item.MaVaiTro.ToString() : item.TenVaiTro;
+            string role = string.IsNullOrWhiteSpace(item.TenVaiTro) ? GetRoleName(item.MaVaiTro) : item.TenVaiTro;
             string fullName = string.IsNullOrWhiteSpace(item.HoTen) ? item.TenDangNhap : item.HoTen;
 
             return new AccountRow
@@ -513,6 +648,7 @@ namespace QLPhongMay.GUI.Forms.Users
                 FullName = fullName ?? string.Empty,
                 Username = item.TenDangNhap ?? string.Empty,
                 Email = item.Email ?? string.Empty,
+                RoleId = item.MaVaiTro,
                 Role = role ?? string.Empty,
                 Initials = GetInitials(fullName),
                 AvatarColor = GetAvatarColor(item.TenDangNhap)
@@ -524,9 +660,9 @@ namespace QLPhongMay.GUI.Forms.Users
             return !string.IsNullOrEmpty(value) && value.ToLowerInvariant().Contains(keyword);
         }
 
-        private static bool IsAdminRole(string role)
+        private static string GetRoleName(int roleId)
         {
-            return string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase);
+            return roleId == 1 ? "Admin" : "Quản lý phòng máy";
         }
 
         private static string GetInitials(string fullName)
@@ -586,6 +722,7 @@ namespace QLPhongMay.GUI.Forms.Users
 
             this.dgvAccounts.Columns[nameof(AccountRow.Initials)].Visible = false;
             this.dgvAccounts.Columns[nameof(AccountRow.AvatarColor)].Visible = false;
+            this.dgvAccounts.Columns[nameof(AccountRow.RoleId)].Visible = false;
 
             if (!this.dgvAccounts.Columns.Contains("Actions"))
             {
@@ -609,7 +746,7 @@ namespace QLPhongMay.GUI.Forms.Users
 
         private void FilterChanged(object sender, EventArgs e)
         {
-            LoadAccounts();
+            LoadAccounts(true);
         }
 
         private void DgvAccounts_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -689,15 +826,16 @@ namespace QLPhongMay.GUI.Forms.Users
             e.Handled = true;
             e.PaintBackground(e.CellBounds, true);
 
-            string[] icons = { "\uE890", "\uE70F" };
+            string[] icons = { "\uE890", "\uE70F", "\uE74D" };
             Color[] colors =
             {
                 Color.FromArgb(71, 85, 105),
-                Color.FromArgb(37, 99, 235)
+                Color.FromArgb(37, 99, 235),
+                Color.FromArgb(220, 38, 38)
             };
 
             int iconSize = 30;
-            int totalWidth = (iconSize * icons.Length) + 6;
+            int totalWidth = (iconSize * icons.Length) + 12;
             int startX = e.CellBounds.Left + (e.CellBounds.Width - totalWidth) / 2;
             int y = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
 
@@ -722,26 +860,197 @@ namespace QLPhongMay.GUI.Forms.Users
             }
         }
 
-        private void DgvAccounts_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
+        private void DgvAccounts_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0 || this.dgvAccounts.Columns[e.ColumnIndex].Name != "Actions")
             {
                 return;
             }
 
-            int iconSize = 30;
-            int totalWidth = (iconSize * 2) + 6;
-            int startX = (this.dgvAccounts.Columns[e.ColumnIndex].Width - totalWidth) / 2;
-            string tip = string.Empty;
+            AccountRow row = this.dgvAccounts.Rows[e.RowIndex].DataBoundItem as AccountRow;
+            if (row == null)
+            {
+                return;
+            }
 
-            if (e.X >= startX && e.X <= startX + iconSize)
+            Rectangle cellBounds = this.dgvAccounts.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+            int mouseX = this.dgvAccounts.PointToClient(Cursor.Position).X - cellBounds.Left;
+            string action = GetActionFromMouseX(cellBounds.Width, mouseX);
+
+            if (action == "View")
             {
-                tip = "Xem chi tiết";
+                ViewAccount(row.Username);
             }
-            else if (e.X >= startX + iconSize + 6 && e.X <= startX + (iconSize * 2) + 6)
+            else if (action == "Edit")
             {
-                tip = "Sửa tài khoản";
+                EditAccount(row.Username);
             }
+            else if (action == "Delete")
+            {
+                DeleteAccount(row.Username);
+            }
+        }
+
+        private void ViewAccount(string username)
+        {
+            AccountListItem account = GetAccount(username);
+            if (account == null)
+            {
+                return;
+            }
+
+            using (FrmAddAccount dialog = new FrmAddAccount(FrmAddAccount.AccountDialogMode.View, account))
+            {
+                dialog.ShowDialog(this);
+            }
+        }
+
+        private void EditAccount(string username)
+        {
+            AccountListItem account = GetAccount(username);
+            if (account == null)
+            {
+                return;
+            }
+
+            using (FrmAddAccount dialog = new FrmAddAccount(FrmAddAccount.AccountDialogMode.Edit, account))
+            {
+                if (dialog.ShowDialog(this) != DialogResult.OK)
+                {
+                    return;
+                }
+
+                try
+                {
+                    string passwordHash = string.IsNullOrWhiteSpace(dialog.NewPassword)
+                        ? string.Empty
+                        : PasswordHasher.HashPassword(dialog.NewPassword);
+                    this.userRepository.UpdateAccount(dialog.Username, dialog.FullName, dialog.Email, dialog.RoleId, passwordHash);
+                    RefreshAccounts(false);
+                    MessageBox.Show(
+                        "Đã cập nhật tài khoản thành công.",
+                        "Thành công",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    ShowDataError("Không thể cập nhật tài khoản.", ex);
+                }
+            }
+        }
+
+        private void DeleteAccount(string username)
+        {
+            if (!ConfirmDeleteAccount(this, username))
+            {
+                return;
+            }
+
+            try
+            {
+                this.userRepository.DeleteAccount(username);
+                RefreshAccounts(false);
+                MessageBox.Show(
+                    "Đã xóa tài khoản thành công.",
+                    "Thành công",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                ShowDataError("Không thể xóa tài khoản. Tài khoản có thể đang được tham chiếu bởi dữ liệu lịch thực hành.", ex);
+            }
+        }
+
+        private static bool ConfirmDeleteAccount(IWin32Window owner, string username)
+        {
+            using (Form dialog = new Form())
+            using (PictureBox icon = new PictureBox())
+            using (Label message = new Label())
+            using (Button btnYes = new Button())
+            using (Button btnNo = new Button())
+            {
+                dialog.Text = "Xác nhận xóa";
+                dialog.StartPosition = FormStartPosition.CenterParent;
+                dialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+                dialog.MaximizeBox = false;
+                dialog.MinimizeBox = false;
+                dialog.ClientSize = new Size(360, 150);
+                dialog.ShowInTaskbar = false;
+
+                icon.Image = SystemIcons.Warning.ToBitmap();
+                icon.Location = new Point(24, 42);
+                icon.Size = new Size(32, 32);
+                icon.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                message.AutoSize = false;
+                message.Location = new Point(72, 32);
+                message.Size = new Size(260, 54);
+                message.Text = "Bạn có chắc muốn xóa tài khoản '" + username + "'?";
+                message.TextAlign = ContentAlignment.MiddleLeft;
+
+                btnYes.DialogResult = DialogResult.Yes;
+                btnYes.Location = new Point(152, 104);
+                btnYes.Size = new Size(86, 28);
+                btnYes.Text = "Có";
+
+                btnNo.DialogResult = DialogResult.No;
+                btnNo.Location = new Point(252, 104);
+                btnNo.Size = new Size(86, 28);
+                btnNo.Text = "Không";
+
+                dialog.Controls.Add(icon);
+                dialog.Controls.Add(message);
+                dialog.Controls.Add(btnYes);
+                dialog.Controls.Add(btnNo);
+                dialog.AcceptButton = btnYes;
+                dialog.CancelButton = btnNo;
+
+                return dialog.ShowDialog(owner) == DialogResult.Yes;
+            }
+        }
+
+        private AccountListItem GetAccount(string username)
+        {
+            try
+            {
+                AccountListItem account = this.userRepository.GetAccountByUsername(username);
+                if (account == null)
+                {
+                    MessageBox.Show(
+                        "Không tìm thấy tài khoản.",
+                        "Thông báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+
+                return account;
+            }
+            catch (Exception ex)
+            {
+                ShowDataError("Không thể tải chi tiết tài khoản.", ex);
+                return null;
+            }
+        }
+
+        private void DgvAccounts_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0 || this.dgvAccounts.Columns[e.ColumnIndex].Name != "Actions")
+            {
+                this.dgvAccounts.Cursor = Cursors.Default;
+                this.actionToolTip.SetToolTip(this.dgvAccounts, string.Empty);
+                return;
+            }
+
+            string action = GetActionFromMouseX(this.dgvAccounts.Columns[e.ColumnIndex].Width, e.X);
+            string tip = action == "View"
+                ? "Xem chi tiết"
+                : action == "Edit"
+                    ? "Sửa tài khoản"
+                    : action == "Delete"
+                        ? "Xóa tài khoản"
+                        : string.Empty;
             if (!string.IsNullOrEmpty(tip))
             {
                 this.dgvAccounts.Cursor = Cursors.Hand;
@@ -752,6 +1061,30 @@ namespace QLPhongMay.GUI.Forms.Users
                 this.dgvAccounts.Cursor = Cursors.Default;
                 this.actionToolTip.SetToolTip(this.dgvAccounts, string.Empty);
             }
+        }
+
+        private static string GetActionFromMouseX(int cellWidth, int x)
+        {
+            int iconSize = 30;
+            int totalWidth = (iconSize * 3) + 12;
+            int startX = (cellWidth - totalWidth) / 2;
+
+            if (x >= startX && x <= startX + iconSize)
+            {
+                return "View";
+            }
+
+            if (x >= startX + iconSize + 6 && x <= startX + (iconSize * 2) + 6)
+            {
+                return "Edit";
+            }
+
+            if (x >= startX + (iconSize * 2) + 12 && x <= startX + (iconSize * 3) + 12)
+            {
+                return "Delete";
+            }
+
+            return string.Empty;
         }
 
         private void DgvAccounts_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
@@ -791,16 +1124,37 @@ namespace QLPhongMay.GUI.Forms.Users
 
             public string Email { get; set; }
 
+            public int RoleId { get; set; }
+
             public string Role { get; set; }
 
             public string Initials { get; set; }
 
             public Color AvatarColor { get; set; }
+
+            public AccountRow CloneWithStt(int stt)
+            {
+                return new AccountRow
+                {
+                    Stt = stt,
+                    FullName = this.FullName,
+                    Username = this.Username,
+                    Email = this.Email,
+                    RoleId = this.RoleId,
+                    Role = this.Role,
+                    Initials = this.Initials,
+                    AvatarColor = this.AvatarColor
+                };
+            }
         }
 
-        private void pnlStats_Paint(object sender, PaintEventArgs e)
+        private static void ShowDataError(string message, Exception ex)
         {
-
+            MessageBox.Show(
+                message + "\n" + ex.Message,
+                "Lỗi dữ liệu",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
         }
     }
 }

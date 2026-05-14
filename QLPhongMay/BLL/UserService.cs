@@ -45,12 +45,14 @@ namespace QLPhongMay.BLL
         {
             string value = ((roleCode ?? string.Empty) + " " + (roleName ?? string.Empty)).Trim();
 
-            if (Contains(value, "admin") || Contains(value, "quantri") || Contains(value, "quản trị"))
+            if (string.Equals(roleCode, "1", StringComparison.OrdinalIgnoreCase) ||
+                Contains(value, "admin") || Contains(value, "quantri") || Contains(value, "quản trị"))
             {
                 return UserRole.Admin;
             }
 
-            if (Contains(value, "quanlyphongmay") ||
+            if (string.Equals(roleCode, "2", StringComparison.OrdinalIgnoreCase) ||
+                Contains(value, "quanlyphongmay") ||
                 Contains(value, "qlpm") ||
                 Contains(value, "quản lý phòng máy") ||
                 Contains(value, "nhân viên") ||
