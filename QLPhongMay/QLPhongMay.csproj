@@ -73,6 +73,9 @@
     <Compile Include="GUI\Forms\Dashboard\frmMain_Admin.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GUI\Forms\Dashboard\frmMain_QLPM.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GUI\Forms\Users\frmQLTaiKhoan.cs">
       <SubType>Form</SubType>
     </Compile>
