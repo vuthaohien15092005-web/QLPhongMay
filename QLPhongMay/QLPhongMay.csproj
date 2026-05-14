@@ -72,6 +72,12 @@
     <Compile Include="GUI\Forms\Auth\FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GUI\Forms\Catalog\frmQLCaHoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Catalog\frmQLCaHoc.Designer.cs">
+      <DependentUpon>frmQLCaHoc.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Forms\Dashboard\frmMain_Admin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,7 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\Controls\" />
-    <Folder Include="GUI\Forms\Catalog\" />
     <Folder Include="GUI\Forms\Schedule\" />
     <Folder Include="GUI\Resources\" />
   </ItemGroup>
