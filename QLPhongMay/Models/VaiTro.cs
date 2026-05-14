@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,8 +14,7 @@ namespace QLPhongMay.Models
 
         [Key]
         [Column("maVaiTro")]
-        [StringLength(50)]
-        public string MaVaiTro { get; set; }
+        public int MaVaiTro { get; set; }
 
         [Column("tenVaiTro")]
         public string TenVaiTro { get; set; }
@@ -23,3 +22,4 @@ namespace QLPhongMay.Models
         public virtual ICollection<NguoiDung> NguoiDungs { get; set; }
     }
 }
+
