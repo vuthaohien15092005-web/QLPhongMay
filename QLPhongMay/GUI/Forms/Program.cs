@@ -1,30 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using QLPhongMay.Auth;
+using QLPhongMay.BLL;
+using QLPhongMay.Enums;
 using QLPhongMay.GUI.Forms.Dashboard;
 
 namespace QLPhongMay
 {
     internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            using (var login = new FrmLogin())
+
+            using (FrmLogin login = new FrmLogin())
             {
-                if (login.ShowDialog() == DialogResult.OK)
+                if (login.ShowDialog() != DialogResult.OK)
                 {
-                    Application.Run(new frmMain_Admin());
+                    return;
                 }
             }
+
+            if (!Session.IsAuthenticated)
+            {
+                MessageBox.Show("Phiên đăng nhập không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (Session.HasRole(UserRole.Admin))
+            {
+                Application.Run(new frmMain_Admin());
+                return;
+            }
+
+            if (Session.HasRole(UserRole.QuanLyPhongMay))
+            {
+                Application.Run(new frmMain_QLPM());
+                return;
+            }
+
+            MessageBox.Show("Tài khoản không có quyền truy cập hệ thống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 }

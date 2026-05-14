@@ -53,6 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\AuthService.cs" />
+    <Compile Include="BLL\UserService.cs" />
+    <Compile Include="BLL\Session.cs" />
     <Compile Include="BLL\PasswordHasher.cs" />
     <Compile Include="DAL\AppDbContext.cs" />
     <Compile Include="DAL\UserRepository.cs" />
