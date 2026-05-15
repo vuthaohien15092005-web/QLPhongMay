@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
+using QLPhongMay.GUI.Forms.Catalog;
 using QLPhongMay.GUI.Forms.Users;
 
 namespace QLPhongMay.GUI.Forms.Dashboard
