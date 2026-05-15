@@ -105,15 +105,8 @@ WHERE LOWER(LTRIM(RTRIM([tenLop]))) = LOWER(LTRIM(RTRIM(@TenLop)))
         public void Create(LopHoc lopHoc)
         {
             const string sql = @"
-INSERT INTO [Lop] ([maLop], [tenLop], [siSo])
-VALUES (
-    COALESCE(NULLIF(@MaLop, ''), (
-        SELECT CONVERT(varchar(50), ISNULL(MAX(TRY_CONVERT(int, [maLop])), 0) + 1)
-        FROM [Lop] WITH (UPDLOCK, HOLDLOCK)
-    )),
-    @TenLop,
-    @SiSo
-);";
+INSERT INTO [Lop] ([tenLop], [siSo])
+VALUES (@TenLop, @SiSo);";
 
             using (IDbConnection connection = new SqlConnection(this.connectionString))
             {
