@@ -95,7 +95,6 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.pnlRoot.Controls.Add(this.lblSubtitle);
             this.pnlRoot.Controls.Add(this.pnlStats);
             this.pnlRoot.Controls.Add(this.btnCreate);
-            this.pnlRoot.Controls.Add(this.pnlFilter);
             this.pnlRoot.Controls.Add(this.dgvCaHoc);
             this.pnlRoot.Controls.Add(this.pnlPaging);
             this.pnlRoot.Location = new System.Drawing.Point(28, 24);
@@ -303,6 +302,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.pnlFilter.Name = "pnlFilter";
             this.pnlFilter.Size = new System.Drawing.Size(984, 66);
             this.pnlFilter.TabIndex = 5;
+            this.pnlFilter.Visible = false;
             this.pnlFilter.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelBorder_Paint);
             // 
             // txtSearch
@@ -395,7 +395,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.dgvCaHoc.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvCaHoc.EnableHeadersVisualStyles = false;
             this.dgvCaHoc.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.dgvCaHoc.Location = new System.Drawing.Point(3, 270);
+            this.dgvCaHoc.Location = new System.Drawing.Point(3, 188);
             this.dgvCaHoc.MultiSelect = false;
             this.dgvCaHoc.Name = "dgvCaHoc";
             this.dgvCaHoc.ReadOnly = true;
@@ -403,7 +403,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.dgvCaHoc.RowHeadersWidth = 51;
             this.dgvCaHoc.RowTemplate.Height = 44;
             this.dgvCaHoc.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCaHoc.Size = new System.Drawing.Size(984, 301);
+            this.dgvCaHoc.Size = new System.Drawing.Size(984, 383);
             this.dgvCaHoc.TabIndex = 6;
             this.dgvCaHoc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCaHoc_CellClick);
             this.dgvCaHoc.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCaHoc_CellMouseLeave);
@@ -622,7 +622,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         private void LoadCaHoc(bool resetPage)
         {
-            List<CaHocRow> filtered = GetFilteredCaHoc().ToList();
+            List<CaHocRow> filtered = caHocs.OrderBy(item => item.GioBatDau).ThenBy(item => item.MaCa).ToList();
             int totalItems = filtered.Count;
             int totalPages = Math.Max(1, (int)Math.Ceiling(totalItems / (double)PageSize));
 
@@ -693,11 +693,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         private void BtnCreate_Click(object sender, EventArgs e)
         {
-            int maCa;
             string tenCa;
             TimeSpan start;
             TimeSpan end;
-            if (!ShowCaHocPopup("Thêm ca học", null, false, false, out maCa, out tenCa, out start, out end))
+            int unusedMaCa;
+            if (!ShowCaHocPopup("Thêm ca học", null, false, true, out unusedMaCa, out tenCa, out start, out end))
             {
                 return;
             }
@@ -706,15 +706,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
             {
                 using (AppDbContext db = new AppDbContext())
                 {
-                    if (db.CaHocs.Any(item => item.MaCa == maCa))
-                    {
-                        MessageBox.Show("Mã ca đã tồn tại.", "Dữ liệu không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
                     db.CaHocs.Add(new CaHoc
                     {
-                        MaCa = maCa,
                         TenCa = tenCa,
                         GioBatDau = start,
                         GioKetThuc = end
@@ -979,10 +972,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
                 lblSubtitleDialog.Location = new Point(32, 68);
                 lblSubtitleDialog.Text = "Thông tin ca học trong hệ thống";
 
+                bool createMode = row == null && !readOnly;
                 ConfigurePopupLabel(lblMaCa, "Mã ca", 34, 116);
                 ConfigurePopupInput(txtDialogMaCa, 34, 146);
-                ConfigurePopupLabel(lblTenCa, "Tên ca", 268, 116);
-                ConfigurePopupInput(txtDialogTenCa, 268, 146);
+                ConfigurePopupLabel(lblTenCa, "Tên ca", createMode ? 34 : 268, 116);
+                ConfigurePopupInput(txtDialogTenCa, createMode ? 34 : 268, 146);
                 ConfigurePopupLabel(lblStart, "Giờ bắt đầu", 34, 216);
                 ConfigurePopupInput(txtDialogStart, 34, 246);
                 ConfigurePopupLabel(lblEnd, "Giờ kết thúc", 268, 216);
@@ -996,10 +990,12 @@ namespace QLPhongMay.GUI.Forms.Catalog
                     txtDialogEnd.Text = row.GioKetThucText;
                 }
 
-                txtDialogMaCa.ReadOnly = readOnly || lockCode;
+                txtDialogMaCa.ReadOnly = true;
                 txtDialogTenCa.ReadOnly = readOnly;
                 txtDialogStart.ReadOnly = readOnly;
                 txtDialogEnd.ReadOnly = readOnly;
+                lblMaCa.Visible = !createMode;
+                txtDialogMaCa.Visible = !createMode;
 
                 if (txtDialogMaCa.ReadOnly)
                 {
@@ -1050,11 +1046,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
                         return;
                     }
 
-                    int parsedMaCa;
+                    int parsedMaCa = row == null ? 0 : int.Parse(row.MaCa, CultureInfo.InvariantCulture);
                     TimeSpan parsedStart;
                     TimeSpan parsedEnd;
 
-                    if (!int.TryParse(txtDialogMaCa.Text.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out parsedMaCa))
+                    if (!createMode && !int.TryParse(txtDialogMaCa.Text.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out parsedMaCa))
                     {
                         MessageBox.Show("Mã ca phải là số nguyên.", "Dữ liệu không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtDialogMaCa.Focus();
@@ -1154,16 +1150,6 @@ namespace QLPhongMay.GUI.Forms.Catalog
                     return;
                 }
 
-                if (action == "View")
-                {
-                    int maCa;
-                    string tenCa;
-                    TimeSpan start;
-                    TimeSpan end;
-                    ShowCaHocPopup("Chi tiết ca học", row, true, true, out maCa, out tenCa, out start, out end);
-                    return;
-                }
-
                 if (action == "Edit")
                 {
                     EditCaHoc(row);
@@ -1190,10 +1176,9 @@ namespace QLPhongMay.GUI.Forms.Catalog
             e.Handled = true;
             e.PaintBackground(e.CellBounds, true);
 
-            string[] icons = { "\uE890", "\uE70F", "\uE74D" };
+            string[] icons = { "\uE70F", "\uE74D" };
             Color[] colors =
             {
-                Color.FromArgb(71, 85, 105),
                 Color.FromArgb(37, 99, 235),
                 Color.FromArgb(220, 38, 38)
             };
@@ -1233,7 +1218,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             }
 
             string action = GetActionFromMouseX(dgvCaHoc.Columns[e.ColumnIndex].Width, e.X);
-            string tip = action == "View" ? "Xem chi tiết" : action == "Edit" ? "Sửa ca học" : action == "Delete" ? "Xóa ca học" : string.Empty;
+            string tip = action == "Edit" ? "Sửa ca học" : action == "Delete" ? "Xóa ca học" : string.Empty;
             dgvCaHoc.Cursor = string.IsNullOrEmpty(tip) ? Cursors.Default : Cursors.Hand;
             actionToolTip.SetToolTip(dgvCaHoc, tip);
         }
@@ -1247,20 +1232,15 @@ namespace QLPhongMay.GUI.Forms.Catalog
         private static string GetActionFromMouseX(int cellWidth, int x)
         {
             int iconSize = 30;
-            int totalWidth = (iconSize * 3) + 12;
+            int totalWidth = (iconSize * 2) + 6;
             int startX = (cellWidth - totalWidth) / 2;
 
             if (x >= startX && x <= startX + iconSize)
             {
-                return "View";
-            }
-
-            if (x >= startX + iconSize + 6 && x <= startX + (iconSize * 2) + 6)
-            {
                 return "Edit";
             }
 
-            if (x >= startX + (iconSize * 2) + 12 && x <= startX + (iconSize * 3) + 12)
+            if (x >= startX + iconSize + 6 && x <= startX + (iconSize * 2) + 6)
             {
                 return "Delete";
             }
