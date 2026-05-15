@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Drawing;
@@ -155,14 +155,17 @@ namespace QLPhongMay.GUI.Forms.Catalog
             // 
             this.btnCreate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.btnCreate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCreate.FlatAppearance.BorderSize = 0;
+            this.btnCreate.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
+            this.btnCreate.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
             this.btnCreate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCreate.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCreate.ForeColor = System.Drawing.Color.White;
-            this.btnCreate.Location = new System.Drawing.Point(762, 82);
+            this.btnCreate.Location = new System.Drawing.Point(790, 92);
             this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(170, 71);
+            this.btnCreate.Size = new System.Drawing.Size(194, 46);
             this.btnCreate.TabIndex = 4;
-            this.btnCreate.Text = "+ Thêm ca học";
+            this.btnCreate.Text = "+  Thêm ca học";
             this.btnCreate.UseVisualStyleBackColor = false;
             this.btnCreate.Click += new System.EventHandler(this.BtnCreate_Click);
             // 
@@ -593,7 +596,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             pnlStats.Controls.Clear();
             AddStatCard("Tổng ca học", caHocs.Count.ToString(), Color.FromArgb(37, 99, 235));
             AddStatCard("Ca buổi sáng", caHocs.Count(item => item.GioBatDau < new TimeSpan(12, 0, 0)).ToString(), Color.FromArgb(245, 158, 11));
-            AddStatCard("Ca sau 12h", caHocs.Count(item => item.GioBatDau >= new TimeSpan(12, 0, 0)).ToString(), Color.FromArgb(22, 163, 74));
+            AddStatCard("Ca buổi chiều", caHocs.Count(item => item.GioBatDau >= new TimeSpan(12, 0, 0)).ToString(), Color.FromArgb(22, 163, 74));
         }
 
         private void AddStatCard(string title, string value, Color accent)
@@ -1052,35 +1055,35 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
                     if (!createMode && !int.TryParse(txtDialogMaCa.Text.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out parsedMaCa))
                     {
-                        MessageBox.Show("Mã ca phải là số nguyên.", "Dữ liệu không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Mã ca phải là số nguyên.", "Dữ liệu không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtDialogMaCa.Focus();
                         return;
                     }
 
                     if (string.IsNullOrWhiteSpace(txtDialogTenCa.Text))
                     {
-                        MessageBox.Show("Vui lòng nhập tên ca.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập tên ca.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtDialogTenCa.Focus();
                         return;
                     }
 
                     if (!TimeSpan.TryParseExact(txtDialogStart.Text.Trim(), @"hh\:mm", CultureInfo.InvariantCulture, out parsedStart))
                     {
-                        MessageBox.Show("Giờ bắt đầu phải đúng định dạng HH:mm.", "Dữ liệu không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Giờ bắt đầu phải đúng định dạng HH:mm.", "Dữ liệu không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtDialogStart.Focus();
                         return;
                     }
 
                     if (!TimeSpan.TryParseExact(txtDialogEnd.Text.Trim(), @"hh\:mm", CultureInfo.InvariantCulture, out parsedEnd))
                     {
-                        MessageBox.Show("Giờ kết thúc phải đúng định dạng HH:mm.", "Dữ liệu không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Giờ bắt đầu phải đúng định dạng HH:mm.", "Dữ liệu không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtDialogEnd.Focus();
                         return;
                     }
 
                     if (parsedStart == parsedEnd)
                     {
-                        MessageBox.Show("Giờ kết thúc phải khác giờ bắt đầu.", "Dữ liệu không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Giờ kết thúc phải khác giờ bắt đầu.", "Dữ liệu không hợp lệ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtDialogEnd.Focus();
                         return;
                     }
