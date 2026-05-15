@@ -151,11 +151,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBack.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.btnBack.Location = new System.Drawing.Point(0, 10);
+            this.btnBack.Location = new System.Drawing.Point(50, 20);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(130, 44);
             this.btnBack.TabIndex = 0;
-            this.btnBack.Text = "<  Quay lai";
+            this.btnBack.Text = "Quay lại";
             this.btnBack.UseVisualStyleBackColor = false;
             this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
@@ -177,7 +177,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSubtitle.BackColor = System.Drawing.Color.Transparent;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(336, 45);
+            this.lblSubtitle.Location = new System.Drawing.Point(347, 56);
             this.lblSubtitle.Name = "lblSubtitle";
             this.lblSubtitle.Size = new System.Drawing.Size(266, 19);
             this.lblSubtitle.TabIndex = 2;
@@ -192,11 +192,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(930, 20);
+            this.btnAdd.Location = new System.Drawing.Point(856, 31);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(194, 44);
             this.btnAdd.TabIndex = 3;
-            this.btnAdd.Text = "+  Them lop";
+            this.btnAdd.Text = "Thêm Lớp +";
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
@@ -221,7 +221,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblTotalClassesIcon.Name = "lblTotalClassesIcon";
             this.lblTotalClassesIcon.Size = new System.Drawing.Size(38, 38);
             this.lblTotalClassesIcon.TabIndex = 0;
-            this.lblTotalClassesIcon.Text = "L";
+            this.lblTotalClassesIcon.Text = "T";
             this.lblTotalClassesIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblTotalClassesValue
@@ -426,7 +426,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.dgvLopHoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
             dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
             dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
@@ -435,7 +435,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.dgvLopHoc.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvLopHoc.EnableHeadersVisualStyles = false;
             this.dgvLopHoc.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.dgvLopHoc.Location = new System.Drawing.Point(56, 306);
+            this.dgvLopHoc.Location = new System.Drawing.Point(50, 301);
             this.dgvLopHoc.MultiSelect = false;
             this.dgvLopHoc.Name = "dgvLopHoc";
             this.dgvLopHoc.ReadOnly = true;
