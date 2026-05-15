@@ -42,8 +42,10 @@ namespace QLPhongMay.GUI.Forms.Catalog
         private Panel pnlFilter;
         private Label lblSearch;
         private Label lblSiSoFilter;
+        private Label lblSort;
         private TextBox txtSearch;
         private ComboBox cboSiSo;
+        private ComboBox cboSort;
         private DataGridView dgvLopHoc;
         private Panel pnlPaging;
         private Label lblPagingInfo;
@@ -85,8 +87,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlRoot = new System.Windows.Forms.Panel();
             this.btnBack = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
@@ -107,8 +109,10 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.pnlFilter = new System.Windows.Forms.Panel();
             this.lblSearch = new System.Windows.Forms.Label();
             this.lblSiSoFilter = new System.Windows.Forms.Label();
+            this.lblSort = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.cboSiSo = new System.Windows.Forms.ComboBox();
+            this.cboSort = new System.Windows.Forms.ComboBox();
             this.dgvLopHoc = new System.Windows.Forms.DataGridView();
             this.pnlPaging = new System.Windows.Forms.Panel();
             this.lblPagingInfo = new System.Windows.Forms.Label();
@@ -151,7 +155,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBack.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.btnBack.Location = new System.Drawing.Point(50, 20);
+            this.btnBack.Location = new System.Drawing.Point(146, 20);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(130, 44);
             this.btnBack.TabIndex = 0;
@@ -192,7 +196,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(856, 31);
+            this.btnAdd.Location = new System.Drawing.Point(711, 20);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(194, 44);
             this.btnAdd.TabIndex = 3;
@@ -207,7 +211,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.pnlTotalClasses.Controls.Add(this.lblTotalClassesIcon);
             this.pnlTotalClasses.Controls.Add(this.lblTotalClassesValue);
             this.pnlTotalClasses.Controls.Add(this.lblTotalClassesText);
-            this.pnlTotalClasses.Location = new System.Drawing.Point(0, 92);
+            this.pnlTotalClasses.Location = new System.Drawing.Point(109, 92);
             this.pnlTotalClasses.Name = "pnlTotalClasses";
             this.pnlTotalClasses.Size = new System.Drawing.Size(238, 78);
             this.pnlTotalClasses.TabIndex = 4;
@@ -253,7 +257,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.pnlTotalStudents.Controls.Add(this.lblTotalStudentsIcon);
             this.pnlTotalStudents.Controls.Add(this.lblTotalStudentsValue);
             this.pnlTotalStudents.Controls.Add(this.lblTotalStudentsText);
-            this.pnlTotalStudents.Location = new System.Drawing.Point(262, 92);
+            this.pnlTotalStudents.Location = new System.Drawing.Point(410, 92);
             this.pnlTotalStudents.Name = "pnlTotalStudents";
             this.pnlTotalStudents.Size = new System.Drawing.Size(238, 78);
             this.pnlTotalStudents.TabIndex = 5;
@@ -299,10 +303,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.pnlAverageStudents.Controls.Add(this.lblAverageStudentsIcon);
             this.pnlAverageStudents.Controls.Add(this.lblAverageStudentsValue);
             this.pnlAverageStudents.Controls.Add(this.lblAverageStudentsText);
-            this.pnlAverageStudents.Location = new System.Drawing.Point(524, 92);
+            this.pnlAverageStudents.Location = new System.Drawing.Point(696, 92);
             this.pnlAverageStudents.Name = "pnlAverageStudents";
             this.pnlAverageStudents.Size = new System.Drawing.Size(238, 78);
             this.pnlAverageStudents.TabIndex = 6;
+            this.pnlAverageStudents.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlAverageStudents_Paint);
             // 
             // lblAverageStudentsIcon
             // 
@@ -346,8 +351,10 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.pnlFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlFilter.Controls.Add(this.lblSearch);
             this.pnlFilter.Controls.Add(this.lblSiSoFilter);
+            this.pnlFilter.Controls.Add(this.lblSort);
             this.pnlFilter.Controls.Add(this.txtSearch);
             this.pnlFilter.Controls.Add(this.cboSiSo);
+            this.pnlFilter.Controls.Add(this.cboSort);
             this.pnlFilter.Location = new System.Drawing.Point(0, 204);
             this.pnlFilter.Name = "pnlFilter";
             this.pnlFilter.Size = new System.Drawing.Size(1124, 82);
@@ -370,11 +377,23 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSiSoFilter.AutoSize = true;
             this.lblSiSoFilter.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSiSoFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.lblSiSoFilter.Location = new System.Drawing.Point(680, 12);
+            this.lblSiSoFilter.Location = new System.Drawing.Point(600, 12);
             this.lblSiSoFilter.Name = "lblSiSoFilter";
             this.lblSiSoFilter.Size = new System.Drawing.Size(81, 15);
             this.lblSiSoFilter.TabIndex = 1;
             this.lblSiSoFilter.Text = "Lọc theo sĩ số";
+            // 
+            // lblSort
+            // 
+            this.lblSort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSort.AutoSize = true;
+            this.lblSort.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.lblSort.Location = new System.Drawing.Point(840, 12);
+            this.lblSort.Name = "lblSort";
+            this.lblSort.Size = new System.Drawing.Size(51, 15);
+            this.lblSort.TabIndex = 2;
+            this.lblSort.Text = "Sắp xếp";
             // 
             // txtSearch
             // 
@@ -395,11 +414,24 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.cboSiSo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSiSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboSiSo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.cboSiSo.Location = new System.Drawing.Point(683, 37);
+            this.cboSiSo.Location = new System.Drawing.Point(603, 37);
             this.cboSiSo.Name = "cboSiSo";
-            this.cboSiSo.Size = new System.Drawing.Size(250, 25);
+            this.cboSiSo.Size = new System.Drawing.Size(200, 25);
             this.cboSiSo.TabIndex = 1;
             this.cboSiSo.SelectedIndexChanged += new System.EventHandler(this.FilterChanged);
+            // 
+            // cboSort
+            // 
+            this.cboSort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboSort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.cboSort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSort.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboSort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.cboSort.Location = new System.Drawing.Point(843, 37);
+            this.cboSort.Name = "cboSort";
+            this.cboSort.Size = new System.Drawing.Size(206, 25);
+            this.cboSort.TabIndex = 2;
+            this.cboSort.SelectedIndexChanged += new System.EventHandler(this.FilterChanged);
             // 
             // dgvLopHoc
             // 
@@ -414,25 +446,25 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.dgvLopHoc.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvLopHoc.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dgvLopHoc.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.dgvLopHoc.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.dgvLopHoc.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvLopHoc.ColumnHeadersHeight = 48;
             this.dgvLopHoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvLopHoc.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvLopHoc.DefaultCellStyle = dataGridViewCellStyle8;
             this.dgvLopHoc.EnableHeadersVisualStyles = false;
             this.dgvLopHoc.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.dgvLopHoc.Location = new System.Drawing.Point(50, 301);
@@ -532,6 +564,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
                 this.lopHocs = data;
                 UpdateSummaryCards();
                 LoadSiSoFilter();
+                LoadSortOptions();
                 ApplyFilter(resetPage);
             }
             catch (Exception ex)
@@ -539,6 +572,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
                 this.lopHocs = new List<LopHoc>();
                 UpdateSummaryCards();
                 LoadSiSoFilter();
+                LoadSortOptions();
                 BindPage(new List<LopHocRow>());
                 ShowDataError("Khong the tai danh sach lop hoc.", ex);
                 this.lblPagingInfo.Text = "Khong tai duoc du lieu. Kiem tra SQL Server va App.config.";
@@ -558,6 +592,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
                 this.lopHocs = this.lopHocRepository.GetAll().ToList();
                 UpdateSummaryCards();
                 LoadSiSoFilter();
+                LoadSortOptions();
                 ApplyFilter(resetPage);
             }
             catch (Exception ex)
@@ -575,6 +610,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.isLoading = loading;
             this.txtSearch.Enabled = !loading;
             this.cboSiSo.Enabled = !loading;
+            this.cboSort.Enabled = !loading;
             this.btnAdd.Enabled = !loading;
             this.dgvLopHoc.Enabled = !loading;
 
@@ -602,15 +638,28 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.cboSiSo.SelectedIndexChanged -= new EventHandler(this.FilterChanged);
             this.cboSiSo.Items.Clear();
             this.cboSiSo.Items.Add("Tat ca si so");
-
-            foreach (int siSo in this.lopHocs.Select(l => l.SiSo).Where(s => s > 0).Distinct().OrderBy(s => s))
-            {
-                this.cboSiSo.Items.Add(siSo.ToString());
-            }
+            this.cboSiSo.Items.Add("Duoi 30");
+            this.cboSiSo.Items.Add("30 - 40");
+            this.cboSiSo.Items.Add("Tren 40");
 
             int selectedIndex = this.cboSiSo.Items.IndexOf(selected);
             this.cboSiSo.SelectedIndex = selectedIndex >= 0 ? selectedIndex : 0;
             this.cboSiSo.SelectedIndexChanged += new EventHandler(this.FilterChanged);
+        }
+
+        private void LoadSortOptions()
+        {
+            string selected = this.cboSort.SelectedItem == null ? "Ten lop A-Z" : Convert.ToString(this.cboSort.SelectedItem);
+            this.cboSort.SelectedIndexChanged -= new EventHandler(this.FilterChanged);
+            this.cboSort.Items.Clear();
+            this.cboSort.Items.Add("Ten lop A-Z");
+            this.cboSort.Items.Add("Ten lop Z-A");
+            this.cboSort.Items.Add("Si so tang dan");
+            this.cboSort.Items.Add("Si so giam dan");
+
+            int selectedIndex = this.cboSort.Items.IndexOf(selected);
+            this.cboSort.SelectedIndex = selectedIndex >= 0 ? selectedIndex : 0;
+            this.cboSort.SelectedIndexChanged += new EventHandler(this.FilterChanged);
         }
 
         private void FilterChanged(object sender, EventArgs e)
@@ -627,6 +676,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
             string keyword = (this.txtSearch.Text ?? string.Empty).Trim();
             string selectedSiSo = this.cboSiSo.SelectedItem == null ? "Tat ca si so" : Convert.ToString(this.cboSiSo.SelectedItem);
+            string selectedSort = this.cboSort.SelectedItem == null ? "Ten lop A-Z" : Convert.ToString(this.cboSort.SelectedItem);
             IEnumerable<LopHoc> query = this.lopHocs;
 
             if (!string.IsNullOrWhiteSpace(keyword))
@@ -634,15 +684,37 @@ namespace QLPhongMay.GUI.Forms.Catalog
                 query = query.Where(l => Contains(l.TenLop, keyword));
             }
 
-            int siSoFilter;
-            if (!string.Equals(selectedSiSo, "Tat ca si so", StringComparison.OrdinalIgnoreCase) &&
-                int.TryParse(selectedSiSo, out siSoFilter))
+            if (string.Equals(selectedSiSo, "Duoi 30", StringComparison.OrdinalIgnoreCase))
             {
-                query = query.Where(l => l.SiSo == siSoFilter);
+                query = query.Where(l => l.SiSo < 30);
+            }
+            else if (string.Equals(selectedSiSo, "30 - 40", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.Where(l => l.SiSo >= 30 && l.SiSo <= 40);
+            }
+            else if (string.Equals(selectedSiSo, "Tren 40", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.Where(l => l.SiSo > 40);
+            }
+
+            if (string.Equals(selectedSort, "Ten lop Z-A", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.OrderByDescending(l => l.TenLop);
+            }
+            else if (string.Equals(selectedSort, "Si so tang dan", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.OrderBy(l => l.SiSo).ThenBy(l => l.TenLop);
+            }
+            else if (string.Equals(selectedSort, "Si so giam dan", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.OrderByDescending(l => l.SiSo).ThenBy(l => l.TenLop);
+            }
+            else
+            {
+                query = query.OrderBy(l => l.TenLop);
             }
 
             List<LopHocRow> rows = query
-                .OrderBy(l => l.TenLop)
                 .Select((l, index) => new LopHocRow
                 {
                     Stt = index + 1,
@@ -913,6 +985,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
             public string TenLop { get; set; }
 
             public int SiSo { get; set; }
+        }
+
+        private void pnlAverageStudents_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
