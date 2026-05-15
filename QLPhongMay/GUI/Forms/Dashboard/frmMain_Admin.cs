@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using QLPhongMay.GUI.Forms.Users;
+using QLPhongMay.GUI.Forms.Schedule;
 
 namespace QLPhongMay.GUI.Forms.Dashboard
 {
@@ -219,7 +220,7 @@ namespace QLPhongMay.GUI.Forms.Dashboard
 
         private void BuildMenuCards()
         {
-            AddMenuCard(0, 0, "\uE787", "Tạo lịch thực hành", "Xếp lịch và kiểm tra phòng trống", Color.FromArgb(37, 99, 235), false, this.OpenScheduleForm);
+            AddMenuCard(0, 0, "\uE787", "Quản lý lịch", "Theo dõi và cập nhật lịch thực hành", Color.FromArgb(37, 99, 235), false, this.OpenScheduleForm);
             AddMenuCard(0, 1, "\uE80F", "Quản lý phòng máy", "Thêm sửa xóa thông tin phòng", Color.FromArgb(14, 165, 233), false, this.OpenRoomForm);
             AddMenuCard(0, 2, "\uE950", "Quản lý máy tính", "Theo dõi máy, cấu hình và trạng thái", Color.FromArgb(20, 184, 166), false, this.OpenComputerForm);
             AddMenuCard(0, 3, "\uE7BE", "Quản lý lớp học", "Danh sách lớp tín chỉ", Color.FromArgb(22, 163, 74), false, this.OpenClassForm);
@@ -409,7 +410,10 @@ namespace QLPhongMay.GUI.Forms.Dashboard
 
         private void OpenScheduleForm(object sender, EventArgs e)
         {
-            OpenPlaceholderForm("Tạo lịch thực hành");
+            using (frmQuanLyLich form = new frmQuanLyLich())
+            {
+                form.ShowDialog(this);
+            }
         }
 
         private void OpenRoomForm(object sender, EventArgs e)
@@ -477,3 +481,4 @@ namespace QLPhongMay.GUI.Forms.Dashboard
         }
     }
 }
+
