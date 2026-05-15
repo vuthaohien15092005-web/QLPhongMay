@@ -20,20 +20,15 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "frmQLCaHoc";
-        }
-
-        #endregion
+        private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblSubtitle;
+        private System.Windows.Forms.Panel pnlEditor;
+        private System.Windows.Forms.Panel pnlFilter;
+        private System.Windows.Forms.DataGridViewButtonColumn ViewAction;
+        private System.Windows.Forms.DataGridViewButtonColumn EditAction;
+        private System.Windows.Forms.DataGridViewButtonColumn DeleteAction;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Actions;
+        private System.Windows.Forms.Panel pnlPaging;
     }
 }

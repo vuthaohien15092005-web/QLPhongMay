@@ -105,6 +105,9 @@
     <EmbeddedResource Include="GUI\Forms\Auth\FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\Catalog\frmQLCaHoc.resx">
+      <DependentUpon>frmQLCaHoc.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Forms\Dashboard\frmMain_Admin.resx">
       <DependentUpon>frmMain_Admin.cs</DependentUpon>
     </EmbeddedResource>
