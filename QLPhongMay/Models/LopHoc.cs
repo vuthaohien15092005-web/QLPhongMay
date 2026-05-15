@@ -20,9 +20,6 @@ namespace QLPhongMay.Models
         [Column("tenLop")]
         public string TenLop { get; set; }
 
-        [Column("nganh")]
-        public string Nganh { get; set; }
-
         [Column("siSo")]
         public int SiSo { get; set; }
 

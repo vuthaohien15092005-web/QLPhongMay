@@ -49,7 +49,6 @@ namespace QLPhongMay.DAL
 SELECT
     [maLop] AS [MaLop],
     [tenLop] AS [TenLop],
-    [nganh] AS [Nganh],
     [siSo] AS [SiSo]
 FROM [Lop]
 ORDER BY [maLop];";
@@ -66,7 +65,6 @@ ORDER BY [maLop];";
 SELECT TOP 1
     [maLop] AS [MaLop],
     [tenLop] AS [TenLop],
-    [nganh] AS [Nganh],
     [siSo] AS [SiSo]
 FROM [Lop]
 WHERE [maLop] = @MaLop;";
@@ -90,11 +88,32 @@ WHERE [maLop] = @MaLop;";
             }
         }
 
+        public bool ExistsByTenLop(string tenLop, string excludedMaLop = null)
+        {
+            const string sql = @"
+SELECT COUNT(1)
+FROM [Lop]
+WHERE LOWER(LTRIM(RTRIM([tenLop]))) = LOWER(LTRIM(RTRIM(@TenLop)))
+  AND (@ExcludedMaLop IS NULL OR [maLop] <> @ExcludedMaLop);";
+
+            using (IDbConnection connection = new SqlConnection(this.connectionString))
+            {
+                return connection.ExecuteScalar<int>(sql, new { TenLop = tenLop, ExcludedMaLop = excludedMaLop }) > 0;
+            }
+        }
+
         public void Create(LopHoc lopHoc)
         {
             const string sql = @"
-INSERT INTO [Lop] ([maLop], [tenLop], [nganh], [siSo])
-VALUES (@MaLop, @TenLop, @Nganh, @SiSo);";
+INSERT INTO [Lop] ([maLop], [tenLop], [siSo])
+VALUES (
+    COALESCE(NULLIF(@MaLop, ''), (
+        SELECT CONVERT(varchar(50), ISNULL(MAX(TRY_CONVERT(int, [maLop])), 0) + 1)
+        FROM [Lop] WITH (UPDLOCK, HOLDLOCK)
+    )),
+    @TenLop,
+    @SiSo
+);";
 
             using (IDbConnection connection = new SqlConnection(this.connectionString))
             {
@@ -107,7 +126,6 @@ VALUES (@MaLop, @TenLop, @Nganh, @SiSo);";
             const string sql = @"
 UPDATE [Lop]
 SET [tenLop] = @TenLop,
-    [nganh] = @Nganh,
     [siSo] = @SiSo
 WHERE [maLop] = @MaLop;";
 
