@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,8 +14,7 @@ namespace QLPhongMay.Models
 
         [Key]
         [Column("maLop")]
-        [StringLength(50)]
-        public string MaLop { get; set; }
+        public int MaLop { get; set; }
 
         [Column("tenLop")]
         public string TenLop { get; set; }

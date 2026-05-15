@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -12,9 +13,13 @@ namespace QLPhongMay.GUI.Forms.Catalog
 {
     public partial class frmQLLopHoc : Form
     {
-        private const int PageSize = 8;
+        private const int PageSize = 5;
         private const int ECM_FIRST = 0x1500;
         private const int EM_SETCUEBANNER = ECM_FIRST + 1;
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, string lParam);
+
 
         private readonly LopHocRepository lopHocRepository;
         private readonly ToolTip actionToolTip;
@@ -52,9 +57,6 @@ namespace QLPhongMay.GUI.Forms.Catalog
         private FlowLayoutPanel pnlPageButtons;
         private System.ComponentModel.IContainer components;
 
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, string lParam);
-
         public frmQLLopHoc()
         {
             this.lopHocRepository = new LopHocRepository();
@@ -82,13 +84,13 @@ namespace QLPhongMay.GUI.Forms.Catalog
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-            SendMessage(this.txtSearch.Handle, EM_SETCUEBANNER, IntPtr.Zero, "Nhap ten lop can tim");
+            SendMessage(this.txtSearch.Handle, EM_SETCUEBANNER, IntPtr.Zero, "Tìm kiếm theo tên lớp");
         }
-
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlRoot = new System.Windows.Forms.Panel();
             this.btnBack = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
@@ -144,7 +146,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.pnlRoot.Controls.Add(this.pnlPaging);
             this.pnlRoot.Location = new System.Drawing.Point(28, 24);
             this.pnlRoot.Name = "pnlRoot";
-            this.pnlRoot.Size = new System.Drawing.Size(1124, 708);
+            this.pnlRoot.Size = new System.Drawing.Size(1124, 808);
             this.pnlRoot.TabIndex = 0;
             // 
             // btnBack
@@ -155,11 +157,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBack.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.btnBack.Location = new System.Drawing.Point(146, 20);
+            this.btnBack.Location = new System.Drawing.Point(0, 4);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(130, 44);
+            this.btnBack.Size = new System.Drawing.Size(128, 46);
             this.btnBack.TabIndex = 0;
-            this.btnBack.Text = "Quay lại";
+            this.btnBack.Text = "<  Quay lại";
             this.btnBack.UseVisualStyleBackColor = false;
             this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
@@ -167,11 +169,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.BackColor = System.Drawing.Color.Transparent;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 21F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.lblTitle.Location = new System.Drawing.Point(364, 4);
+            this.lblTitle.Location = new System.Drawing.Point(146, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(239, 41);
+            this.lblTitle.Size = new System.Drawing.Size(336, 57);
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "Quản lý lớp học";
             // 
@@ -181,11 +183,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSubtitle.BackColor = System.Drawing.Color.Transparent;
             this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblSubtitle.Location = new System.Drawing.Point(347, 56);
+            this.lblSubtitle.Location = new System.Drawing.Point(150, 48);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(266, 19);
+            this.lblSubtitle.Size = new System.Drawing.Size(320, 28);
             this.lblSubtitle.TabIndex = 2;
-            this.lblSubtitle.Text = "Theo dõi danh sách lớp thực hành và sĩ số";
+            this.lblSubtitle.Text = "Theo dõi danh sách lớp học và sĩ số";
             // 
             // btnAdd
             // 
@@ -196,24 +198,23 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(711, 20);
+            this.btnAdd.Location = new System.Drawing.Point(930, 92);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(194, 44);
+            this.btnAdd.Size = new System.Drawing.Size(194, 46);
             this.btnAdd.TabIndex = 3;
-            this.btnAdd.Text = "Thêm Lớp +";
+            this.btnAdd.Text = "+  Thêm lớp học";
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // pnlTotalClasses
             // 
             this.pnlTotalClasses.BackColor = System.Drawing.Color.White;
-            this.pnlTotalClasses.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlTotalClasses.Controls.Add(this.lblTotalClassesIcon);
             this.pnlTotalClasses.Controls.Add(this.lblTotalClassesValue);
             this.pnlTotalClasses.Controls.Add(this.lblTotalClassesText);
-            this.pnlTotalClasses.Location = new System.Drawing.Point(109, 92);
+            this.pnlTotalClasses.Location = new System.Drawing.Point(0, 82);
             this.pnlTotalClasses.Name = "pnlTotalClasses";
-            this.pnlTotalClasses.Size = new System.Drawing.Size(238, 78);
+            this.pnlTotalClasses.Size = new System.Drawing.Size(248, 78);
             this.pnlTotalClasses.TabIndex = 4;
             // 
             // lblTotalClassesIcon
@@ -235,7 +236,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblTotalClassesValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.lblTotalClassesValue.Location = new System.Drawing.Point(82, 12);
             this.lblTotalClassesValue.Name = "lblTotalClassesValue";
-            this.lblTotalClassesValue.Size = new System.Drawing.Size(30, 36);
+            this.lblTotalClassesValue.Size = new System.Drawing.Size(44, 51);
             this.lblTotalClassesValue.TabIndex = 1;
             this.lblTotalClassesValue.Text = "0";
             // 
@@ -246,20 +247,19 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblTotalClassesText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblTotalClassesText.Location = new System.Drawing.Point(84, 48);
             this.lblTotalClassesText.Name = "lblTotalClassesText";
-            this.lblTotalClassesText.Size = new System.Drawing.Size(86, 17);
+            this.lblTotalClassesText.Size = new System.Drawing.Size(123, 25);
             this.lblTotalClassesText.TabIndex = 2;
             this.lblTotalClassesText.Text = "Tổng lớp học";
             // 
             // pnlTotalStudents
             // 
             this.pnlTotalStudents.BackColor = System.Drawing.Color.White;
-            this.pnlTotalStudents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlTotalStudents.Controls.Add(this.lblTotalStudentsIcon);
             this.pnlTotalStudents.Controls.Add(this.lblTotalStudentsValue);
             this.pnlTotalStudents.Controls.Add(this.lblTotalStudentsText);
-            this.pnlTotalStudents.Location = new System.Drawing.Point(410, 92);
+            this.pnlTotalStudents.Location = new System.Drawing.Point(262, 82);
             this.pnlTotalStudents.Name = "pnlTotalStudents";
-            this.pnlTotalStudents.Size = new System.Drawing.Size(238, 78);
+            this.pnlTotalStudents.Size = new System.Drawing.Size(248, 78);
             this.pnlTotalStudents.TabIndex = 5;
             // 
             // lblTotalStudentsIcon
@@ -281,7 +281,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblTotalStudentsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.lblTotalStudentsValue.Location = new System.Drawing.Point(82, 12);
             this.lblTotalStudentsValue.Name = "lblTotalStudentsValue";
-            this.lblTotalStudentsValue.Size = new System.Drawing.Size(30, 36);
+            this.lblTotalStudentsValue.Size = new System.Drawing.Size(44, 51);
             this.lblTotalStudentsValue.TabIndex = 1;
             this.lblTotalStudentsValue.Text = "0";
             // 
@@ -292,20 +292,19 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblTotalStudentsText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblTotalStudentsText.Location = new System.Drawing.Point(84, 48);
             this.lblTotalStudentsText.Name = "lblTotalStudentsText";
-            this.lblTotalStudentsText.Size = new System.Drawing.Size(69, 17);
+            this.lblTotalStudentsText.Size = new System.Drawing.Size(97, 25);
             this.lblTotalStudentsText.TabIndex = 2;
             this.lblTotalStudentsText.Text = "Tổng sĩ số";
             // 
             // pnlAverageStudents
             // 
             this.pnlAverageStudents.BackColor = System.Drawing.Color.White;
-            this.pnlAverageStudents.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlAverageStudents.Controls.Add(this.lblAverageStudentsIcon);
             this.pnlAverageStudents.Controls.Add(this.lblAverageStudentsValue);
             this.pnlAverageStudents.Controls.Add(this.lblAverageStudentsText);
-            this.pnlAverageStudents.Location = new System.Drawing.Point(696, 92);
+            this.pnlAverageStudents.Location = new System.Drawing.Point(524, 82);
             this.pnlAverageStudents.Name = "pnlAverageStudents";
-            this.pnlAverageStudents.Size = new System.Drawing.Size(238, 78);
+            this.pnlAverageStudents.Size = new System.Drawing.Size(248, 78);
             this.pnlAverageStudents.TabIndex = 6;
             this.pnlAverageStudents.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlAverageStudents_Paint);
             // 
@@ -328,7 +327,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblAverageStudentsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.lblAverageStudentsValue.Location = new System.Drawing.Point(82, 12);
             this.lblAverageStudentsValue.Name = "lblAverageStudentsValue";
-            this.lblAverageStudentsValue.Size = new System.Drawing.Size(30, 36);
+            this.lblAverageStudentsValue.Size = new System.Drawing.Size(44, 51);
             this.lblAverageStudentsValue.TabIndex = 1;
             this.lblAverageStudentsValue.Text = "0";
             // 
@@ -339,7 +338,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblAverageStudentsText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblAverageStudentsText.Location = new System.Drawing.Point(84, 48);
             this.lblAverageStudentsText.Name = "lblAverageStudentsText";
-            this.lblAverageStudentsText.Size = new System.Drawing.Size(100, 17);
+            this.lblAverageStudentsText.Size = new System.Drawing.Size(145, 25);
             this.lblAverageStudentsText.TabIndex = 2;
             this.lblAverageStudentsText.Text = "Sĩ só trung bình";
             // 
@@ -348,16 +347,15 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.pnlFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFilter.BackColor = System.Drawing.Color.White;
-            this.pnlFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlFilter.Controls.Add(this.lblSearch);
             this.pnlFilter.Controls.Add(this.lblSiSoFilter);
             this.pnlFilter.Controls.Add(this.lblSort);
             this.pnlFilter.Controls.Add(this.txtSearch);
             this.pnlFilter.Controls.Add(this.cboSiSo);
             this.pnlFilter.Controls.Add(this.cboSort);
-            this.pnlFilter.Location = new System.Drawing.Point(0, 204);
+            this.pnlFilter.Location = new System.Drawing.Point(0, 188);
             this.pnlFilter.Name = "pnlFilter";
-            this.pnlFilter.Size = new System.Drawing.Size(1124, 82);
+            this.pnlFilter.Size = new System.Drawing.Size(1124, 66);
             this.pnlFilter.TabIndex = 7;
             // 
             // lblSearch
@@ -367,9 +365,10 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.lblSearch.Location = new System.Drawing.Point(22, 12);
             this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(59, 15);
+            this.lblSearch.Size = new System.Drawing.Size(90, 25);
             this.lblSearch.TabIndex = 0;
             this.lblSearch.Text = "Tìm kiếm";
+            this.lblSearch.Visible = false;
             // 
             // lblSiSoFilter
             // 
@@ -379,9 +378,10 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSiSoFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.lblSiSoFilter.Location = new System.Drawing.Point(600, 12);
             this.lblSiSoFilter.Name = "lblSiSoFilter";
-            this.lblSiSoFilter.Size = new System.Drawing.Size(81, 15);
+            this.lblSiSoFilter.Size = new System.Drawing.Size(127, 25);
             this.lblSiSoFilter.TabIndex = 1;
             this.lblSiSoFilter.Text = "Lọc theo sĩ số";
+            this.lblSiSoFilter.Visible = false;
             // 
             // lblSort
             // 
@@ -391,9 +391,10 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.lblSort.Location = new System.Drawing.Point(840, 12);
             this.lblSort.Name = "lblSort";
-            this.lblSort.Size = new System.Drawing.Size(51, 15);
+            this.lblSort.Size = new System.Drawing.Size(79, 25);
             this.lblSort.TabIndex = 2;
             this.lblSort.Text = "Sắp xếp";
+            this.lblSort.Visible = false;
             // 
             // txtSearch
             // 
@@ -401,9 +402,9 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.txtSearch.Location = new System.Drawing.Point(22, 38);
+            this.txtSearch.Location = new System.Drawing.Point(22, 17);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(520, 25);
+            this.txtSearch.Size = new System.Drawing.Size(520, 34);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.TextChanged += new System.EventHandler(this.FilterChanged);
             // 
@@ -414,9 +415,9 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.cboSiSo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSiSo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboSiSo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.cboSiSo.Location = new System.Drawing.Point(603, 37);
+            this.cboSiSo.Location = new System.Drawing.Point(704, 17);
             this.cboSiSo.Name = "cboSiSo";
-            this.cboSiSo.Size = new System.Drawing.Size(200, 25);
+            this.cboSiSo.Size = new System.Drawing.Size(178, 36);
             this.cboSiSo.TabIndex = 1;
             this.cboSiSo.SelectedIndexChanged += new System.EventHandler(this.FilterChanged);
             // 
@@ -427,9 +428,9 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.cboSort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSort.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboSort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.cboSort.Location = new System.Drawing.Point(843, 37);
+            this.cboSort.Location = new System.Drawing.Point(900, 17);
             this.cboSort.Name = "cboSort";
-            this.cboSort.Size = new System.Drawing.Size(206, 25);
+            this.cboSort.Size = new System.Drawing.Size(202, 36);
             this.cboSort.TabIndex = 2;
             this.cboSort.SelectedIndexChanged += new System.EventHandler(this.FilterChanged);
             // 
@@ -446,49 +447,50 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.dgvLopHoc.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvLopHoc.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dgvLopHoc.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.dgvLopHoc.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.dgvLopHoc.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvLopHoc.ColumnHeadersHeight = 48;
             this.dgvLopHoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvLopHoc.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvLopHoc.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvLopHoc.EnableHeadersVisualStyles = false;
             this.dgvLopHoc.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.dgvLopHoc.Location = new System.Drawing.Point(50, 301);
+            this.dgvLopHoc.Location = new System.Drawing.Point(0, 260);
             this.dgvLopHoc.MultiSelect = false;
             this.dgvLopHoc.Name = "dgvLopHoc";
             this.dgvLopHoc.ReadOnly = true;
             this.dgvLopHoc.RowHeadersVisible = false;
+            this.dgvLopHoc.RowHeadersWidth = 51;
             this.dgvLopHoc.RowTemplate.Height = 44;
             this.dgvLopHoc.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvLopHoc.Size = new System.Drawing.Size(1010, 346);
+            this.dgvLopHoc.Size = new System.Drawing.Size(1124, 484);
             this.dgvLopHoc.TabIndex = 5;
             this.dgvLopHoc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvLopHoc_CellClick);
             this.dgvLopHoc.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvLopHoc_CellMouseLeave);
             this.dgvLopHoc.CellMouseMove += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvLopHoc_CellMouseMove);
+            this.dgvLopHoc.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DgvLopHoc_CellPainting);
             // 
             // pnlPaging
             // 
             this.pnlPaging.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlPaging.BackColor = System.Drawing.Color.White;
-            this.pnlPaging.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlPaging.Controls.Add(this.lblPagingInfo);
             this.pnlPaging.Controls.Add(this.pnlPageButtons);
-            this.pnlPaging.Location = new System.Drawing.Point(0, 662);
+            this.pnlPaging.Location = new System.Drawing.Point(0, 762);
             this.pnlPaging.Name = "pnlPaging";
             this.pnlPaging.Size = new System.Drawing.Size(1124, 46);
             this.pnlPaging.TabIndex = 8;
@@ -501,7 +503,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblPagingInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblPagingInfo.Location = new System.Drawing.Point(18, 13);
             this.lblPagingInfo.Name = "lblPagingInfo";
-            this.lblPagingInfo.Size = new System.Drawing.Size(97, 15);
+            this.lblPagingInfo.Size = new System.Drawing.Size(147, 25);
             this.lblPagingInfo.TabIndex = 0;
             this.lblPagingInfo.Text = "Không có dữ liệu";
             // 
@@ -509,7 +511,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             // 
             this.pnlPageButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlPageButtons.BackColor = System.Drawing.Color.Transparent;
-            this.pnlPageButtons.Location = new System.Drawing.Point(820, 6);
+            this.pnlPageButtons.Location = new System.Drawing.Point(838, 9);
             this.pnlPageButtons.Name = "pnlPageButtons";
             this.pnlPageButtons.Size = new System.Drawing.Size(286, 34);
             this.pnlPageButtons.TabIndex = 1;
@@ -517,16 +519,16 @@ namespace QLPhongMay.GUI.Forms.Catalog
             // 
             // frmQLLopHoc
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(251)))));
-            this.ClientSize = new System.Drawing.Size(1180, 760);
+            this.ClientSize = new System.Drawing.Size(1180, 860);
             this.Controls.Add(this.pnlRoot);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MinimumSize = new System.Drawing.Size(980, 620);
+            this.MinimumSize = new System.Drawing.Size(1080, 780);
             this.Name = "frmQLLopHoc";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Quan ly lop hoc";
+            this.Text = "Quản lý lớp học";
             this.pnlRoot.ResumeLayout(false);
             this.pnlRoot.PerformLayout();
             this.pnlTotalClasses.ResumeLayout(false);
@@ -756,16 +758,14 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
             this.dgvLopHoc.Columns[nameof(LopHocRow.Stt)].HeaderText = "STT";
             this.dgvLopHoc.Columns[nameof(LopHocRow.MaLop)].Visible = false;
-            this.dgvLopHoc.Columns[nameof(LopHocRow.TenLop)].HeaderText = "Ten lop";
-            this.dgvLopHoc.Columns[nameof(LopHocRow.SiSo)].HeaderText = "Si so";
+            this.dgvLopHoc.Columns[nameof(LopHocRow.TenLop)].HeaderText = "Tên lớp";
+            this.dgvLopHoc.Columns[nameof(LopHocRow.SiSo)].HeaderText = "Sĩ số";
 
             if (!this.dgvLopHoc.Columns.Contains("Actions"))
             {
-                DataGridViewButtonColumn actionColumn = new DataGridViewButtonColumn();
+                DataGridViewTextBoxColumn actionColumn = new DataGridViewTextBoxColumn();
                 actionColumn.Name = "Actions";
-                actionColumn.HeaderText = "Hanh dong";
-                actionColumn.Text = "Sua / Xoa";
-                actionColumn.UseColumnTextForButtonValue = true;
+                actionColumn.HeaderText = "Hành động";
                 this.dgvLopHoc.Columns.Add(actionColumn);
             }
 
@@ -776,6 +776,12 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.dgvLopHoc.Columns[nameof(LopHocRow.Stt)].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLopHoc.Columns[nameof(LopHocRow.SiSo)].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvLopHoc.Columns["Actions"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgvLopHoc.Columns[nameof(LopHocRow.SiSo)].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgvLopHoc.Columns["Actions"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dgvLopHoc.Columns[nameof(LopHocRow.SiSo)].HeaderCell.Style.Padding = Padding.Empty;
+            this.dgvLopHoc.Columns["Actions"].HeaderCell.Style.Padding = Padding.Empty;
+            this.dgvLopHoc.Columns[nameof(LopHocRow.SiSo)].DefaultCellStyle.Padding = Padding.Empty;
+            this.dgvLopHoc.Columns["Actions"].DefaultCellStyle.Padding = Padding.Empty;
         }
 
         private void UpdatePaging(int totalRows, int totalPages)
@@ -860,7 +866,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             }
         }
 
-        private void EditLopHoc(string maLop)
+        private void EditLopHoc(int maLop)
         {
             LopHoc lopHoc = this.lopHocRepository.GetById(maLop);
             if (lopHoc == null)
@@ -896,7 +902,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             }
         }
 
-        private void DeleteLopHoc(string maLop)
+        private void DeleteLopHoc(int maLop)
         {
             DialogResult result = MessageBox.Show("Ban co chac muon xoa lop nay?", "Xac nhan xoa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -930,16 +936,17 @@ namespace QLPhongMay.GUI.Forms.Catalog
                 return;
             }
 
-            ContextMenuStrip menu = new ContextMenuStrip();
-            ToolStripMenuItem editItem = new ToolStripMenuItem("Sua");
-            ToolStripMenuItem deleteItem = new ToolStripMenuItem("Xoa");
-            editItem.Click += delegate { EditLopHoc(row.MaLop); };
-            deleteItem.Click += delegate { DeleteLopHoc(row.MaLop); };
-            menu.Items.Add(editItem);
-            menu.Items.Add(deleteItem);
-
             Rectangle cellBounds = this.dgvLopHoc.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true);
-            menu.Show(this.dgvLopHoc, cellBounds.Left, cellBounds.Bottom);
+            Point cursorPoint = this.dgvLopHoc.PointToClient(Cursor.Position);
+
+            if (GetActionIconBounds(cellBounds, 0).Contains(cursorPoint))
+            {
+                EditLopHoc(row.MaLop);
+            }
+            else if (GetActionIconBounds(cellBounds, 1).Contains(cursorPoint))
+            {
+                DeleteLopHoc(row.MaLop);
+            }
         }
 
         private void DgvLopHoc_CellMouseMove(object sender, DataGridViewCellMouseEventArgs e)
@@ -961,6 +968,61 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.actionToolTip.SetToolTip(this.dgvLopHoc, string.Empty);
         }
 
+        private void DgvLopHoc_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0 || this.dgvLopHoc.Columns[e.ColumnIndex].Name != "Actions")
+            {
+                return;
+            }
+
+            e.Handled = true;
+            e.PaintBackground(e.CellBounds, true);
+            e.Paint(e.CellBounds, DataGridViewPaintParts.Border);
+
+            string[] icons = { "\uE70F", "\uE74D" };
+            Color[] iconColors = { Color.FromArgb(37, 99, 235), Color.FromArgb(239, 68, 68) };
+
+            using (Font iconFont = new Font("Segoe MDL2 Assets", 9.5F, FontStyle.Regular, GraphicsUnit.Point, 0))
+            using (StringFormat format = new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center })
+            {
+                for (int i = 0; i < icons.Length; i++)
+                {
+                    Rectangle iconBounds = GetActionIconBounds(e.CellBounds, i);
+                    using (GraphicsPath path = RoundedRectangle(iconBounds, 6))
+                    using (SolidBrush backBrush = new SolidBrush(Color.FromArgb(248, 250, 252)))
+                    using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240)))
+                    using (SolidBrush iconBrush = new SolidBrush(iconColors[i]))
+                    {
+                        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                        e.Graphics.FillPath(backBrush, path);
+                        e.Graphics.DrawPath(borderPen, path);
+                        e.Graphics.DrawString(icons[i], iconFont, iconBrush, iconBounds, format);
+                    }
+                }
+            }
+        }
+
+        private static Rectangle GetActionIconBounds(Rectangle cellBounds, int index)
+        {
+            const int iconSize = 28;
+            const int gap = 8;
+            int totalWidth = iconSize * 2 + gap;
+            int left = cellBounds.Left + (cellBounds.Width - totalWidth) / 2;
+            int top = cellBounds.Top + (cellBounds.Height - iconSize) / 2;
+            return new Rectangle(left + index * (iconSize + gap), top, iconSize, iconSize);
+        }
+
+        private static GraphicsPath RoundedRectangle(Rectangle bounds, int radius)
+        {
+            int diameter = radius * 2;
+            GraphicsPath path = new GraphicsPath();
+            path.AddArc(bounds.Left, bounds.Top, diameter, diameter, 180, 90);
+            path.AddArc(bounds.Right - diameter, bounds.Top, diameter, diameter, 270, 90);
+            path.AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+            path.AddArc(bounds.Left, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+            path.CloseFigure();
+            return path;
+        }
         private void BtnBack_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -980,7 +1042,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
         {
             public int Stt { get; set; }
 
-            public string MaLop { get; set; }
+            public int MaLop { get; set; }
 
             public string TenLop { get; set; }
 

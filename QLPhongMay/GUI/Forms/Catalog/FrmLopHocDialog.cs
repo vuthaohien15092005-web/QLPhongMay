@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 using QLPhongMay.Models;
@@ -7,7 +7,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
 {
     public partial class FrmLopHocDialog : Form
     {
-        private string maLop;
+        private int maLop;
 
         private Panel pnlRoot;
         private Label lblTitle;
@@ -28,7 +28,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         public FrmLopHocDialog(LopHoc lopHoc)
         {
-            this.maLop = lopHoc == null ? string.Empty : lopHoc.MaLop;
+            this.maLop = lopHoc == null ? 0 : lopHoc.MaLop;
             InitializeComponent();
 
             if (lopHoc != null)
