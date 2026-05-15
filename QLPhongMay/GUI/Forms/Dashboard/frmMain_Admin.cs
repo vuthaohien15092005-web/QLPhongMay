@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
+using QLPhongMay.GUI.Forms.Catalog;
 using QLPhongMay.GUI.Forms.Users;
 
 namespace QLPhongMay.GUI.Forms.Dashboard
@@ -423,7 +424,10 @@ namespace QLPhongMay.GUI.Forms.Dashboard
         }
         private void OpenClassForm(object sender, EventArgs e)
         {
-            OpenPlaceholderForm("Quản lý lớp học");
+            using (frmQLLopHoc form = new frmQLLopHoc())
+            {
+                form.ShowDialog(this);
+            }
         }
 
         private void OpenShiftForm(object sender, EventArgs e)

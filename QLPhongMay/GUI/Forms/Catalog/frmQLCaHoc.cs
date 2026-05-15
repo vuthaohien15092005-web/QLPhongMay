@@ -16,5 +16,10 @@ namespace QLPhongMay.GUI.Forms.Catalog
         {
             InitializeComponent();
         }
+
+        private void frmQLCaHoc_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

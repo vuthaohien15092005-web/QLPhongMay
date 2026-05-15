@@ -57,6 +57,7 @@
     <Compile Include="BLL\Session.cs" />
     <Compile Include="BLL\PasswordHasher.cs" />
     <Compile Include="DAL\AppDbContext.cs" />
+    <Compile Include="DAL\LopHocRepository.cs" />
     <Compile Include="DAL\UserRepository.cs" />
     <Compile Include="DTO\User.cs" />
     <Compile Include="Enums\ComputerStatus.cs" />
@@ -77,6 +78,12 @@
     </Compile>
     <Compile Include="GUI\Forms\Catalog\frmQLCaHoc.Designer.cs">
       <DependentUpon>frmQLCaHoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Forms\Catalog\FrmLopHocDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Catalog\frmQLLopHoc.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\Forms\Dashboard\frmMain_Admin.cs">
       <SubType>Form</SubType>
@@ -104,6 +111,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Forms\Auth\FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\Catalog\frmQLCaHoc.resx">
+      <DependentUpon>frmQLCaHoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\Catalog\frmQLLopHoc.resx">
+      <DependentUpon>frmQLLopHoc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Forms\Dashboard\frmMain_Admin.resx">
       <DependentUpon>frmMain_Admin.cs</DependentUpon>
