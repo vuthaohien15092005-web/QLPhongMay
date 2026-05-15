@@ -82,7 +82,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-            SendMessage(this.txtSearch.Handle, EM_SETCUEBANNER, IntPtr.Zero, "Nhap ten lop can tim");
+            SendMessage(this.txtSearch.Handle, EM_SETCUEBANNER, IntPtr.Zero, "Nhập tên lớp cần tìm");
         }
 
         private void InitializeComponent()
@@ -200,7 +200,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(194, 44);
             this.btnAdd.TabIndex = 3;
-            this.btnAdd.Text = "Thêm Lớp +";
+            this.btnAdd.Text = "Thêm lớp +";
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
@@ -526,7 +526,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.MinimumSize = new System.Drawing.Size(980, 620);
             this.Name = "frmQLLopHoc";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Quan ly lop hoc";
+            this.Text = "Quản lý lớp học";
             this.pnlRoot.ResumeLayout(false);
             this.pnlRoot.PerformLayout();
             this.pnlTotalClasses.ResumeLayout(false);
@@ -551,7 +551,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         private async Task RefreshDataAsync(bool resetPage)
         {
-            SetLoadingState(true, "Dang tai danh sach lop hoc...");
+            SetLoadingState(true, "Đang tải danh sách lớp học...");
 
             try
             {
@@ -574,8 +574,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
                 LoadSiSoFilter();
                 LoadSortOptions();
                 BindPage(new List<LopHocRow>());
-                ShowDataError("Khong the tai danh sach lop hoc.", ex);
-                this.lblPagingInfo.Text = "Khong tai duoc du lieu. Kiem tra SQL Server va App.config.";
+                ShowDataError("Không thể tải danh sách lớp học.", ex);
+                this.lblPagingInfo.Text = "Không tải được dữ liệu. Kiểm tra SQL Server và App.config.";
             }
             finally
             {
@@ -585,7 +585,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         private void RefreshData(bool resetPage)
         {
-            SetLoadingState(true, "Dang tai danh sach lop hoc...");
+            SetLoadingState(true, "Đang tải danh sách lớp học...");
 
             try
             {
@@ -597,7 +597,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             }
             catch (Exception ex)
             {
-                ShowDataError("Khong the tai danh sach lop hoc.", ex);
+                ShowDataError("Không thể tải danh sách lớp học.", ex);
             }
             finally
             {
@@ -617,7 +617,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             if (loading)
             {
                 this.pnlPageButtons.Controls.Clear();
-                this.lblPagingInfo.Text = message ?? "Dang tai...";
+                this.lblPagingInfo.Text = message ?? "Đang tải...";
             }
         }
 
@@ -634,13 +634,13 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         private void LoadSiSoFilter()
         {
-            string selected = this.cboSiSo.SelectedItem == null ? "Tat ca si so" : Convert.ToString(this.cboSiSo.SelectedItem);
+            string selected = this.cboSiSo.SelectedItem == null ? "Tất cả sĩ số" : Convert.ToString(this.cboSiSo.SelectedItem);
             this.cboSiSo.SelectedIndexChanged -= new EventHandler(this.FilterChanged);
             this.cboSiSo.Items.Clear();
-            this.cboSiSo.Items.Add("Tat ca si so");
-            this.cboSiSo.Items.Add("Duoi 30");
+            this.cboSiSo.Items.Add("Tất cả sĩ số");
+            this.cboSiSo.Items.Add("Dưới 30");
             this.cboSiSo.Items.Add("30 - 40");
-            this.cboSiSo.Items.Add("Tren 40");
+            this.cboSiSo.Items.Add("Trên 40");
 
             int selectedIndex = this.cboSiSo.Items.IndexOf(selected);
             this.cboSiSo.SelectedIndex = selectedIndex >= 0 ? selectedIndex : 0;
@@ -649,13 +649,13 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         private void LoadSortOptions()
         {
-            string selected = this.cboSort.SelectedItem == null ? "Ten lop A-Z" : Convert.ToString(this.cboSort.SelectedItem);
+            string selected = this.cboSort.SelectedItem == null ? "Tên lớp A-Z" : Convert.ToString(this.cboSort.SelectedItem);
             this.cboSort.SelectedIndexChanged -= new EventHandler(this.FilterChanged);
             this.cboSort.Items.Clear();
-            this.cboSort.Items.Add("Ten lop A-Z");
-            this.cboSort.Items.Add("Ten lop Z-A");
-            this.cboSort.Items.Add("Si so tang dan");
-            this.cboSort.Items.Add("Si so giam dan");
+            this.cboSort.Items.Add("Tên lớp A-Z");
+            this.cboSort.Items.Add("Tên lớp Z-A");
+            this.cboSort.Items.Add("Sĩ số tăng dần");
+            this.cboSort.Items.Add("Sĩ số giảm dần");
 
             int selectedIndex = this.cboSort.Items.IndexOf(selected);
             this.cboSort.SelectedIndex = selectedIndex >= 0 ? selectedIndex : 0;
@@ -675,8 +675,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
             }
 
             string keyword = (this.txtSearch.Text ?? string.Empty).Trim();
-            string selectedSiSo = this.cboSiSo.SelectedItem == null ? "Tat ca si so" : Convert.ToString(this.cboSiSo.SelectedItem);
-            string selectedSort = this.cboSort.SelectedItem == null ? "Ten lop A-Z" : Convert.ToString(this.cboSort.SelectedItem);
+            string selectedSiSo = this.cboSiSo.SelectedItem == null ? "Tất cả sĩ số" : Convert.ToString(this.cboSiSo.SelectedItem);
+            string selectedSort = this.cboSort.SelectedItem == null ? "Tên lớp A-Z" : Convert.ToString(this.cboSort.SelectedItem);
             IEnumerable<LopHoc> query = this.lopHocs;
 
             if (!string.IsNullOrWhiteSpace(keyword))
@@ -684,7 +684,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
                 query = query.Where(l => Contains(l.TenLop, keyword));
             }
 
-            if (string.Equals(selectedSiSo, "Duoi 30", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(selectedSiSo, "Dưới 30", StringComparison.OrdinalIgnoreCase))
             {
                 query = query.Where(l => l.SiSo < 30);
             }
@@ -692,20 +692,20 @@ namespace QLPhongMay.GUI.Forms.Catalog
             {
                 query = query.Where(l => l.SiSo >= 30 && l.SiSo <= 40);
             }
-            else if (string.Equals(selectedSiSo, "Tren 40", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(selectedSiSo, "Trên 40", StringComparison.OrdinalIgnoreCase))
             {
                 query = query.Where(l => l.SiSo > 40);
             }
 
-            if (string.Equals(selectedSort, "Ten lop Z-A", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(selectedSort, "Tên lớp Z-A", StringComparison.OrdinalIgnoreCase))
             {
                 query = query.OrderByDescending(l => l.TenLop);
             }
-            else if (string.Equals(selectedSort, "Si so tang dan", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(selectedSort, "Sĩ số tăng dần", StringComparison.OrdinalIgnoreCase))
             {
                 query = query.OrderBy(l => l.SiSo).ThenBy(l => l.TenLop);
             }
-            else if (string.Equals(selectedSort, "Si so giam dan", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(selectedSort, "Sĩ số giảm dần", StringComparison.OrdinalIgnoreCase))
             {
                 query = query.OrderByDescending(l => l.SiSo).ThenBy(l => l.TenLop);
             }
@@ -756,15 +756,15 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
             this.dgvLopHoc.Columns[nameof(LopHocRow.Stt)].HeaderText = "STT";
             this.dgvLopHoc.Columns[nameof(LopHocRow.MaLop)].Visible = false;
-            this.dgvLopHoc.Columns[nameof(LopHocRow.TenLop)].HeaderText = "Ten lop";
-            this.dgvLopHoc.Columns[nameof(LopHocRow.SiSo)].HeaderText = "Si so";
+            this.dgvLopHoc.Columns[nameof(LopHocRow.TenLop)].HeaderText = "Tên lớp";
+            this.dgvLopHoc.Columns[nameof(LopHocRow.SiSo)].HeaderText = "Sĩ số";
 
             if (!this.dgvLopHoc.Columns.Contains("Actions"))
             {
                 DataGridViewButtonColumn actionColumn = new DataGridViewButtonColumn();
                 actionColumn.Name = "Actions";
-                actionColumn.HeaderText = "Hanh dong";
-                actionColumn.Text = "Sua / Xoa";
+                actionColumn.HeaderText = "Hành động";
+                actionColumn.Text = "Sửa / Xóa";
                 actionColumn.UseColumnTextForButtonValue = true;
                 this.dgvLopHoc.Columns.Add(actionColumn);
             }
@@ -782,7 +782,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
         {
             int from = totalRows == 0 ? 0 : ((this.currentPage - 1) * PageSize) + 1;
             int to = Math.Min(this.currentPage * PageSize, totalRows);
-            this.lblPagingInfo.Text = string.Format("Hien thi {0}-{1} / {2} lop", from, to, totalRows);
+            this.lblPagingInfo.Text = string.Format("Hiển thị {0}-{1} / {2} lớp", from, to, totalRows);
 
             this.pnlPageButtons.Controls.Clear();
             AddPageButton("<", Math.Max(1, this.currentPage - 1), this.currentPage > 1);
@@ -845,17 +845,17 @@ namespace QLPhongMay.GUI.Forms.Catalog
                     LopHoc lopHoc = dialog.LopHoc;
                     if (this.lopHocRepository.ExistsByTenLop(lopHoc.TenLop))
                     {
-                        MessageBox.Show("Ten lop da ton tai.", "Thong bao", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Tên lớp đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
                     this.lopHocRepository.Create(lopHoc);
                     RefreshData(false);
-                    MessageBox.Show("Da them lop hoc thanh cong.", "Thanh cong", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã thêm lớp học thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    ShowDataError("Khong the them lop hoc.", ex);
+                    ShowDataError("Không thể thêm lớp học.", ex);
                 }
             }
         }
@@ -865,7 +865,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             LopHoc lopHoc = this.lopHocRepository.GetById(maLop);
             if (lopHoc == null)
             {
-                MessageBox.Show("Khong tim thay lop hoc.", "Thong bao", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Không tìm thấy lớp học.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -881,24 +881,24 @@ namespace QLPhongMay.GUI.Forms.Catalog
                     LopHoc updated = dialog.LopHoc;
                     if (this.lopHocRepository.ExistsByTenLop(updated.TenLop, updated.MaLop))
                     {
-                        MessageBox.Show("Ten lop da ton tai.", "Thong bao", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Tên lớp đã tồn tại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
                     this.lopHocRepository.Update(updated);
                     RefreshData(false);
-                    MessageBox.Show("Da cap nhat lop hoc thanh cong.", "Thanh cong", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đã cập nhật lớp học thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    ShowDataError("Khong the cap nhat lop hoc.", ex);
+                    ShowDataError("Không thể cập nhật lớp học.", ex);
                 }
             }
         }
 
         private void DeleteLopHoc(string maLop)
         {
-            DialogResult result = MessageBox.Show("Ban co chac muon xoa lop nay?", "Xac nhan xoa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult result = MessageBox.Show("Bạn có chắc muốn xóa lớp này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (result != DialogResult.Yes)
             {
@@ -909,11 +909,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
             {
                 this.lopHocRepository.Delete(maLop);
                 RefreshData(false);
-                MessageBox.Show("Da xoa lop hoc thanh cong.", "Thanh cong", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã xóa lớp học thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                ShowDataError("Khong the xoa lop hoc. Lop co the dang duoc tham chieu boi lich thuc hanh.", ex);
+                ShowDataError("Không thể xóa lớp học. Lớp có thể đang được tham chiếu bởi lịch thực hành.", ex);
             }
         }
 
@@ -931,8 +931,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
             }
 
             ContextMenuStrip menu = new ContextMenuStrip();
-            ToolStripMenuItem editItem = new ToolStripMenuItem("Sua");
-            ToolStripMenuItem deleteItem = new ToolStripMenuItem("Xoa");
+            ToolStripMenuItem editItem = new ToolStripMenuItem("Sửa");
+            ToolStripMenuItem deleteItem = new ToolStripMenuItem("Xóa");
             editItem.Click += delegate { EditLopHoc(row.MaLop); };
             deleteItem.Click += delegate { DeleteLopHoc(row.MaLop); };
             menu.Items.Add(editItem);
@@ -947,7 +947,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && this.dgvLopHoc.Columns[e.ColumnIndex].Name == "Actions")
             {
                 this.dgvLopHoc.Cursor = Cursors.Hand;
-                this.actionToolTip.SetToolTip(this.dgvLopHoc, "Sua hoac xoa lop hoc");
+                this.actionToolTip.SetToolTip(this.dgvLopHoc, "Sửa hoặc xóa lớp học");
                 return;
             }
 
@@ -973,7 +973,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         private static void ShowDataError(string message, Exception ex)
         {
-            MessageBox.Show(message + "\n" + ex.Message, "Loi du lieu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(message + "\n" + ex.Message, "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private class LopHocRow
