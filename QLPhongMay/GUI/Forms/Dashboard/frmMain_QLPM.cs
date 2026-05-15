@@ -429,7 +429,10 @@ namespace QLPhongMay.GUI.Forms.Dashboard
 
         private void OpenShiftForm(object sender, EventArgs e)
         {
-            OpenPlaceholderForm("Quản lý ca học");
+            using (frmQLCaHoc form = new frmQLCaHoc())
+            {
+                form.ShowDialog(this);
+            }
         }
 
         private void OpenReportForm(object sender, EventArgs e)
