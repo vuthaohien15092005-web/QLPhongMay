@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using QLPhongMay.GUI.Forms.Catalog;
+using QLPhongMay.GUI.Forms.Computer;
 using QLPhongMay.GUI.Forms.Schedule;
 
 namespace QLPhongMay.GUI.Forms.Dashboard
@@ -421,7 +422,10 @@ namespace QLPhongMay.GUI.Forms.Dashboard
 
         private void OpenComputerForm(object sender, EventArgs e)
         {
-            OpenPlaceholderForm("Quản lý máy tính");
+            using (frmQuanLyMay form = new frmQuanLyMay())
+            {
+                form.ShowDialog(this);
+            }
         }
         private void OpenClassForm(object sender, EventArgs e)
         {
@@ -477,3 +481,5 @@ namespace QLPhongMay.GUI.Forms.Dashboard
         }
     }
 }
+
+
