@@ -142,6 +142,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="DAL\ScheduleRepository.cs" />
+    <Compile Include="DTO\ScheduleListItem.cs" />
+    <Compile Include="GUI\Forms\Schedule\frmQuanLyLich.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Schedule\FrmScheduleEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <None Include="..\database\seed-login-users.sql" />
+    <Compile Include="GUI\Forms\Schedule\frmQuanLyLich.Designer.cs">
+      <DependentUpon>frmQuanLyLich.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -155,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\Controls\" />
+    <Folder Include="GUI\Forms\Catalog\" />
     <Folder Include="GUI\Forms\Schedule\" />
     <Folder Include="GUI\Resources\" />
   </ItemGroup>
