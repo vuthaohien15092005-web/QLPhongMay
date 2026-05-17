@@ -12,13 +12,19 @@ namespace QLPhongMay.DAL
         private readonly string connectionString;
 
         public UserRepository()
-            : this(ConfigurationManager.ConnectionStrings["QLPhongMayDbContext"].ConnectionString)
+            : this(GetDefaultConnectionString())
         {
         }
 
         public UserRepository(string connectionString)
         {
-            this.connectionString = connectionString;
+            this.connectionString = connectionString ?? string.Empty;
+        }
+
+        private static string GetDefaultConnectionString()
+        {
+            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["QLPhongMayDbContext"];
+            return settings == null ? string.Empty : settings.ConnectionString;
         }
 
         public User GetByUsername(string username)

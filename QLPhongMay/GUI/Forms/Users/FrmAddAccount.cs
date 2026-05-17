@@ -84,6 +84,8 @@ namespace QLPhongMay.GUI.Forms.Users
             this.account = account;
             InitializeComponent();
             ApplyMode();
+            ApplyPasswordVisibilityForRole();
+            UpdatePasswordIcon();
         }
 
         public string FullName
@@ -138,6 +140,12 @@ namespace QLPhongMay.GUI.Forms.Users
 
         private void InitializeComponent()
         {
+            Color primaryColor = Color.FromArgb(37, 99, 235);
+            Color mutedTextColor = Color.FromArgb(100, 116, 139);
+            Color borderColor = Color.FromArgb(226, 232, 240);
+            Color inputBackColor = Color.FromArgb(248, 250, 252);
+            Color dangerColor = Color.FromArgb(220, 38, 38);
+
             this.components = new System.ComponentModel.Container();
             this.borderlessForm = new Guna2BorderlessForm(this.components);
             this.shadowForm = new Guna2ShadowForm(this.components);
@@ -172,7 +180,7 @@ namespace QLPhongMay.GUI.Forms.Users
             this.shadowForm.BorderRadius = 18;
             this.shadowForm.TargetForm = this;
 
-            this.pnlRoot.BorderColor = this.borderColor;
+            this.pnlRoot.BorderColor = borderColor;
             this.pnlRoot.BorderRadius = 18;
             this.pnlRoot.BorderThickness = 1;
             this.pnlRoot.Controls.Add(this.btnClose);
@@ -208,40 +216,143 @@ namespace QLPhongMay.GUI.Forms.Users
             this.btnClose.Location = new Point(464, 24);
             this.btnClose.Size = new Size(32, 32);
 
-            ConfigureLabel(this.lblTitle, "Thêm tài khoản mới", 28, 24, 18F, true);
-            ConfigureLabel(this.lblSubtitle, "Nhập thông tin để cấp quyền truy cập hệ thống", 30, 69, 10F, false);
-            ConfigureLabel(this.lblFullName, "Họ và tên", 31, 118, 9.5F, true);
-            ConfigureTextBox(this.txtFullName, "Nhập họ và tên", 30, 148, 1);
-            ConfigureLabel(this.lblUsername, "Tên đăng nhập", 31, 216, 9.5F, true);
-            ConfigureTextBox(this.txtUsername, "Nhập tên đăng nhập", 30, 246, 2);
-            ConfigureLabel(this.lblPassword, "Mật khẩu", 31, 314, 9.5F, true);
-            ConfigureTextBox(this.txtPassword, "Nhập mật khẩu", 30, 344, 3);
+            this.lblTitle.BackColor = Color.Transparent;
+            this.lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblTitle.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblTitle.Location = new Point(28, 24);
+            this.lblTitle.Text = "Thêm tài khoản mới";
+
+            this.lblSubtitle.BackColor = Color.Transparent;
+            this.lblSubtitle.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.lblSubtitle.ForeColor = mutedTextColor;
+            this.lblSubtitle.Location = new Point(30, 69);
+            this.lblSubtitle.Text = "Nhập thông tin để cấp quyền truy cập hệ thống";
+
+            this.lblFullName.BackColor = Color.Transparent;
+            this.lblFullName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblFullName.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblFullName.Location = new Point(31, 118);
+            this.lblFullName.Text = "Họ và tên";
+            this.txtFullName.BorderColor = borderColor;
+            this.txtFullName.BorderRadius = 8;
+            this.txtFullName.Cursor = Cursors.IBeam;
+            this.txtFullName.DefaultText = string.Empty;
+            this.txtFullName.FillColor = inputBackColor;
+            this.txtFullName.FocusedState.BorderColor = primaryColor;
+            this.txtFullName.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.txtFullName.ForeColor = Color.FromArgb(15, 23, 42);
+            this.txtFullName.HoverState.BorderColor = primaryColor;
+            this.txtFullName.Location = new Point(30, 148);
+            this.txtFullName.Margin = new Padding(3, 5, 3, 5);
+            this.txtFullName.PlaceholderText = "Nhập họ và tên";
+            this.txtFullName.Size = new Size(460, 46);
+            this.txtFullName.TabIndex = 1;
+
+            this.lblUsername.BackColor = Color.Transparent;
+            this.lblUsername.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblUsername.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblUsername.Location = new Point(31, 216);
+            this.lblUsername.Text = "Tên đăng nhập";
+            this.txtUsername.BorderColor = borderColor;
+            this.txtUsername.BorderRadius = 8;
+            this.txtUsername.Cursor = Cursors.IBeam;
+            this.txtUsername.DefaultText = string.Empty;
+            this.txtUsername.FillColor = inputBackColor;
+            this.txtUsername.FocusedState.BorderColor = primaryColor;
+            this.txtUsername.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.txtUsername.ForeColor = Color.FromArgb(15, 23, 42);
+            this.txtUsername.HoverState.BorderColor = primaryColor;
+            this.txtUsername.Location = new Point(30, 246);
+            this.txtUsername.Margin = new Padding(3, 5, 3, 5);
+            this.txtUsername.PlaceholderText = "Nhập tên đăng nhập";
+            this.txtUsername.Size = new Size(460, 46);
+            this.txtUsername.TabIndex = 2;
+
+            this.lblPassword.BackColor = Color.Transparent;
+            this.lblPassword.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblPassword.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblPassword.Location = new Point(31, 314);
+            this.lblPassword.Text = "Mật khẩu";
+            this.txtPassword.BorderColor = borderColor;
+            this.txtPassword.BorderRadius = 8;
+            this.txtPassword.Cursor = Cursors.IBeam;
+            this.txtPassword.DefaultText = string.Empty;
+            this.txtPassword.FillColor = inputBackColor;
+            this.txtPassword.FocusedState.BorderColor = primaryColor;
+            this.txtPassword.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.txtPassword.ForeColor = Color.FromArgb(15, 23, 42);
+            this.txtPassword.HoverState.BorderColor = primaryColor;
+            this.txtPassword.Location = new Point(30, 344);
+            this.txtPassword.Margin = new Padding(3, 5, 3, 5);
+            this.txtPassword.PlaceholderText = "Nhập mật khẩu";
+            this.txtPassword.Size = new Size(460, 46);
+            this.txtPassword.TabIndex = 3;
             this.txtPassword.UseSystemPasswordChar = true;
-            this.txtPassword.IconRight = CreateEyeIcon(this.mutedTextColor, false);
             this.txtPassword.IconRightOffset = new Point(8, 0);
             this.txtPassword.IconRightSize = new Size(18, 18);
             this.txtPassword.IconRightClick += new EventHandler(this.TxtPassword_IconRightClick);
-            ConfigureLabel(this.lblNewPassword, "Mật khẩu mới", 31, 412, 9.5F, true);
-            ConfigureTextBox(this.txtNewPassword, "Để trống nếu không đổi mật khẩu", 30, 442, 4);
+
+            this.lblNewPassword.BackColor = Color.Transparent;
+            this.lblNewPassword.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblNewPassword.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblNewPassword.Location = new Point(31, 412);
+            this.lblNewPassword.Text = "Mật khẩu mới";
+            this.txtNewPassword.BorderColor = borderColor;
+            this.txtNewPassword.BorderRadius = 8;
+            this.txtNewPassword.Cursor = Cursors.IBeam;
+            this.txtNewPassword.DefaultText = string.Empty;
+            this.txtNewPassword.FillColor = inputBackColor;
+            this.txtNewPassword.FocusedState.BorderColor = primaryColor;
+            this.txtNewPassword.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.txtNewPassword.ForeColor = Color.FromArgb(15, 23, 42);
+            this.txtNewPassword.HoverState.BorderColor = primaryColor;
+            this.txtNewPassword.Location = new Point(30, 442);
+            this.txtNewPassword.Margin = new Padding(3, 5, 3, 5);
+            this.txtNewPassword.PlaceholderText = "Để trống nếu không đổi mật khẩu";
+            this.txtNewPassword.Size = new Size(460, 46);
+            this.txtNewPassword.TabIndex = 4;
             this.lblNewPassword.Visible = false;
             this.txtNewPassword.Visible = false;
             this.txtNewPassword.UseSystemPasswordChar = true;
-            ConfigureLabel(this.lblEmail, "Email", 31, 412, 9.5F, true);
-            ConfigureTextBox(this.txtEmail, "Nhập email", 30, 442, 4);
-            ConfigureLabel(this.lblRole, "Vai trò", 31, 510, 9.5F, true);
+
+            this.lblEmail.BackColor = Color.Transparent;
+            this.lblEmail.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblEmail.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblEmail.Location = new Point(31, 412);
+            this.lblEmail.Text = "Email";
+            this.txtEmail.BorderColor = borderColor;
+            this.txtEmail.BorderRadius = 8;
+            this.txtEmail.Cursor = Cursors.IBeam;
+            this.txtEmail.DefaultText = string.Empty;
+            this.txtEmail.FillColor = inputBackColor;
+            this.txtEmail.FocusedState.BorderColor = primaryColor;
+            this.txtEmail.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.txtEmail.ForeColor = Color.FromArgb(15, 23, 42);
+            this.txtEmail.HoverState.BorderColor = primaryColor;
+            this.txtEmail.Location = new Point(30, 442);
+            this.txtEmail.Margin = new Padding(3, 5, 3, 5);
+            this.txtEmail.PlaceholderText = "Nhập email";
+            this.txtEmail.Size = new Size(460, 46);
+            this.txtEmail.TabIndex = 4;
+
+            this.lblRole.BackColor = Color.Transparent;
+            this.lblRole.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblRole.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblRole.Location = new Point(31, 510);
+            this.lblRole.Text = "Vai trò";
 
             this.cboRole.BackColor = Color.Transparent;
-            this.cboRole.BorderColor = this.borderColor;
+            this.cboRole.BorderColor = borderColor;
             this.cboRole.BorderRadius = 8;
             this.cboRole.Cursor = Cursors.Hand;
             this.cboRole.DrawMode = DrawMode.OwnerDrawFixed;
             this.cboRole.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.cboRole.FillColor = this.inputBackColor;
-            this.cboRole.FocusedColor = this.primaryColor;
-            this.cboRole.FocusedState.BorderColor = this.primaryColor;
+            this.cboRole.FillColor = inputBackColor;
+            this.cboRole.FocusedColor = primaryColor;
+            this.cboRole.FocusedState.BorderColor = primaryColor;
             this.cboRole.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             this.cboRole.ForeColor = Color.FromArgb(51, 65, 85);
-            this.cboRole.HoverState.BorderColor = this.primaryColor;
+            this.cboRole.HoverState.BorderColor = primaryColor;
             this.cboRole.ItemHeight = 40;
             this.cboRole.Items.AddRange(new object[] { "Admin", "Quản lý phòng máy" });
             this.cboRole.Location = new Point(30, 540);
@@ -253,12 +364,12 @@ namespace QLPhongMay.GUI.Forms.Users
 
             this.lblError.BackColor = Color.Transparent;
             this.lblError.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.lblError.ForeColor = this.dangerColor;
+            this.lblError.ForeColor = dangerColor;
             this.lblError.Location = new Point(31, 596);
             this.lblError.Text = string.Empty;
 
             this.btnCancel.Animated = true;
-            this.btnCancel.BorderColor = this.borderColor;
+            this.btnCancel.BorderColor = borderColor;
             this.btnCancel.BorderRadius = 8;
             this.btnCancel.BorderThickness = 1;
             this.btnCancel.Cursor = Cursors.Hand;
@@ -276,7 +387,7 @@ namespace QLPhongMay.GUI.Forms.Users
             this.btnSave.Animated = true;
             this.btnSave.BorderRadius = 8;
             this.btnSave.Cursor = Cursors.Hand;
-            this.btnSave.FillColor = this.primaryColor;
+            this.btnSave.FillColor = primaryColor;
             this.btnSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             this.btnSave.ForeColor = Color.White;
             this.btnSave.HoverState.FillColor = Color.FromArgb(29, 78, 216);
@@ -304,7 +415,6 @@ namespace QLPhongMay.GUI.Forms.Users
             this.pnlRoot.ResumeLayout(false);
             this.pnlRoot.PerformLayout();
             this.ResumeLayout(false);
-            ApplyPasswordVisibilityForRole();
         }
 
         private void ApplyMode()
@@ -415,12 +525,18 @@ namespace QLPhongMay.GUI.Forms.Users
         {
             this.passwordVisible = !this.passwordVisible;
             this.txtPassword.UseSystemPasswordChar = !this.passwordVisible;
-            this.txtPassword.IconRight = CreateEyeIcon(this.passwordVisible ? this.primaryColor : this.mutedTextColor, this.passwordVisible);
+            UpdatePasswordIcon();
         }
 
         private void CboRole_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (this.DesignMode || (this.Site != null && this.Site.DesignMode))
+            {
+                return;
+            }
+
             ApplyPasswordVisibilityForRole();
+            UpdatePasswordIcon();
         }
 
         private void ApplyPasswordVisibilityForRole()
@@ -432,6 +548,15 @@ namespace QLPhongMay.GUI.Forms.Users
 
             this.passwordVisible = this.RoleId == 1;
             this.txtPassword.UseSystemPasswordChar = !this.passwordVisible;
+        }
+
+        private void UpdatePasswordIcon()
+        {
+            if (this.mode == AccountDialogMode.View || this.txtPassword == null)
+            {
+                return;
+            }
+
             this.txtPassword.IconRight = CreateEyeIcon(this.passwordVisible ? this.primaryColor : this.mutedTextColor, this.passwordVisible);
         }
 

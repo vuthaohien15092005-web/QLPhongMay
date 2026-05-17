@@ -733,12 +733,20 @@ namespace QLPhongMay.GUI.Forms.Users
                 this.dgvAccounts.Columns.Add(actionColumn);
             }
 
+            this.dgvAccounts.Columns[nameof(AccountRow.Stt)].DisplayIndex = 0;
+            this.dgvAccounts.Columns[nameof(AccountRow.FullName)].DisplayIndex = 1;
+            this.dgvAccounts.Columns[nameof(AccountRow.Username)].DisplayIndex = 2;
+            this.dgvAccounts.Columns[nameof(AccountRow.Email)].DisplayIndex = 3;
+            this.dgvAccounts.Columns[nameof(AccountRow.Role)].DisplayIndex = 4;
+            this.dgvAccounts.Columns["Actions"].DisplayIndex = 5;
+
             this.dgvAccounts.Columns[nameof(AccountRow.Stt)].FillWeight = 48;
             this.dgvAccounts.Columns[nameof(AccountRow.FullName)].FillWeight = 220;
             this.dgvAccounts.Columns[nameof(AccountRow.Username)].FillWeight = 140;
             this.dgvAccounts.Columns[nameof(AccountRow.Email)].FillWeight = 220;
             this.dgvAccounts.Columns[nameof(AccountRow.Role)].FillWeight = 125;
-            this.dgvAccounts.Columns["Actions"].FillWeight = 116;
+            this.dgvAccounts.Columns["Actions"].FillWeight = 92;
+            this.dgvAccounts.Columns["Actions"].MinimumWidth = 96;
 
             this.dgvAccounts.Columns[nameof(AccountRow.Stt)].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.dgvAccounts.Columns["Actions"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
