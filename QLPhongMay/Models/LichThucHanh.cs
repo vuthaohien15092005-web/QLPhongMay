@@ -18,8 +18,7 @@ namespace QLPhongMay.Models
         public string TenDangNhap { get; set; }
 
         [Column("maPhong")]
-        [StringLength(50)]
-        public string MaPhong { get; set; }
+        public int MaPhong { get; set; }
 
         [Column("maCa")]
         public int MaCa { get; set; }

@@ -31,8 +31,7 @@ namespace QLPhongMay.Models
         }
 
         [Column("maPhong")]
-        [StringLength(50)]
-        public string MaPhong { get; set; }
+        public int MaPhong { get; set; }
 
         [Column("maCauHinh")]
         [StringLength(50)]

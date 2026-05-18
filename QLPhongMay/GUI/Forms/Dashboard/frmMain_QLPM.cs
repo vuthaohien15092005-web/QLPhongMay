@@ -417,7 +417,10 @@ namespace QLPhongMay.GUI.Forms.Dashboard
 
         private void OpenRoomForm(object sender, EventArgs e)
         {
-            OpenPlaceholderForm("Quản lý phòng máy");
+            using (FrmQLPhong form = new FrmQLPhong())
+            {
+                form.ShowDialog(this);
+            }
         }
 
         private void OpenComputerForm(object sender, EventArgs e)
@@ -481,5 +484,6 @@ namespace QLPhongMay.GUI.Forms.Dashboard
         }
     }
 }
+
 
 

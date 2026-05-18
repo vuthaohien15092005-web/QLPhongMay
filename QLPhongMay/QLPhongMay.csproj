@@ -87,6 +87,12 @@
     <Compile Include="GUI\Forms\Catalog\frmQLLopHoc.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GUI\Forms\Catalog\FrmQLPhong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Catalog\FrmQLPhong.Designer.cs">
+      <DependentUpon>FrmQLPhong.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Forms\Computer\FrmMayDialog.cs">
       <SubType>Form</SubType>
     </Compile>

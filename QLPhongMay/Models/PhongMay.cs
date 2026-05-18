@@ -17,8 +17,8 @@ namespace QLPhongMay.Models
 
         [Key]
         [Column("maPhong")]
-        [StringLength(50)]
-        public string MaPhong { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int MaPhong { get; set; }
 
         [Column("tenPhong")]
         public string TenPhong { get; set; }
