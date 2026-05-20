@@ -1,413 +1,270 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
+using QLPhongMay.Auth;
+using QLPhongMay.BLL;
+using QLPhongMay.DTO;
+using QLPhongMay.Enums;
 using QLPhongMay.GUI.Forms.Catalog;
 using QLPhongMay.GUI.Forms.Computer;
-using QLPhongMay.GUI.Forms.Users;
 using QLPhongMay.GUI.Forms.Schedule;
+using QLPhongMay.GUI.Forms.Users;
 
 namespace QLPhongMay.GUI.Forms.Dashboard
 {
     public partial class frmMain_Admin : Form
     {
-        private Guna2Panel pnlHeader;
-        private Guna2Panel pnlLogoMark;
-        private Label lblLogoIcon;
-        private Guna2HtmlLabel lblAppName;
-        private Guna2HtmlLabel lblAppSub;
-        private Guna2Panel pnlUser;
-        private Label lblAvatar;
-        private Guna2HtmlLabel lblUserName;
-        private Guna2Button btnLogout;
-        private Guna2Panel pnlContent;
-        private TableLayoutPanel tblMenu;
+        private Panel pnlSidebar;
+        private Panel pnlHeader;
+        private Panel pnlContent;
+        private Panel pnlAccount;
+        private Label lblBrand;
+        private Label lblRole;
+        private Label lblTitle;
+        private Label lblWelcome;
+        private Label lblAccountTitle;
+        private Label lblUsername;
+        private Label lblFullName;
+        private Label lblEmail;
+        private Label lblAccountRole;
+        private Button btnLogout;
 
         public frmMain_Admin()
         {
             InitializeComponent();
-            BuildMenuCards();
+            BuildMenu();
+            LoadAccountInfo();
         }
 
         private void InitializeComponent()
         {
-            this.pnlHeader = new Guna.UI2.WinForms.Guna2Panel();
-            this.pnlLogoMark = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblLogoIcon = new System.Windows.Forms.Label();
-            this.lblAppName = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.lblAppSub = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.pnlUser = new Guna.UI2.WinForms.Guna2Panel();
-            this.lblAvatar = new System.Windows.Forms.Label();
-            this.lblUserName = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.btnLogout = new Guna.UI2.WinForms.Guna2Button();
-            this.pnlContent = new Guna.UI2.WinForms.Guna2Panel();
-            this.tblMenu = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlSidebar = new Panel();
+            this.pnlHeader = new Panel();
+            this.pnlContent = new Panel();
+            this.pnlAccount = new Panel();
+            this.lblBrand = new Label();
+            this.lblRole = new Label();
+            this.lblTitle = new Label();
+            this.lblWelcome = new Label();
+            this.lblAccountTitle = new Label();
+            this.lblUsername = new Label();
+            this.lblFullName = new Label();
+            this.lblEmail = new Label();
+            this.lblAccountRole = new Label();
+            this.btnLogout = new Button();
+            this.pnlSidebar.SuspendLayout();
             this.pnlHeader.SuspendLayout();
-            this.pnlLogoMark.SuspendLayout();
-            this.pnlUser.SuspendLayout();
             this.pnlContent.SuspendLayout();
+            this.pnlAccount.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pnlHeader
-            // 
-            this.pnlHeader.BackColor = System.Drawing.Color.Transparent;
-            this.pnlHeader.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.pnlHeader.Controls.Add(this.pnlLogoMark);
-            this.pnlHeader.Controls.Add(this.lblAppName);
-            this.pnlHeader.Controls.Add(this.lblAppSub);
-            this.pnlHeader.Controls.Add(this.pnlUser);
-            this.pnlHeader.CustomBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.pnlHeader.CustomBorderThickness = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.FillColor = System.Drawing.Color.White;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+
+            this.pnlSidebar.BackColor = Color.FromArgb(15, 76, 129);
+            this.pnlSidebar.Controls.Add(this.lblBrand);
+            this.pnlSidebar.Controls.Add(this.lblRole);
+            this.pnlSidebar.Dock = DockStyle.Left;
+            this.pnlSidebar.Location = new Point(0, 0);
+            this.pnlSidebar.Name = "pnlSidebar";
+            this.pnlSidebar.Size = new Size(240, 760);
+            this.pnlSidebar.TabIndex = 0;
+
+            this.lblBrand.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            this.lblBrand.ForeColor = Color.White;
+            this.lblBrand.Location = new Point(22, 28);
+            this.lblBrand.Name = "lblBrand";
+            this.lblBrand.Size = new Size(196, 78);
+            this.lblBrand.TabIndex = 0;
+            this.lblBrand.Text = "QL Phòng Máy";
+            this.lblBrand.TextAlign = ContentAlignment.MiddleLeft;
+
+            this.lblRole.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            this.lblRole.ForeColor = Color.FromArgb(191, 219, 254);
+            this.lblRole.Location = new Point(24, 102);
+            this.lblRole.Name = "lblRole";
+            this.lblRole.Size = new Size(190, 24);
+            this.lblRole.TabIndex = 1;
+            this.lblRole.Text = "ADMIN";
+
+            this.pnlHeader.BackColor = Color.White;
+            this.pnlHeader.Controls.Add(this.lblTitle);
+            this.pnlHeader.Controls.Add(this.lblWelcome);
+            this.pnlHeader.Controls.Add(this.btnLogout);
+            this.pnlHeader.Dock = DockStyle.Top;
+            this.pnlHeader.Location = new Point(240, 0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1180, 84);
-            this.pnlHeader.TabIndex = 0;
-            // 
-            // pnlLogoMark
-            // 
-            this.pnlLogoMark.BorderRadius = 12;
-            this.pnlLogoMark.Controls.Add(this.lblLogoIcon);
-            this.pnlLogoMark.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
-            this.pnlLogoMark.Location = new System.Drawing.Point(32, 20);
-            this.pnlLogoMark.Name = "pnlLogoMark";
-            this.pnlLogoMark.Size = new System.Drawing.Size(44, 44);
-            this.pnlLogoMark.TabIndex = 0;
-            // 
-            // lblLogoIcon
-            // 
-            this.lblLogoIcon.BackColor = System.Drawing.Color.Transparent;
-            this.lblLogoIcon.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLogoIcon.Font = new System.Drawing.Font("Segoe MDL2 Assets", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLogoIcon.ForeColor = System.Drawing.Color.White;
-            this.lblLogoIcon.Location = new System.Drawing.Point(0, 0);
-            this.lblLogoIcon.Name = "lblLogoIcon";
-            this.lblLogoIcon.Size = new System.Drawing.Size(44, 44);
-            this.lblLogoIcon.TabIndex = 0;
-            this.lblLogoIcon.Text = "";
-            this.lblLogoIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblAppName
-            // 
-            this.lblAppName.BackColor = System.Drawing.Color.Transparent;
-            this.lblAppName.Font = new System.Drawing.Font("Segoe UI", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAppName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.lblAppName.Location = new System.Drawing.Point(88, 14);
-            this.lblAppName.Name = "lblAppName";
-            this.lblAppName.Size = new System.Drawing.Size(261, 40);
-            this.lblAppName.TabIndex = 1;
-            this.lblAppName.Text = "Quản lý phòng máy";
-            // 
-            // lblAppSub
-            // 
-            this.lblAppSub.BackColor = System.Drawing.Color.Transparent;
-            this.lblAppSub.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAppSub.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblAppSub.Location = new System.Drawing.Point(90, 52);
-            this.lblAppSub.Name = "lblAppSub";
-            this.lblAppSub.Size = new System.Drawing.Size(168, 22);
-            this.lblAppSub.TabIndex = 2;
-            this.lblAppSub.Text = "Hệ thống quản trị Admin";
-            // 
-            // pnlUser
-            // 
-            this.pnlUser.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlUser.BackColor = System.Drawing.Color.Transparent;
-            this.pnlUser.Controls.Add(this.lblAvatar);
-            this.pnlUser.Controls.Add(this.lblUserName);
-            this.pnlUser.Controls.Add(this.btnLogout);
-            this.pnlUser.FillColor = System.Drawing.Color.Transparent;
-            this.pnlUser.Location = new System.Drawing.Point(836, 14);
-            this.pnlUser.Name = "pnlUser";
-            this.pnlUser.Size = new System.Drawing.Size(312, 56);
-            this.pnlUser.TabIndex = 3;
-            // 
-            // lblAvatar
-            // 
-            this.lblAvatar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
-            this.lblAvatar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAvatar.ForeColor = System.Drawing.Color.White;
-            this.lblAvatar.Location = new System.Drawing.Point(0, 8);
-            this.lblAvatar.Name = "lblAvatar";
-            this.lblAvatar.Size = new System.Drawing.Size(40, 40);
-            this.lblAvatar.TabIndex = 0;
-            this.lblAvatar.Text = "AD";
-            this.lblAvatar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblAvatar.Paint += new System.Windows.Forms.PaintEventHandler(this.RoundAvatar_Paint);
-            // 
-            // lblUserName
-            // 
-            this.lblUserName.BackColor = System.Drawing.Color.Transparent;
-            this.lblUserName.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.lblUserName.Location = new System.Drawing.Point(52, 17);
-            this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(140, 25);
-            this.lblUserName.TabIndex = 1;
-            this.lblUserName.Text = "Admin Hệ Thống";
-            // 
-            // btnLogout
-            // 
-            this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogout.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.btnLogout.BorderRadius = 9;
-            this.btnLogout.BorderThickness = 1;
-            this.btnLogout.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLogout.FillColor = System.Drawing.Color.White;
-            this.btnLogout.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.btnLogout.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.btnLogout.HoverState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.btnLogout.Location = new System.Drawing.Point(260, 8);
+            this.pnlHeader.Size = new Size(940, 96);
+            this.pnlHeader.TabIndex = 1;
+            this.pnlHeader.Paint += this.BorderBottom_Paint;
+
+            this.lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            this.lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
+            this.lblTitle.Location = new Point(34, 22);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new Size(380, 38);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Bảng điều khiển Admin";
+
+            this.lblWelcome.Font = new Font("Segoe UI", 9.5F);
+            this.lblWelcome.ForeColor = Color.FromArgb(100, 116, 139);
+            this.lblWelcome.Location = new Point(38, 61);
+            this.lblWelcome.Name = "lblWelcome";
+            this.lblWelcome.Size = new Size(520, 22);
+            this.lblWelcome.TabIndex = 1;
+            this.lblWelcome.Text = "Quản lý lịch, phòng máy, máy tính, lớp học, ca học và tài khoản";
+
+            this.btnLogout.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            this.btnLogout.BackColor = Color.White;
+            this.btnLogout.Cursor = Cursors.Hand;
+            this.btnLogout.FlatAppearance.BorderColor = Color.FromArgb(37, 99, 235);
+            this.btnLogout.FlatStyle = FlatStyle.Flat;
+            this.btnLogout.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            this.btnLogout.ForeColor = Color.FromArgb(37, 99, 235);
+            this.btnLogout.Location = new Point(790, 28);
             this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(42, 40);
+            this.btnLogout.Size = new Size(116, 38);
             this.btnLogout.TabIndex = 2;
-            this.btnLogout.Text = "";
-            this.btnLogout.Click += new System.EventHandler(this.BtnLogout_Click);
-            // 
-            // pnlContent
-            // 
-            this.pnlContent.BackColor = System.Drawing.Color.Transparent;
-            this.pnlContent.Controls.Add(this.tblMenu);
-            this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContent.FillColor = System.Drawing.Color.Transparent;
-            this.pnlContent.Location = new System.Drawing.Point(0, 84);
+            this.btnLogout.Text = "Đăng xuất";
+            this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += this.BtnLogout_Click;
+
+            this.pnlContent.BackColor = Color.FromArgb(241, 245, 249);
+            this.pnlContent.Controls.Add(this.pnlAccount);
+            this.pnlContent.Dock = DockStyle.Fill;
+            this.pnlContent.Location = new Point(240, 96);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Padding = new System.Windows.Forms.Padding(38, 42, 38, 42);
-            this.pnlContent.Size = new System.Drawing.Size(1180, 676);
-            this.pnlContent.TabIndex = 1;
-            // 
-            // tblMenu
-            // 
-            this.tblMenu.BackColor = System.Drawing.Color.Transparent;
-            this.tblMenu.ColumnCount = 4;
-            this.tblMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tblMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tblMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tblMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tblMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblMenu.Location = new System.Drawing.Point(38, 42);
-            this.tblMenu.Name = "tblMenu";
-            this.tblMenu.RowCount = 2;
-            this.tblMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblMenu.Size = new System.Drawing.Size(1104, 592);
-            this.tblMenu.TabIndex = 0;
-            // 
-            // frmMain_Admin
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(251)))));
-            this.ClientSize = new System.Drawing.Size(1180, 760);
+            this.pnlContent.Size = new Size(940, 664);
+            this.pnlContent.TabIndex = 2;
+
+            this.pnlAccount.Anchor = AnchorStyles.None;
+            this.pnlAccount.BackColor = Color.White;
+            this.pnlAccount.Controls.Add(this.lblAccountTitle);
+            this.pnlAccount.Controls.Add(this.lblUsername);
+            this.pnlAccount.Controls.Add(this.lblFullName);
+            this.pnlAccount.Controls.Add(this.lblEmail);
+            this.pnlAccount.Controls.Add(this.lblAccountRole);
+            this.pnlAccount.Location = new Point(190, 120);
+            this.pnlAccount.Name = "pnlAccount";
+            this.pnlAccount.Size = new Size(560, 330);
+            this.pnlAccount.TabIndex = 0;
+            this.pnlAccount.Paint += this.AccountPanel_Paint;
+
+            this.lblAccountTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            this.lblAccountTitle.ForeColor = Color.FromArgb(15, 76, 129);
+            this.lblAccountTitle.Location = new Point(40, 30);
+            this.lblAccountTitle.Name = "lblAccountTitle";
+            this.lblAccountTitle.Size = new Size(480, 44);
+            this.lblAccountTitle.TabIndex = 0;
+            this.lblAccountTitle.Text = "Thông tin tài khoản";
+            this.lblAccountTitle.TextAlign = ContentAlignment.MiddleCenter;
+
+            this.lblUsername.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            this.lblUsername.ForeColor = Color.FromArgb(30, 41, 59);
+            this.lblUsername.Location = new Point(78, 112);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new Size(420, 30);
+            this.lblUsername.TabIndex = 1;
+
+            this.lblFullName.Font = new Font("Segoe UI", 12F);
+            this.lblFullName.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblFullName.Location = new Point(78, 158);
+            this.lblFullName.Name = "lblFullName";
+            this.lblFullName.Size = new Size(420, 30);
+            this.lblFullName.TabIndex = 2;
+
+            this.lblEmail.Font = new Font("Segoe UI", 12F);
+            this.lblEmail.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblEmail.Location = new Point(78, 204);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new Size(420, 30);
+            this.lblEmail.TabIndex = 3;
+
+            this.lblAccountRole.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            this.lblAccountRole.ForeColor = Color.FromArgb(37, 99, 235);
+            this.lblAccountRole.Location = new Point(78, 250);
+            this.lblAccountRole.Name = "lblAccountRole";
+            this.lblAccountRole.Size = new Size(420, 30);
+            this.lblAccountRole.TabIndex = 4;
+
+            this.AutoScaleDimensions = new SizeF(8F, 20F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.BackColor = Color.FromArgb(241, 245, 249);
+            this.ClientSize = new Size(1180, 760);
             this.Controls.Add(this.pnlContent);
             this.Controls.Add(this.pnlHeader);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MinimumSize = new System.Drawing.Size(1040, 680);
+            this.Controls.Add(this.pnlSidebar);
+            this.Font = new Font("Segoe UI", 9F);
+            this.MinimumSize = new Size(1040, 680);
             this.Name = "frmMain_Admin";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Quản lý phòng máy - Admin";
-            this.Load += new System.EventHandler(this.frmMain_Admin_Load);
+            this.pnlSidebar.ResumeLayout(false);
             this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
-            this.pnlLogoMark.ResumeLayout(false);
-            this.pnlUser.ResumeLayout(false);
-            this.pnlUser.PerformLayout();
             this.pnlContent.ResumeLayout(false);
+            this.pnlAccount.ResumeLayout(false);
             this.ResumeLayout(false);
-
         }
 
-        private void BuildMenuCards()
+        private void BuildMenu()
         {
-            AddMenuCard(0, 0, "\uE787", "Quản lý lịch", "Theo dõi và cập nhật lịch thực hành", Color.FromArgb(37, 99, 235), false, this.OpenScheduleForm);
-            AddMenuCard(0, 1, "\uE80F", "Quản lý phòng máy", "Thêm sửa xóa thông tin phòng", Color.FromArgb(14, 165, 233), false, this.OpenRoomForm);
-            AddMenuCard(0, 2, "\uE950", "Quản lý máy tính", "Theo dõi máy, cấu hình và trạng thái", Color.FromArgb(20, 184, 166), false, this.OpenComputerForm);
-            AddMenuCard(0, 3, "\uE7BE", "Quản lý lớp học", "Danh sách lớp tín chỉ", Color.FromArgb(22, 163, 74), false, this.OpenClassForm);
-            AddMenuCard(1, 0, "\uE823", "Quản lý ca học", "Khung giờ các ca thực hành", Color.FromArgb(245, 158, 11), false, this.OpenShiftForm);
-            AddMenuCard(1, 1, "\uE716", "Quản lý tài khoản", "Phân quyền nhân viên", Color.FromArgb(124, 58, 237), true, this.OpenAccountForm);
-            AddMenuCard(1, 2, "\uE9D2", "Báo cáo & Thống kê", "Thống kê sử dụng phòng máy", Color.FromArgb(239, 68, 68), false, this.OpenReportForm);
+            int top = 152;
+            AddMenuButton("Quản lý lịch", top, this.OpenScheduleForm);
+            AddMenuButton("Quản lý phòng máy", top += 56, this.OpenRoomForm);
+            AddMenuButton("Quản lý máy tính", top += 56, this.OpenComputerForm);
+            AddMenuButton("Quản lý lớp học", top += 56, this.OpenClassForm);
+            AddMenuButton("Quản lý ca học", top += 56, this.OpenShiftForm);
+            AddMenuButton("Quản lý tài khoản", top += 56, this.OpenAccountForm);
+            AddMenuButton("Báo cáo & Thống kê", top += 56, this.OpenReportForm);
         }
 
-        private void AddMenuCard(int row, int column, string icon, string title, string description, Color accentColor, bool adminBadge, EventHandler clickHandler)
+        private void AddMenuButton(string text, int top, EventHandler clickHandler)
         {
-            Guna2Panel card = new Guna2Panel();
-            Label iconLabel = new Label();
-            Guna2HtmlLabel titleLabel = new Guna2HtmlLabel();
-            Guna2HtmlLabel descLabel = new Guna2HtmlLabel();
-
-            card.BorderColor = Color.FromArgb(226, 232, 240);
-            card.BorderRadius = 14;
-            card.BorderThickness = 1;
-            card.Cursor = Cursors.Hand;
-            card.Dock = DockStyle.Fill;
-            card.FillColor = Color.White;
-            card.Margin = new Padding(14);
-            card.Name = "card" + row + column;
-            card.ShadowDecoration.Color = Color.FromArgb(28, 15, 23, 42);
-            card.ShadowDecoration.Depth = 8;
-            card.ShadowDecoration.Enabled = false;
-            card.Click += clickHandler;
-            card.MouseEnter += new EventHandler(this.Card_MouseEnter);
-            card.MouseLeave += new EventHandler(this.Card_MouseLeave);
-
-            iconLabel.BackColor = Color.Transparent;
-            iconLabel.Cursor = Cursors.Hand;
-            iconLabel.Font = new Font("Segoe MDL2 Assets", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            iconLabel.ForeColor = accentColor;
-            iconLabel.Location = new Point(0, 54);
-            iconLabel.Name = "icon" + row + column;
-            iconLabel.Size = new Size(100, 70);
-            iconLabel.Text = icon;
-            iconLabel.TextAlign = ContentAlignment.MiddleCenter;
-            iconLabel.Click += clickHandler;
-            iconLabel.MouseEnter += new EventHandler(this.CardChild_MouseEnter);
-            iconLabel.MouseLeave += new EventHandler(this.CardChild_MouseLeave);
-
-            titleLabel.BackColor = Color.Transparent;
-            titleLabel.Cursor = Cursors.Hand;
-            titleLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            titleLabel.ForeColor = Color.FromArgb(15, 23, 42);
-            titleLabel.Location = new Point(0, 134);
-            titleLabel.Name = "title" + row + column;
-            titleLabel.Text = title;
-            titleLabel.TextAlignment = ContentAlignment.MiddleCenter;
-            titleLabel.Click += clickHandler;
-            titleLabel.MouseEnter += new EventHandler(this.CardChild_MouseEnter);
-            titleLabel.MouseLeave += new EventHandler(this.CardChild_MouseLeave);
-
-            descLabel.BackColor = Color.Transparent;
-            descLabel.Cursor = Cursors.Hand;
-            descLabel.Font = new Font("Segoe UI", 9.4F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            descLabel.ForeColor = Color.FromArgb(100, 116, 139);
-            descLabel.Location = new Point(0, 174);
-            descLabel.Name = "desc" + row + column;
-            descLabel.Text = description;
-            descLabel.TextAlignment = ContentAlignment.MiddleCenter;
-            descLabel.Click += clickHandler;
-            descLabel.MouseEnter += new EventHandler(this.CardChild_MouseEnter);
-            descLabel.MouseLeave += new EventHandler(this.CardChild_MouseLeave);
-
-            card.Controls.Add(iconLabel);
-            card.Controls.Add(titleLabel);
-            card.Controls.Add(descLabel);
-
-            if (adminBadge)
-            {
-                Guna2HtmlLabel badge = new Guna2HtmlLabel();
-                badge.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-                badge.BackColor = Color.Transparent;
-                badge.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-                badge.ForeColor = Color.FromArgb(37, 99, 235);
-                badge.Location = new Point(0, 0);
-                badge.Name = "badgeAdmin";
-                badge.Text = "Admin";
-
-                Guna2Panel badgeBox = new Guna2Panel();
-                badgeBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-                badgeBox.BorderRadius = 8;
-                badgeBox.Controls.Add(badge);
-                badgeBox.Cursor = Cursors.Hand;
-                badgeBox.FillColor = Color.FromArgb(239, 246, 255);
-                badgeBox.Location = new Point(246, 18);
-                badgeBox.Name = "badgeBox";
-                badgeBox.Size = new Size(70, 28);
-                badgeBox.Click += clickHandler;
-                badgeBox.MouseEnter += new EventHandler(this.CardChild_MouseEnter);
-                badgeBox.MouseLeave += new EventHandler(this.CardChild_MouseLeave);
-                badge.Location = new Point(16, 4);
-
-                card.Controls.Add(badgeBox);
-            }
-
-            card.Resize += delegate
-            {
-                CenterCardContent(card, iconLabel, titleLabel, descLabel);
-                Control badgeBox = card.Controls["badgeBox"];
-                if (badgeBox != null)
-                {
-                    badgeBox.Left = card.Width - badgeBox.Width - 18;
-                    badgeBox.Top = 18;
-                }
-            };
-
-            CenterCardContent(card, iconLabel, titleLabel, descLabel);
-            Control adminBadgeBox = card.Controls["badgeBox"];
-            if (adminBadgeBox != null)
-            {
-                adminBadgeBox.Left = card.Width - adminBadgeBox.Width - 18;
-                adminBadgeBox.Top = 18;
-            }
-            this.tblMenu.Controls.Add(card, column, row);
+            Button button = new Button();
+            button.BackColor = Color.FromArgb(29, 105, 174);
+            button.Cursor = Cursors.Hand;
+            button.FlatAppearance.BorderColor = Color.FromArgb(147, 197, 253);
+            button.FlatStyle = FlatStyle.Flat;
+            button.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button.ForeColor = Color.White;
+            button.Location = new Point(18, top);
+            button.Name = "btn" + text.Replace(" ", string.Empty);
+            button.Size = new Size(204, 44);
+            button.Text = text;
+            button.UseVisualStyleBackColor = false;
+            button.Click += clickHandler;
+            button.MouseEnter += delegate { button.BackColor = Color.FromArgb(37, 99, 235); };
+            button.MouseLeave += delegate { button.BackColor = Color.FromArgb(29, 105, 174); };
+            this.pnlSidebar.Controls.Add(button);
         }
 
-        private static void CenterCardContent(Control card, Control iconLabel, Guna2HtmlLabel titleLabel, Guna2HtmlLabel descLabel)
+        private void LoadAccountInfo()
         {
-            iconLabel.Left = (card.Width - iconLabel.Width) / 2;
-            titleLabel.Left = (card.Width - titleLabel.Width) / 2;
-            descLabel.Left = (card.Width - descLabel.Width) / 2;
+            User user = Session.CurrentUser;
+            string username = user == null ? "Chưa xác định" : user.TenDangNhap;
+            string fullName = user == null ? "Chưa xác định" : user.HoTen;
+            string email = user == null ? "Chưa xác định" : user.Email;
+            string role = user == null ? "Admin" : (string.IsNullOrWhiteSpace(user.TenVaiTro) ? "Admin" : user.TenVaiTro);
+
+            this.lblUsername.Text = "Tên đăng nhập: " + username;
+            this.lblFullName.Text = "Họ tên: " + fullName;
+            this.lblEmail.Text = "Email: " + email;
+            this.lblAccountRole.Text = "Vai trò: " + role;
         }
 
-        private void Card_MouseEnter(object sender, EventArgs e)
+        private void AccountPanel_Paint(object sender, PaintEventArgs e)
         {
-            Guna2Panel card = sender as Guna2Panel;
-            if (card == null)
+            Panel panel = (Panel)sender;
+            using (Pen pen = new Pen(Color.FromArgb(191, 219, 254), 2))
             {
-                return;
-            }
-
-            card.BorderColor = Color.FromArgb(37, 99, 235);
-            card.ShadowDecoration.Enabled = true;
-        }
-
-        private void Card_MouseLeave(object sender, EventArgs e)
-        {
-            Guna2Panel card = sender as Guna2Panel;
-            if (card == null)
-            {
-                return;
-            }
-
-            card.BorderColor = Color.FromArgb(226, 232, 240);
-            card.ShadowDecoration.Enabled = false;
-        }
-
-        private void CardChild_MouseEnter(object sender, EventArgs e)
-        {
-            Control child = sender as Control;
-            Guna2Panel card = GetMenuCard(child);
-            if (card != null)
-            {
-                Card_MouseEnter(card, EventArgs.Empty);
+                e.Graphics.DrawRectangle(pen, 0, 0, panel.Width - 1, panel.Height - 1);
             }
         }
 
-        private void CardChild_MouseLeave(object sender, EventArgs e)
+        private void BorderBottom_Paint(object sender, PaintEventArgs e)
         {
-            Control child = sender as Control;
-            Guna2Panel card = GetMenuCard(child);
-            if (card != null)
+            using (Pen pen = new Pen(Color.FromArgb(226, 232, 240)))
             {
-                Card_MouseLeave(card, EventArgs.Empty);
+                e.Graphics.DrawLine(pen, 0, this.pnlHeader.Height - 1, this.pnlHeader.Width, this.pnlHeader.Height - 1);
             }
-        }
-
-        private Guna2Panel GetMenuCard(Control control)
-        {
-            Control current = control;
-            while (current != null)
-            {
-                if (current is Guna2Panel && current.Parent == this.tblMenu)
-                {
-                    return (Guna2Panel)current;
-                }
-
-                current = current.Parent;
-            }
-
-            return null;
         }
 
         private void OpenScheduleForm(object sender, EventArgs e)
@@ -433,6 +290,7 @@ namespace QLPhongMay.GUI.Forms.Dashboard
                 form.ShowDialog(this);
             }
         }
+
         private void OpenClassForm(object sender, EventArgs e)
         {
             using (frmQLLopHoc form = new frmQLLopHoc())
@@ -469,33 +327,44 @@ namespace QLPhongMay.GUI.Forms.Dashboard
                 form.StartPosition = FormStartPosition.CenterParent;
                 form.Size = new Size(900, 560);
                 form.Text = title;
-                form.BackColor = Color.FromArgb(245, 247, 251);
+                form.BackColor = Color.FromArgb(241, 245, 249);
                 form.ShowDialog(this);
             }
         }
 
         private void BtnLogout_Click(object sender, EventArgs e)
         {
-            this.Close();
-        }
+            Session.SignOut();
+            this.Hide();
 
-        private void RoundAvatar_Paint(object sender, PaintEventArgs e)
-        {
-            Label label = (Label)sender;
-            using (GraphicsPath path = new GraphicsPath())
+            using (FrmLogin login = new FrmLogin())
             {
-                path.AddEllipse(label.ClientRectangle);
-                label.Region = new Region(path);
+                if (login.ShowDialog() != DialogResult.OK)
+                {
+                    this.Close();
+                    return;
+                }
             }
-        }
 
-        private void frmMain_Admin_Load(object sender, EventArgs e)
-        {
+            Form nextMain = null;
+            if (Session.HasRole(UserRole.Admin))
+            {
+                nextMain = new frmMain_Admin();
+            }
+            else if (Session.HasRole(UserRole.QuanLyPhongMay))
+            {
+                nextMain = new frmMain_QLPM();
+            }
 
+            if (nextMain != null)
+            {
+                using (nextMain)
+                {
+                    nextMain.ShowDialog();
+                }
+            }
+
+            this.Close();
         }
     }
 }
-
-
-
-
