@@ -47,7 +47,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Guna.UI2">
-      <HintPath>C:\Users\ThinhPad\.nuget\packages\guna.ui2.winforms\2.0.4.7\lib\net472\Guna.UI2.dll</HintPath>
+      <HintPath>$(NuGetPackageRoot)guna.ui2.winforms\2.0.4.7\lib\net472\Guna.UI2.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
