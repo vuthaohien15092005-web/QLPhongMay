@@ -47,7 +47,8 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Guna.UI2">
-      <HintPath>$(UserProfile)\.nuget\packages\guna.ui2.winforms\2.0.4.7\lib\net472\Guna.UI2.dll</HintPath>
+      <HintPath>$(NuGetPackageRoot)guna.ui2.winforms\2.0.4.7\lib\net472\Guna.UI2.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
@@ -57,6 +58,8 @@
     <Compile Include="BLL\Session.cs" />
     <Compile Include="BLL\PasswordHasher.cs" />
     <Compile Include="DAL\AppDbContext.cs" />
+    <Compile Include="DAL\ComputerRepository.cs" />
+    <Compile Include="DAL\LopHocRepository.cs" />
     <Compile Include="DAL\UserRepository.cs" />
     <Compile Include="DTO\User.cs" />
     <Compile Include="Enums\ComputerStatus.cs" />
@@ -72,6 +75,33 @@
     <Compile Include="GUI\Forms\Auth\FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GUI\Forms\Catalog\frmQLCaHoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Catalog\frmQLCaHoc.Designer.cs">
+      <DependentUpon>frmQLCaHoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Forms\Catalog\FrmLopHocDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Catalog\frmQLLopHoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Catalog\FrmQLPhong.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Catalog\FrmQLPhong.Designer.cs">
+      <DependentUpon>FrmQLPhong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Forms\Computer\FrmMayDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Computer\frmQuanLyMay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Computer\frmQuanLyMay.Designer.cs">
+      <DependentUpon>frmQuanLyMay.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Forms\Dashboard\frmMain_Admin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +116,9 @@
     </Compile>
     <Compile Include="DAL\QLPhongMayDbContext.cs" />
     <Compile Include="DTO\AccountListItem.cs" />
+    <Compile Include="DTO\ComputerListItem.cs" />
+    <Compile Include="DTO\ComputerEditItem.cs" />
+    <Compile Include="DTO\ComputerLookupItem.cs" />
     <Compile Include="GUI\Forms\Program.cs" />
     <Compile Include="Models\CaHoc.cs" />
     <Compile Include="Models\CauHinh.cs" />
@@ -98,6 +131,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Forms\Auth\FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\Catalog\frmQLCaHoc.resx">
+      <DependentUpon>frmQLCaHoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\Catalog\frmQLLopHoc.resx">
+      <DependentUpon>frmQLLopHoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\Computer\frmQuanLyMay.resx">
+      <DependentUpon>frmQuanLyMay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Forms\Dashboard\frmMain_Admin.resx">
       <DependentUpon>frmMain_Admin.cs</DependentUpon>
@@ -148,7 +190,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GUI\Controls\" />
-    <Folder Include="GUI\Forms\Catalog\" />
     <Folder Include="GUI\Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,8 +15,8 @@ namespace QLPhongMay.Models
 
         [Key]
         [Column("maCa")]
-        [StringLength(50)]
-        public string MaCa { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int MaCa { get; set; }
 
         [Column("tenCa")]
         public string TenCa { get; set; }

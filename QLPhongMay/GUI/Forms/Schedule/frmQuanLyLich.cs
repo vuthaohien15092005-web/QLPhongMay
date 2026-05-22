@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 using QLPhongMay.BLL;
 using QLPhongMay.Enums;
 using QLPhongMay.GUI.Forms.Dashboard;
@@ -79,7 +78,7 @@ namespace QLPhongMay.GUI.Forms.Schedule
             this.cboStatus.SelectedIndex = 0;
         }
 
-        private static void BindLookup(Guna2ComboBox comboBox, List<LookupItem> items)
+        private static void BindLookup(ComboBox comboBox, List<LookupItem> items)
         {
             List<LookupItem> source = new List<LookupItem> { new LookupItem { Id = string.Empty, Name = "Tất cả" } };
             source.AddRange(items);
@@ -162,7 +161,7 @@ namespace QLPhongMay.GUI.Forms.Schedule
             return this.cboDayOfWeek.SelectedIndex <= 0 ? (int?)null : this.cboDayOfWeek.SelectedIndex + 1;
         }
 
-        private static string GetSelectedValue(Guna2ComboBox comboBox)
+        private static string GetSelectedValue(ComboBox comboBox)
         {
             return Convert.ToString(comboBox.SelectedValue);
         }

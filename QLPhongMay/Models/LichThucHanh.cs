@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using QLPhongMay.Enums;
@@ -18,16 +18,13 @@ namespace QLPhongMay.Models
         public string TenDangNhap { get; set; }
 
         [Column("maPhong")]
-        [StringLength(50)]
-        public string MaPhong { get; set; }
+        public int MaPhong { get; set; }
 
         [Column("maCa")]
-        [StringLength(50)]
-        public string MaCa { get; set; }
+        public int MaCa { get; set; }
 
         [Column("maLop")]
-        [StringLength(50)]
-        public string MaLop { get; set; }
+        public int MaLop { get; set; }
 
         [Column("ngayThucHanh")]
         public DateTime NgayThucHanh { get; set; }

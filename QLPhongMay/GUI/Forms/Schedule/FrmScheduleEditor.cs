@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 using QLPhongMay.DAL;
 using QLPhongMay.DTO;
 
@@ -13,16 +11,16 @@ namespace QLPhongMay.GUI.Forms.Schedule
     {
         private readonly ScheduleRepository repository;
         private readonly bool editMode;
-        private Guna2TextBox txtId;
-        private Guna2ComboBox cboUser;
-        private Guna2ComboBox cboClass;
-        private Guna2ComboBox cboRoom;
-        private Guna2ComboBox cboShift;
-        private Guna2ComboBox cboStatus;
-        private Guna2DateTimePicker dtpDate;
-        private Guna2NumericUpDown nudStudentCount;
-        private Guna2Button btnSave;
-        private Guna2Button btnCancel;
+        private TextBox txtId;
+        private ComboBox cboUser;
+        private ComboBox cboClass;
+        private ComboBox cboRoom;
+        private ComboBox cboShift;
+        private ComboBox cboStatus;
+        private DateTimePicker dtpDate;
+        private NumericUpDown nudStudentCount;
+        private Button btnSave;
+        private Button btnCancel;
 
         public ScheduleListItem ScheduleItem { get; private set; }
 
@@ -55,20 +53,22 @@ namespace QLPhongMay.GUI.Forms.Schedule
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             this.Controls.Add(layout);
 
-            this.txtId = new Guna2TextBox { BorderRadius = 8 };
+            this.txtId = new TextBox();
             this.cboUser = CreateComboBox();
             this.cboClass = CreateComboBox();
             this.cboRoom = CreateComboBox();
             this.cboShift = CreateComboBox();
             this.cboStatus = CreateComboBox();
-            this.dtpDate = new Guna2DateTimePicker { Dock = DockStyle.Fill, Format = DateTimePickerFormat.Short, BorderRadius = 8, FillColor = Color.White, Checked = true };
-            this.nudStudentCount = new Guna2NumericUpDown { Dock = DockStyle.Fill, Minimum = 1, Maximum = 500, BorderRadius = 8 };
-            this.btnSave = new Guna2Button { Text = "Lưu", Width = 100, Height = 34, BorderRadius = 8, FillColor = Color.FromArgb(37, 99, 235), ForeColor = Color.White, Font = new Font("Segoe UI", 9F, FontStyle.Bold), DialogResult = DialogResult.None };
-            this.btnCancel = new Guna2Button { Text = "Hủy", Width = 100, Height = 34, BorderRadius = 8, FillColor = Color.White, ForeColor = Color.FromArgb(71, 85, 105), BorderThickness = 1, BorderColor = Color.FromArgb(226, 232, 240), Font = new Font("Segoe UI", 9F, FontStyle.Bold), DialogResult = DialogResult.Cancel };
+            this.dtpDate = new DateTimePicker { Dock = DockStyle.Fill, Format = DateTimePickerFormat.Short };
+            this.nudStudentCount = new NumericUpDown { Dock = DockStyle.Fill, Minimum = 1, Maximum = 500 };
+            this.btnSave = new Button { Text = "Lưu", Width = 100, Height = 34, BackColor = Color.FromArgb(37, 99, 235), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 9F, FontStyle.Bold), DialogResult = DialogResult.None };
+            this.btnCancel = new Button { Text = "Hủy", Width = 100, Height = 34, BackColor = Color.White, ForeColor = Color.FromArgb(71, 85, 105), FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 9F, FontStyle.Bold), DialogResult = DialogResult.Cancel };
 
             this.txtId.Dock = DockStyle.Fill;
             this.txtId.Enabled = false;
             this.cboStatus.Items.AddRange(new object[] { "Đã lên lịch", "Hoàn thành", "Đã hủy" });
+            this.btnSave.FlatAppearance.BorderSize = 0;
+            this.btnCancel.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 225);
 
             AddField(layout, 0, "Mã lịch", this.txtId);
             AddField(layout, 1, "Người tạo", this.cboUser);
@@ -89,9 +89,9 @@ namespace QLPhongMay.GUI.Forms.Schedule
             this.btnSave.Click += BtnSave_Click;
         }
 
-        private static Guna2ComboBox CreateComboBox()
+        private static ComboBox CreateComboBox()
         {
-            return new Guna2ComboBox { Dock = DockStyle.Fill, DropDownStyle = ComboBoxStyle.DropDownList, BorderRadius = 8, DrawMode = DrawMode.OwnerDrawFixed, ItemHeight = 26, BackColor = Color.Transparent };
+            return new ComboBox { Dock = DockStyle.Fill, DropDownStyle = ComboBoxStyle.DropDownList };
         }
 
         private static void AddField(TableLayoutPanel layout, int row, string label, Control control)
@@ -110,7 +110,7 @@ namespace QLPhongMay.GUI.Forms.Schedule
             BindLookup(this.cboShift, this.repository.GetShifts());
         }
 
-        private static void BindLookup(Guna2ComboBox comboBox, List<LookupItem> items)
+        private static void BindLookup(ComboBox comboBox, List<LookupItem> items)
         {
             comboBox.DataSource = items;
             comboBox.DisplayMember = "Name";
@@ -133,7 +133,7 @@ namespace QLPhongMay.GUI.Forms.Schedule
             }
         }
 
-        private static void SelectValue(Guna2ComboBox comboBox, string value)
+        private static void SelectValue(ComboBox comboBox, string value)
         {
             if (!string.IsNullOrWhiteSpace(value))
             {
