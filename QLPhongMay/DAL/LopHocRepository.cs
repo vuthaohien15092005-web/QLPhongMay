@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -26,7 +26,7 @@ namespace QLPhongMay.DAL
             ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["QLPhongMayDbContext"];
             if (settings == null || string.IsNullOrWhiteSpace(settings.ConnectionString))
             {
-                throw new ConfigurationErrorsException("Không tìm thấy connection string 'QLPhongMayDbContext' trong App.config.");
+                throw new ConfigurationErrorsException("KhÃ´ng tÃ¬m tháº¥y connection string 'QLPhongMayDbContext' trong App.config.");
             }
 
             return settings.ConnectionString;
@@ -59,7 +59,7 @@ ORDER BY [maLop];";
             }
         }
 
-        public LopHoc GetById(string maLop)
+        public LopHoc GetById(int maLop)
         {
             const string sql = @"
 SELECT TOP 1
@@ -75,7 +75,7 @@ WHERE [maLop] = @MaLop;";
             }
         }
 
-        public bool Exists(string maLop)
+        public bool Exists(int maLop)
         {
             const string sql = @"
 SELECT COUNT(1)
@@ -88,7 +88,7 @@ WHERE [maLop] = @MaLop;";
             }
         }
 
-        public bool ExistsByTenLop(string tenLop, string excludedMaLop = null)
+        public bool ExistsByTenLop(string tenLop, int? excludedMaLop = null)
         {
             const string sql = @"
 SELECT COUNT(1)
@@ -128,7 +128,7 @@ WHERE [maLop] = @MaLop;";
             }
         }
 
-        public void Delete(string maLop)
+        public void Delete(int maLop)
         {
             const string sql = @"
 DELETE FROM [Lop]
