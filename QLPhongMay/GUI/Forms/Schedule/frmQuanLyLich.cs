@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Guna.UI2.WinForms;
 using QLPhongMay.BLL;
 using QLPhongMay.Enums;
 using QLPhongMay.GUI.Forms.Dashboard;
@@ -16,12 +18,123 @@ namespace QLPhongMay.GUI.Forms.Schedule
         private readonly ScheduleRepository repository;
         private List<ScheduleRow> filteredRows = new List<ScheduleRow>();
         private int currentPage = 1;
+        private Guna2Panel pnlRoomPalette;
+        private Guna2HtmlLabel lblPaletteTitle;
+        private Guna2HtmlLabel lblPaletteSubtitle;
+        private Guna2HtmlLabel lblPaletteDate;
+        private Guna2HtmlLabel lblPaletteShift;
+        private Guna2HtmlLabel lblPaletteStudents;
+        private DateTimePicker dtpPaletteDate;
+        private ComboBox cboPaletteShift;
+        private NumericUpDown nudPaletteStudents;
+        private Guna2Button btnRefreshPalette;
+        private Guna2HtmlLabel lblPaletteState;
+        private FlowLayoutPanel pnlPaletteRooms;
 
         public frmQuanLyLich()
         {
             this.repository = new ScheduleRepository();
             InitializeComponent();
+            InitializeRoomPalette();
             this.Load += frmQuanLyLich_Load;
+        }
+
+        private void InitializeRoomPalette()
+        {
+            this.pnlRoomPalette = new Guna2Panel();
+            this.lblPaletteTitle = new Guna2HtmlLabel();
+            this.lblPaletteSubtitle = new Guna2HtmlLabel();
+            this.lblPaletteDate = new Guna2HtmlLabel();
+            this.lblPaletteShift = new Guna2HtmlLabel();
+            this.lblPaletteStudents = new Guna2HtmlLabel();
+            this.dtpPaletteDate = new DateTimePicker();
+            this.cboPaletteShift = new ComboBox();
+            this.nudPaletteStudents = new NumericUpDown();
+            this.btnRefreshPalette = new Guna2Button();
+            this.lblPaletteState = new Guna2HtmlLabel();
+            this.pnlPaletteRooms = new FlowLayoutPanel();
+
+            this.pnlRoomPalette.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            this.pnlRoomPalette.BorderColor = Color.FromArgb(226, 232, 240);
+            this.pnlRoomPalette.BorderRadius = 8;
+            this.pnlRoomPalette.BorderThickness = 1;
+            this.pnlRoomPalette.FillColor = Color.White;
+            this.pnlRoomPalette.Location = new Point(30, 292);
+            this.pnlRoomPalette.Size = new Size(1120, 112);
+
+            ConfigurePaletteLabel(this.lblPaletteTitle, "Palette đề xuất phòng trống", 24, 14, 10.5F, true);
+            ConfigurePaletteLabel(this.lblPaletteSubtitle, "Chọn ngày, ca và sĩ số để xem phòng còn trống, đủ sức chứa", 24, 40, 8.8F, false);
+            ConfigurePaletteLabel(this.lblPaletteDate, "Ngày", 390, 15, 8.8F, true);
+            ConfigurePaletteLabel(this.lblPaletteShift, "Ca", 540, 15, 8.8F, true);
+            ConfigurePaletteLabel(this.lblPaletteStudents, "Sĩ số", 700, 15, 8.8F, true);
+
+            this.dtpPaletteDate.Format = DateTimePickerFormat.Short;
+            this.dtpPaletteDate.Location = new Point(390, 38);
+            this.dtpPaletteDate.Size = new Size(130, 23);
+            this.dtpPaletteDate.ValueChanged += PaletteInputChanged;
+
+            this.cboPaletteShift.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.cboPaletteShift.Location = new Point(540, 38);
+            this.cboPaletteShift.Size = new Size(140, 23);
+            this.cboPaletteShift.SelectedIndexChanged += PaletteInputChanged;
+
+            this.nudPaletteStudents.Location = new Point(700, 38);
+            this.nudPaletteStudents.Maximum = 500;
+            this.nudPaletteStudents.Minimum = 1;
+            this.nudPaletteStudents.Size = new Size(76, 23);
+            this.nudPaletteStudents.Value = 30;
+            this.nudPaletteStudents.ValueChanged += PaletteInputChanged;
+
+            this.btnRefreshPalette.Animated = true;
+            this.btnRefreshPalette.BorderRadius = 8;
+            this.btnRefreshPalette.Cursor = Cursors.Hand;
+            this.btnRefreshPalette.FillColor = Color.FromArgb(37, 99, 235);
+            this.btnRefreshPalette.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            this.btnRefreshPalette.ForeColor = Color.White;
+            this.btnRefreshPalette.HoverState.FillColor = Color.FromArgb(29, 78, 216);
+            this.btnRefreshPalette.Location = new Point(796, 32);
+            this.btnRefreshPalette.Size = new Size(104, 34);
+            this.btnRefreshPalette.Text = "Làm mới";
+            this.btnRefreshPalette.Click += BtnRefreshPalette_Click;
+
+            this.pnlPaletteRooms.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            this.pnlPaletteRooms.AutoScroll = true;
+            this.pnlPaletteRooms.BackColor = Color.Transparent;
+            this.pnlPaletteRooms.Location = new Point(24, 72);
+            this.pnlPaletteRooms.Size = new Size(1072, 32);
+            this.pnlPaletteRooms.WrapContents = false;
+
+            this.lblPaletteState.BackColor = Color.Transparent;
+            this.lblPaletteState.Font = new Font("Segoe UI", 9F);
+            this.lblPaletteState.ForeColor = Color.FromArgb(100, 116, 139);
+            this.lblPaletteState.Location = new Point(24, 78);
+            this.lblPaletteState.Text = "Đang chờ dữ liệu phòng và ca học.";
+
+            this.pnlRoomPalette.Controls.Add(this.lblPaletteTitle);
+            this.pnlRoomPalette.Controls.Add(this.lblPaletteSubtitle);
+            this.pnlRoomPalette.Controls.Add(this.lblPaletteDate);
+            this.pnlRoomPalette.Controls.Add(this.lblPaletteShift);
+            this.pnlRoomPalette.Controls.Add(this.lblPaletteStudents);
+            this.pnlRoomPalette.Controls.Add(this.dtpPaletteDate);
+            this.pnlRoomPalette.Controls.Add(this.cboPaletteShift);
+            this.pnlRoomPalette.Controls.Add(this.nudPaletteStudents);
+            this.pnlRoomPalette.Controls.Add(this.btnRefreshPalette);
+            this.pnlRoomPalette.Controls.Add(this.pnlPaletteRooms);
+            this.pnlRoomPalette.Controls.Add(this.lblPaletteState);
+            this.Controls.Add(this.pnlRoomPalette);
+            this.pnlRoomPalette.BringToFront();
+
+            this.dgvSchedules.Location = new Point(this.dgvSchedules.Left, 424);
+            this.dgvSchedules.Size = new Size(this.dgvSchedules.Width, 266);
+        }
+
+        private static void ConfigurePaletteLabel(Guna2HtmlLabel label, string text, int x, int y, float size, bool bold)
+        {
+            label.BackColor = Color.Transparent;
+            label.Font = new Font("Segoe UI", size, bold ? FontStyle.Bold : FontStyle.Regular);
+            label.ForeColor = bold ? Color.FromArgb(51, 65, 85) : Color.FromArgb(100, 116, 139);
+            label.Location = new Point(x, y);
+            label.Text = text;
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
@@ -61,7 +174,9 @@ namespace QLPhongMay.GUI.Forms.Schedule
         {
             this.dtpFrom.Value = DateTime.Today.AddMonths(-1);
             this.dtpTo.Value = DateTime.Today.AddMonths(1);
+            this.dtpPaletteDate.Value = DateTime.Today;
             LoadLookups();
+            RefreshRoomPalette();
             LoadSchedules(true);
         }
 
@@ -69,6 +184,7 @@ namespace QLPhongMay.GUI.Forms.Schedule
         {
             BindLookup(this.cboRoom, this.repository.GetRooms());
             BindLookup(this.cboShift, this.repository.GetShifts());
+            BindRequiredLookup(this.cboPaletteShift, this.repository.GetShifts());
             BindLookup(this.cboClass, this.repository.GetClasses());
             this.cboDayOfWeek.Items.Clear();
             this.cboDayOfWeek.Items.AddRange(new object[] { "Tất cả", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật" });
@@ -83,6 +199,13 @@ namespace QLPhongMay.GUI.Forms.Schedule
             List<LookupItem> source = new List<LookupItem> { new LookupItem { Id = string.Empty, Name = "Tất cả" } };
             source.AddRange(items);
             comboBox.DataSource = source;
+            comboBox.DisplayMember = "Name";
+            comboBox.ValueMember = "Id";
+        }
+
+        private static void BindRequiredLookup(ComboBox comboBox, List<LookupItem> items)
+        {
+            comboBox.DataSource = items;
             comboBox.DisplayMember = "Name";
             comboBox.ValueMember = "Id";
         }
@@ -169,6 +292,110 @@ namespace QLPhongMay.GUI.Forms.Schedule
         private string GetSelectedStatus()
         {
             return this.cboStatus.SelectedIndex <= 0 ? null : Convert.ToString(this.cboStatus.SelectedItem);
+        }
+
+        private void PaletteInputChanged(object sender, EventArgs e)
+        {
+            RefreshRoomPalette();
+        }
+
+        private void BtnRefreshPalette_Click(object sender, EventArgs e)
+        {
+            RefreshRoomPalette();
+        }
+
+        private void RefreshRoomPalette()
+        {
+            if (this.pnlPaletteRooms == null || this.cboPaletteShift == null)
+            {
+                return;
+            }
+
+            string shiftId = Convert.ToString(this.cboPaletteShift.SelectedValue);
+            if (string.IsNullOrWhiteSpace(shiftId))
+            {
+                ShowPaletteState("Chưa có ca học để đề xuất phòng trống.");
+                return;
+            }
+
+            try
+            {
+                List<RoomSuggestionItem> rooms = this.repository.GetAvailableRooms(
+                    this.dtpPaletteDate.Value.Date,
+                    shiftId,
+                    Convert.ToInt32(this.nudPaletteStudents.Value),
+                    null);
+
+                RenderRoomPalette(rooms);
+            }
+            catch (Exception ex)
+            {
+                ShowPaletteState("Không thể tải phòng trống: " + ex.Message);
+            }
+        }
+
+        private void RenderRoomPalette(List<RoomSuggestionItem> rooms)
+        {
+            this.pnlPaletteRooms.SuspendLayout();
+            this.pnlPaletteRooms.Controls.Clear();
+
+            if (rooms == null || rooms.Count == 0)
+            {
+                this.pnlPaletteRooms.ResumeLayout();
+                ShowPaletteState("Không có phòng trống phù hợp với ngày, ca và sĩ số đã chọn.");
+                return;
+            }
+
+            this.lblPaletteState.Visible = false;
+            foreach (RoomSuggestionItem room in rooms)
+            {
+                this.pnlPaletteRooms.Controls.Add(CreateRoomPaletteCard(room));
+            }
+
+            this.pnlPaletteRooms.ResumeLayout();
+        }
+
+        private Guna2Button CreateRoomPaletteCard(RoomSuggestionItem room)
+        {
+            Guna2Button card = new Guna2Button();
+            card.Animated = true;
+            card.BorderColor = Color.FromArgb(226, 232, 240);
+            card.BorderRadius = 8;
+            card.BorderThickness = 1;
+            card.Cursor = Cursors.Hand;
+            card.FillColor = Color.FromArgb(248, 250, 252);
+            card.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            card.ForeColor = Color.FromArgb(15, 23, 42);
+            card.HoverState.BorderColor = Color.FromArgb(37, 99, 235);
+            card.HoverState.FillColor = Color.FromArgb(239, 246, 255);
+            card.Margin = new Padding(0, 0, 8, 0);
+            card.Size = new Size(150, 30);
+            card.Tag = room;
+            card.Text = string.Format("{0}  |  {1} SV", room.TenPhong, room.SucChua);
+            card.TextAlign = HorizontalAlignment.Left;
+            card.TextOffset = new Point(8, 0);
+            card.Click += RoomPaletteCard_Click;
+            return card;
+        }
+
+        private void RoomPaletteCard_Click(object sender, EventArgs e)
+        {
+            Guna2Button card = sender as Guna2Button;
+            RoomSuggestionItem room = card == null ? null : card.Tag as RoomSuggestionItem;
+            if (room == null)
+            {
+                return;
+            }
+
+            this.cboRoom.SelectedValue = room.MaPhong;
+            LoadSchedules(true);
+        }
+
+        private void ShowPaletteState(string message)
+        {
+            this.pnlPaletteRooms.Controls.Clear();
+            this.lblPaletteState.Text = message;
+            this.lblPaletteState.Visible = true;
         }
 
         private void BtnFilter_Click(object sender, EventArgs e)

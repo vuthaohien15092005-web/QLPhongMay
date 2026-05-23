@@ -124,6 +124,42 @@ WHERE maPhong = @MaPhong
             }
         }
 
+        public List<RoomSuggestionItem> GetAvailableRooms(DateTime date, string shiftId, int studentCount, string scheduleId)
+        {
+            const string sql = @"
+SELECT
+    CONVERT(nvarchar(50), p.maPhong) AS MaPhong,
+    p.tenPhong AS TenPhong,
+    p.sucChua AS SucChua,
+    COUNT(m.maMay) AS SoMay,
+    p.trangThai AS TrangThai
+FROM PhongMay p
+LEFT JOIN May m ON p.maPhong = m.maPhong
+WHERE p.sucChua >= @StudentCount
+  AND (p.trangThai IS NULL OR p.trangThai NOT IN (N'Bảo trì', N'Ngừng sử dụng', N'BaoTri', N'NgungSuDung'))
+  AND NOT EXISTS (
+      SELECT 1
+      FROM LichThucHanh l
+      WHERE l.maPhong = p.maPhong
+        AND l.maCa = @MaCa
+        AND l.ngayThucHanh = @NgayThucHanh
+        AND (@MaLich IS NULL OR l.maLich <> @MaLich)
+  )
+GROUP BY p.maPhong, p.tenPhong, p.sucChua, p.trangThai
+ORDER BY p.sucChua ASC, p.tenPhong, p.maPhong;";
+
+            using (IDbConnection connection = new SqlConnection(this.connectionString))
+            {
+                return connection.Query<RoomSuggestionItem>(sql, new
+                {
+                    MaCa = ToRequiredInt(shiftId, "ca"),
+                    NgayThucHanh = date.Date,
+                    StudentCount = studentCount,
+                    MaLich = ToNullableInt(scheduleId)
+                }).AsList();
+            }
+        }
+
         public void Add(ScheduleListItem item)
         {
             const string sql = @"

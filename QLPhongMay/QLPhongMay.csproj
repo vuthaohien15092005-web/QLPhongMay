@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="DAL\ScheduleRepository.cs" />
     <Compile Include="DTO\ScheduleListItem.cs" />
+    <Compile Include="DTO\RoomSuggestionItem.cs" />
     <Compile Include="GUI\Forms\Schedule\frmQuanLyLich.cs">
       <SubType>Form</SubType>
     </Compile>
