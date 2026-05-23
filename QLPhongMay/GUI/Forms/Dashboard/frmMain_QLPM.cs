@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Guna.UI2.WinForms;
 using QLPhongMay.GUI.Forms.Catalog;
+using QLPhongMay.GUI.Forms.Schedule;
 
 namespace QLPhongMay.GUI.Forms.Dashboard
 {
@@ -407,7 +408,10 @@ namespace QLPhongMay.GUI.Forms.Dashboard
 
         private void OpenScheduleForm(object sender, EventArgs e)
         {
-            OpenPlaceholderForm("Tạo lịch thực hành");
+            using (frmTaoLich form = new frmTaoLich())
+            {
+                form.ShowDialog(this);
+            }
         }
 
         private void OpenRoomForm(object sender, EventArgs e)
