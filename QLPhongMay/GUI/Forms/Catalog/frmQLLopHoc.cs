@@ -88,7 +88,6 @@ namespace QLPhongMay.GUI.Forms.Catalog
         }
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlRoot = new System.Windows.Forms.Panel();
@@ -173,7 +172,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.lblTitle.Location = new System.Drawing.Point(146, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(336, 57);
+            this.lblTitle.Size = new System.Drawing.Size(224, 38);
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "Quản lý lớp học";
             // 
@@ -185,7 +184,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblSubtitle.Location = new System.Drawing.Point(150, 48);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(320, 28);
+            this.lblSubtitle.Size = new System.Drawing.Size(226, 19);
             this.lblSubtitle.TabIndex = 2;
             this.lblSubtitle.Text = "Theo dõi danh sách lớp học và sĩ số";
             // 
@@ -236,7 +235,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblTotalClassesValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.lblTotalClassesValue.Location = new System.Drawing.Point(82, 12);
             this.lblTotalClassesValue.Name = "lblTotalClassesValue";
-            this.lblTotalClassesValue.Size = new System.Drawing.Size(44, 51);
+            this.lblTotalClassesValue.Size = new System.Drawing.Size(30, 36);
             this.lblTotalClassesValue.TabIndex = 1;
             this.lblTotalClassesValue.Text = "0";
             // 
@@ -247,7 +246,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblTotalClassesText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblTotalClassesText.Location = new System.Drawing.Point(84, 48);
             this.lblTotalClassesText.Name = "lblTotalClassesText";
-            this.lblTotalClassesText.Size = new System.Drawing.Size(123, 25);
+            this.lblTotalClassesText.Size = new System.Drawing.Size(86, 17);
             this.lblTotalClassesText.TabIndex = 2;
             this.lblTotalClassesText.Text = "Tổng lớp học";
             // 
@@ -281,7 +280,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblTotalStudentsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.lblTotalStudentsValue.Location = new System.Drawing.Point(82, 12);
             this.lblTotalStudentsValue.Name = "lblTotalStudentsValue";
-            this.lblTotalStudentsValue.Size = new System.Drawing.Size(44, 51);
+            this.lblTotalStudentsValue.Size = new System.Drawing.Size(30, 36);
             this.lblTotalStudentsValue.TabIndex = 1;
             this.lblTotalStudentsValue.Text = "0";
             // 
@@ -292,7 +291,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblTotalStudentsText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblTotalStudentsText.Location = new System.Drawing.Point(84, 48);
             this.lblTotalStudentsText.Name = "lblTotalStudentsText";
-            this.lblTotalStudentsText.Size = new System.Drawing.Size(97, 25);
+            this.lblTotalStudentsText.Size = new System.Drawing.Size(69, 17);
             this.lblTotalStudentsText.TabIndex = 2;
             this.lblTotalStudentsText.Text = "Tổng sĩ số";
             // 
@@ -327,7 +326,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblAverageStudentsValue.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.lblAverageStudentsValue.Location = new System.Drawing.Point(82, 12);
             this.lblAverageStudentsValue.Name = "lblAverageStudentsValue";
-            this.lblAverageStudentsValue.Size = new System.Drawing.Size(44, 51);
+            this.lblAverageStudentsValue.Size = new System.Drawing.Size(30, 36);
             this.lblAverageStudentsValue.TabIndex = 1;
             this.lblAverageStudentsValue.Text = "0";
             // 
@@ -338,7 +337,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblAverageStudentsText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblAverageStudentsText.Location = new System.Drawing.Point(84, 48);
             this.lblAverageStudentsText.Name = "lblAverageStudentsText";
-            this.lblAverageStudentsText.Size = new System.Drawing.Size(145, 25);
+            this.lblAverageStudentsText.Size = new System.Drawing.Size(100, 17);
             this.lblAverageStudentsText.TabIndex = 2;
             this.lblAverageStudentsText.Text = "Sĩ só trung bình";
             // 
@@ -365,7 +364,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.lblSearch.Location = new System.Drawing.Point(22, 12);
             this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(90, 25);
+            this.lblSearch.Size = new System.Drawing.Size(59, 15);
             this.lblSearch.TabIndex = 0;
             this.lblSearch.Text = "Tìm kiếm";
             this.lblSearch.Visible = false;
@@ -378,7 +377,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSiSoFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.lblSiSoFilter.Location = new System.Drawing.Point(600, 12);
             this.lblSiSoFilter.Name = "lblSiSoFilter";
-            this.lblSiSoFilter.Size = new System.Drawing.Size(127, 25);
+            this.lblSiSoFilter.Size = new System.Drawing.Size(81, 15);
             this.lblSiSoFilter.TabIndex = 1;
             this.lblSiSoFilter.Text = "Lọc theo sĩ số";
             this.lblSiSoFilter.Visible = false;
@@ -391,7 +390,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.lblSort.Location = new System.Drawing.Point(840, 12);
             this.lblSort.Name = "lblSort";
-            this.lblSort.Size = new System.Drawing.Size(79, 25);
+            this.lblSort.Size = new System.Drawing.Size(51, 15);
             this.lblSort.TabIndex = 2;
             this.lblSort.Text = "Sắp xếp";
             this.lblSort.Visible = false;
@@ -404,7 +403,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.txtSearch.Location = new System.Drawing.Point(22, 17);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(520, 34);
+            this.txtSearch.Size = new System.Drawing.Size(564, 25);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.TextChanged += new System.EventHandler(this.FilterChanged);
             // 
@@ -417,7 +416,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.cboSiSo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.cboSiSo.Location = new System.Drawing.Point(704, 17);
             this.cboSiSo.Name = "cboSiSo";
-            this.cboSiSo.Size = new System.Drawing.Size(178, 36);
+            this.cboSiSo.Size = new System.Drawing.Size(178, 25);
             this.cboSiSo.TabIndex = 1;
             this.cboSiSo.SelectedIndexChanged += new System.EventHandler(this.FilterChanged);
             // 
@@ -430,7 +429,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.cboSort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.cboSort.Location = new System.Drawing.Point(900, 17);
             this.cboSort.Name = "cboSort";
-            this.cboSort.Size = new System.Drawing.Size(202, 36);
+            this.cboSort.Size = new System.Drawing.Size(202, 25);
             this.cboSort.TabIndex = 2;
             this.cboSort.SelectedIndexChanged += new System.EventHandler(this.FilterChanged);
             // 
@@ -503,7 +502,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblPagingInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblPagingInfo.Location = new System.Drawing.Point(18, 13);
             this.lblPagingInfo.Name = "lblPagingInfo";
-            this.lblPagingInfo.Size = new System.Drawing.Size(147, 25);
+            this.lblPagingInfo.Size = new System.Drawing.Size(97, 15);
             this.lblPagingInfo.TabIndex = 0;
             this.lblPagingInfo.Text = "Không có dữ liệu";
             // 
@@ -519,7 +518,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             // 
             // frmQLLopHoc
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(251)))));
             this.ClientSize = new System.Drawing.Size(1180, 860);
