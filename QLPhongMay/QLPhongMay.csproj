@@ -58,6 +58,7 @@
     <Compile Include="BLL\Session.cs" />
     <Compile Include="BLL\PasswordHasher.cs" />
     <Compile Include="DAL\AppDbContext.cs" />
+    <Compile Include="DAL\ConfigurationRepository.cs" />
     <Compile Include="DAL\ComputerRepository.cs" />
     <Compile Include="DAL\LopHocRepository.cs" />
     <Compile Include="DAL\UserRepository.cs" />
@@ -90,6 +91,9 @@
     <Compile Include="GUI\Forms\Catalog\FrmQLPhong.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GUI\Forms\Catalog\frmCauHinh.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GUI\Forms\Catalog\FrmQLPhong.Designer.cs">
       <DependentUpon>FrmQLPhong.cs</DependentUpon>
     </Compile>
@@ -119,6 +123,7 @@
     <Compile Include="DTO\ComputerListItem.cs" />
     <Compile Include="DTO\ComputerEditItem.cs" />
     <Compile Include="DTO\ComputerLookupItem.cs" />
+    <Compile Include="DTO\ConfigLookupItem.cs" />
     <Compile Include="GUI\Forms\Program.cs" />
     <Compile Include="Models\CaHoc.cs" />
     <Compile Include="Models\CauHinh.cs" />

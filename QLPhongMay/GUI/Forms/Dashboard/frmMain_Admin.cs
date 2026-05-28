@@ -1,6 +1,5 @@
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using QLPhongMay.Auth;
 using QLPhongMay.BLL;
@@ -66,14 +65,12 @@ namespace QLPhongMay.GUI.Forms.Dashboard
             this.pnlSidebar.Location = new Point(0, 0);
             this.pnlSidebar.Name = "pnlSidebar";
             this.pnlSidebar.Size = new Size(240, 760);
-            this.pnlSidebar.TabIndex = 0;
 
             this.lblBrand.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             this.lblBrand.ForeColor = Color.White;
             this.lblBrand.Location = new Point(22, 28);
             this.lblBrand.Name = "lblBrand";
             this.lblBrand.Size = new Size(196, 78);
-            this.lblBrand.TabIndex = 0;
             this.lblBrand.Text = "QL Phòng Máy";
             this.lblBrand.TextAlign = ContentAlignment.MiddleLeft;
 
@@ -82,7 +79,6 @@ namespace QLPhongMay.GUI.Forms.Dashboard
             this.lblRole.Location = new Point(24, 102);
             this.lblRole.Name = "lblRole";
             this.lblRole.Size = new Size(190, 24);
-            this.lblRole.TabIndex = 1;
             this.lblRole.Text = "ADMIN";
 
             this.pnlHeader.BackColor = Color.White;
@@ -93,24 +89,21 @@ namespace QLPhongMay.GUI.Forms.Dashboard
             this.pnlHeader.Location = new Point(240, 0);
             this.pnlHeader.Name = "pnlHeader";
             this.pnlHeader.Size = new Size(940, 96);
-            this.pnlHeader.TabIndex = 1;
-            this.pnlHeader.Paint += this.BorderBottom_Paint;
+            this.pnlHeader.Paint += BorderBottom_Paint;
 
             this.lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             this.lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
             this.lblTitle.Location = new Point(34, 22);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new Size(380, 38);
-            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Size = new Size(420, 38);
             this.lblTitle.Text = "Bảng điều khiển Admin";
 
             this.lblWelcome.Font = new Font("Segoe UI", 9.5F);
             this.lblWelcome.ForeColor = Color.FromArgb(100, 116, 139);
             this.lblWelcome.Location = new Point(38, 61);
             this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new Size(520, 22);
-            this.lblWelcome.TabIndex = 1;
-            this.lblWelcome.Text = "Quản lý lịch, phòng máy, máy tính, lớp học, ca học và tài khoản";
+            this.lblWelcome.Size = new Size(620, 22);
+            this.lblWelcome.Text = "Quản lý lịch, phòng máy, máy tính, cấu hình, lớp học, ca học và tài khoản";
 
             this.btnLogout.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             this.btnLogout.BackColor = Color.White;
@@ -122,10 +115,9 @@ namespace QLPhongMay.GUI.Forms.Dashboard
             this.btnLogout.Location = new Point(790, 28);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new Size(116, 38);
-            this.btnLogout.TabIndex = 2;
             this.btnLogout.Text = "Đăng xuất";
             this.btnLogout.UseVisualStyleBackColor = false;
-            this.btnLogout.Click += this.BtnLogout_Click;
+            this.btnLogout.Click += BtnLogout_Click;
 
             this.pnlContent.BackColor = Color.FromArgb(241, 245, 249);
             this.pnlContent.Controls.Add(this.pnlAccount);
@@ -133,7 +125,6 @@ namespace QLPhongMay.GUI.Forms.Dashboard
             this.pnlContent.Location = new Point(240, 96);
             this.pnlContent.Name = "pnlContent";
             this.pnlContent.Size = new Size(940, 664);
-            this.pnlContent.TabIndex = 2;
 
             this.pnlAccount.Anchor = AnchorStyles.None;
             this.pnlAccount.BackColor = Color.White;
@@ -145,15 +136,13 @@ namespace QLPhongMay.GUI.Forms.Dashboard
             this.pnlAccount.Location = new Point(190, 120);
             this.pnlAccount.Name = "pnlAccount";
             this.pnlAccount.Size = new Size(560, 330);
-            this.pnlAccount.TabIndex = 0;
-            this.pnlAccount.Paint += this.AccountPanel_Paint;
+            this.pnlAccount.Paint += AccountPanel_Paint;
 
             this.lblAccountTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             this.lblAccountTitle.ForeColor = Color.FromArgb(15, 76, 129);
             this.lblAccountTitle.Location = new Point(40, 30);
             this.lblAccountTitle.Name = "lblAccountTitle";
             this.lblAccountTitle.Size = new Size(480, 44);
-            this.lblAccountTitle.TabIndex = 0;
             this.lblAccountTitle.Text = "Thông tin tài khoản";
             this.lblAccountTitle.TextAlign = ContentAlignment.MiddleCenter;
 
@@ -162,28 +151,24 @@ namespace QLPhongMay.GUI.Forms.Dashboard
             this.lblUsername.Location = new Point(78, 112);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new Size(420, 30);
-            this.lblUsername.TabIndex = 1;
 
             this.lblFullName.Font = new Font("Segoe UI", 12F);
             this.lblFullName.ForeColor = Color.FromArgb(51, 65, 85);
             this.lblFullName.Location = new Point(78, 158);
             this.lblFullName.Name = "lblFullName";
             this.lblFullName.Size = new Size(420, 30);
-            this.lblFullName.TabIndex = 2;
 
             this.lblEmail.Font = new Font("Segoe UI", 12F);
             this.lblEmail.ForeColor = Color.FromArgb(51, 65, 85);
             this.lblEmail.Location = new Point(78, 204);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new Size(420, 30);
-            this.lblEmail.TabIndex = 3;
 
             this.lblAccountRole.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             this.lblAccountRole.ForeColor = Color.FromArgb(37, 99, 235);
             this.lblAccountRole.Location = new Point(78, 250);
             this.lblAccountRole.Name = "lblAccountRole";
             this.lblAccountRole.Size = new Size(420, 30);
-            this.lblAccountRole.TabIndex = 4;
 
             this.AutoScaleDimensions = new SizeF(8F, 20F);
             this.AutoScaleMode = AutoScaleMode.Font;
@@ -207,13 +192,14 @@ namespace QLPhongMay.GUI.Forms.Dashboard
         private void BuildMenu()
         {
             int top = 152;
-            AddMenuButton("Quản lý lịch", top, this.OpenScheduleForm);
-            AddMenuButton("Quản lý phòng máy", top += 56, this.OpenRoomForm);
-            AddMenuButton("Quản lý máy tính", top += 56, this.OpenComputerForm);
-            AddMenuButton("Quản lý lớp học", top += 56, this.OpenClassForm);
-            AddMenuButton("Quản lý ca học", top += 56, this.OpenShiftForm);
-            AddMenuButton("Quản lý tài khoản", top += 56, this.OpenAccountForm);
-            AddMenuButton("Báo cáo & Thống kê", top += 56, this.OpenReportForm);
+            AddMenuButton("Quản lý lịch", top, OpenScheduleForm);
+            AddMenuButton("Quản lý phòng máy", top += 56, OpenRoomForm);
+            AddMenuButton("Quản lý máy tính", top += 56, OpenComputerForm);
+            AddMenuButton("Quản lý cấu hình", top += 56, OpenConfigForm);
+            AddMenuButton("Quản lý lớp học", top += 56, OpenClassForm);
+            AddMenuButton("Quản lý ca học", top += 56, OpenShiftForm);
+            AddMenuButton("Quản lý tài khoản", top += 56, OpenAccountForm);
+            AddMenuButton("Báo cáo & Thống kê", top += 56, OpenReportForm);
         }
 
         private void AddMenuButton(string text, int top, EventHandler clickHandler)
@@ -286,6 +272,14 @@ namespace QLPhongMay.GUI.Forms.Dashboard
         private void OpenComputerForm(object sender, EventArgs e)
         {
             using (frmQuanLyMay form = new frmQuanLyMay())
+            {
+                form.ShowDialog(this);
+            }
+        }
+
+        private void OpenConfigForm(object sender, EventArgs e)
+        {
+            using (frmCauHinh form = new frmCauHinh())
             {
                 form.ShowDialog(this);
             }
