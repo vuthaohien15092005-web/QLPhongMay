@@ -18,6 +18,7 @@ namespace QLPhongMay.GUI.Forms.Schedule
         private ComboBox cboRoom;
         private ComboBox cboShift;
         private ComboBox cboStatus;
+        private Label lblStatus;
         private DateTimePicker dtpDate;
         private NumericUpDown nudStudentCount;
         private Guna2Panel pnlRoomSuggestion;
@@ -49,7 +50,7 @@ namespace QLPhongMay.GUI.Forms.Schedule
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.ClientSize = new Size(720, 620);
+            this.ClientSize = new Size(720, this.editMode ? 620 : 576);
             this.Font = new Font("Segoe UI", 9F);
 
             TableLayoutPanel layout = new TableLayoutPanel();
@@ -91,9 +92,15 @@ namespace QLPhongMay.GUI.Forms.Schedule
             AddField(layout, 4, "Ca", this.cboShift);
             AddField(layout, 5, "Ngày", this.dtpDate);
             AddField(layout, 6, "Số sinh viên", this.nudStudentCount);
-            AddField(layout, 7, "Trạng thái", this.cboStatus);
+            this.lblStatus = AddField(layout, 7, "Trạng thái", this.cboStatus);
+            if (!this.editMode)
+            {
+                this.lblStatus.Visible = false;
+                this.cboStatus.Visible = false;
+                layout.RowStyles[7].Height = 0;
+            }
             ConfigureSuggestionPalette();
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 166));
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 190));
             layout.Controls.Add(this.pnlRoomSuggestion, 0, 8);
             layout.SetColumnSpan(this.pnlRoomSuggestion, 2);
 
@@ -116,12 +123,13 @@ namespace QLPhongMay.GUI.Forms.Schedule
             return new ComboBox { Dock = DockStyle.Fill, DropDownStyle = ComboBoxStyle.DropDownList };
         }
 
-        private static void AddField(TableLayoutPanel layout, int row, string label, Control control)
+        private static Label AddField(TableLayoutPanel layout, int row, string label, Control control)
         {
             layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 44));
             Label lbl = new Label { Text = label, Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
             layout.Controls.Add(lbl, 0, row);
             layout.Controls.Add(control, 1, row);
+            return lbl;
         }
 
         private void ConfigureSuggestionPalette()
@@ -164,8 +172,8 @@ namespace QLPhongMay.GUI.Forms.Schedule
             this.pnlSuggestionRooms.BackColor = Color.Transparent;
             this.pnlSuggestionRooms.Location = new Point(16, 70);
             this.pnlSuggestionRooms.Name = "pnlSuggestionRooms";
-            this.pnlSuggestionRooms.Size = new Size(648, 76);
-            this.pnlSuggestionRooms.WrapContents = false;
+            this.pnlSuggestionRooms.Size = new Size(648, 100);
+            this.pnlSuggestionRooms.WrapContents = true;
 
             this.lblSuggestionState.BackColor = Color.Transparent;
             this.lblSuggestionState.Font = new Font("Segoe UI", 9F);
@@ -305,7 +313,7 @@ namespace QLPhongMay.GUI.Forms.Schedule
             card.HoverState.BorderColor = Color.FromArgb(37, 99, 235);
             card.HoverState.FillColor = Color.FromArgb(239, 246, 255);
             card.Margin = new Padding(0, 0, 10, 0);
-            card.Size = new Size(150, 66);
+            card.Size = new Size(148, 66);
             card.Tag = room;
             card.Text = string.Format("{0}\nSức chứa {1} | {2} máy", room.TenPhong, room.SucChua, room.SoMay);
             card.TextAlign = HorizontalAlignment.Left;
@@ -352,7 +360,7 @@ namespace QLPhongMay.GUI.Forms.Schedule
             this.ScheduleItem.NgayThucHanh = this.dtpDate.Value.Date;
             this.ScheduleItem.ThuTrongTuan = ToVietnameseDayOfWeek(this.dtpDate.Value.DayOfWeek);
             this.ScheduleItem.SoLuongSV = Convert.ToInt32(this.nudStudentCount.Value);
-            this.ScheduleItem.TrangThai = Convert.ToString(this.cboStatus.SelectedItem);
+            this.ScheduleItem.TrangThai = this.editMode ? Convert.ToString(this.cboStatus.SelectedItem) : "Đã lên lịch";
 
             if (this.repository.HasScheduleConflict(this.ScheduleItem.MaLich, this.ScheduleItem.MaPhong, this.ScheduleItem.MaCa, this.ScheduleItem.NgayThucHanh))
             {
