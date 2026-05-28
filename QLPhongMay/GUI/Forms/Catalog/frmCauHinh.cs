@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using QLPhongMay.DAL;
 using QLPhongMay.DTO;
@@ -12,6 +13,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
         private readonly ConfigurationRepository repository;
         private readonly Dictionary<TabPage, ConfigCategory> tabCategories;
         private readonly Dictionary<ConfigCategory, DataGridView> grids;
+        private readonly Dictionary<ConfigCategory, string> sortColumns;
+        private readonly Dictionary<ConfigCategory, bool> sortAscending;
 
         private Panel pnlRoot;
         private Button btnBack;
@@ -27,6 +30,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.repository = new ConfigurationRepository();
             this.tabCategories = new Dictionary<TabPage, ConfigCategory>();
             this.grids = new Dictionary<ConfigCategory, DataGridView>();
+            this.sortColumns = new Dictionary<ConfigCategory, string>();
+            this.sortAscending = new Dictionary<ConfigCategory, bool>();
 
             InitializeComponent();
             BuildInterface();
@@ -73,6 +78,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.pnlRoot.Location = new Point(28, 24);
             this.pnlRoot.Name = "pnlRoot";
             this.pnlRoot.Size = new Size(1124, 708);
+            this.pnlRoot.Resize += PnlRoot_Resize;
 
             ConfigureButton(this.btnBack, "<  Quay lại", 0, 4, 128, 46, Color.White, Color.FromArgb(51, 65, 85), Color.FromArgb(226, 232, 240));
             this.btnBack.Click += BtnBack_Click;
@@ -91,7 +97,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSubtitle.Name = "lblSubtitle";
             this.lblSubtitle.Text = "Quản lý danh mục RAM, màn hình, hệ điều hành và CPU";
 
-            ConfigureButton(this.btnAdd, "+  Thêm", 666, 24, 128, 44, Color.FromArgb(37, 99, 235), Color.White, Color.FromArgb(37, 99, 235));
+            ConfigureButton(this.btnAdd, "+  Thêm", 600, 24, 194, 44, Color.FromArgb(37, 99, 235), Color.White, Color.FromArgb(37, 99, 235));
             ConfigureButton(this.btnEdit, "Chỉnh sửa", 812, 24, 128, 44, Color.White, Color.FromArgb(37, 99, 235), Color.FromArgb(37, 99, 235));
             ConfigureButton(this.btnDelete, "Xóa", 958, 24, 128, 44, Color.White, Color.FromArgb(220, 38, 38), Color.FromArgb(220, 38, 38));
             this.btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -101,7 +107,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.btnEdit.Click += BtnEdit_Click;
             this.btnDelete.Click += BtnDelete_Click;
 
-            this.tabControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            this.tabControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             this.tabControl.Controls.Add(CreateTab("RAM", ConfigCategory.Ram));
             this.tabControl.Controls.Add(CreateTab("Màn hình", ConfigCategory.Monitor));
             this.tabControl.Controls.Add(CreateTab("Hệ điều hành", ConfigCategory.OperatingSystem));
@@ -114,6 +120,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.tabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
 
             this.Controls.Add(this.pnlRoot);
+            UpdateAddButtonText();
+            LayoutActionButtons();
 
             this.pnlRoot.ResumeLayout(false);
             this.pnlRoot.PerformLayout();
@@ -131,7 +139,27 @@ namespace QLPhongMay.GUI.Forms.Catalog
             button.Location = new Point(left, top);
             button.Size = new Size(width, height);
             button.Text = text;
+            button.TextAlign = ContentAlignment.MiddleCenter;
             button.UseVisualStyleBackColor = false;
+        }
+
+        private void LayoutActionButtons()
+        {
+            if (this.pnlRoot == null || this.btnAdd == null || this.btnEdit == null || this.btnDelete == null)
+            {
+                return;
+            }
+
+            const int rightMargin = 38;
+            const int gap = 18;
+            this.btnDelete.Left = this.pnlRoot.Width - rightMargin - this.btnDelete.Width;
+            this.btnEdit.Left = this.btnDelete.Left - gap - this.btnEdit.Width;
+            this.btnAdd.Left = this.btnEdit.Left - gap - this.btnAdd.Width;
+        }
+
+        private void PnlRoot_Resize(object sender, EventArgs e)
+        {
+            LayoutActionButtons();
         }
 
         private TabPage CreateTab(string title, ConfigCategory category)
@@ -141,12 +169,16 @@ namespace QLPhongMay.GUI.Forms.Catalog
             tab.Padding = new Padding(16);
 
             Panel panel = new Panel();
+            panel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel.BackColor = Color.White;
             panel.BorderStyle = BorderStyle.FixedSingle;
-            panel.Dock = DockStyle.Fill;
+            panel.Location = new Point(16, 16);
             panel.Padding = new Padding(16);
+            panel.Size = new Size(1060, 172);
 
             DataGridView grid = CreateGrid();
+            grid.Tag = category;
+            grid.ColumnHeaderMouseClick += Grid_ColumnHeaderMouseClick;
             panel.Controls.Add(grid);
             tab.Controls.Add(panel);
 
@@ -171,7 +203,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
             grid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             grid.ColumnHeadersHeight = 48;
             grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            grid.Dock = DockStyle.Fill;
+            grid.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            grid.Location = new Point(16, 16);
             grid.EnableHeadersVisualStyles = false;
             grid.GridColor = Color.FromArgb(241, 245, 249);
             grid.MultiSelect = false;
@@ -179,6 +212,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             grid.RowHeadersVisible = false;
             grid.RowTemplate.Height = 44;
             grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            grid.Size = new Size(1028, 140);
 
             headerStyle.BackColor = Color.FromArgb(248, 250, 252);
             headerStyle.Font = new Font("Segoe UI", 9.2F, FontStyle.Bold);
@@ -215,12 +249,14 @@ namespace QLPhongMay.GUI.Forms.Catalog
         private void LoadTab(ConfigCategory category)
         {
             List<ConfigLookupItem> items = this.repository.GetItems(category);
+            items = ApplySort(category, items);
             DataGridView grid = this.grids[category];
             grid.DataSource = items;
             ConfigureGridColumns(grid, category);
+            UpdateGridHeight(grid, items.Count);
         }
 
-        private static void ConfigureGridColumns(DataGridView grid, ConfigCategory category)
+        private void ConfigureGridColumns(DataGridView grid, ConfigCategory category)
         {
             if (grid.Columns.Count == 0)
             {
@@ -228,11 +264,104 @@ namespace QLPhongMay.GUI.Forms.Catalog
             }
 
             ConfigTable table = ConfigurationRepository.GetTable(category);
-            grid.Columns[nameof(ConfigLookupItem.Id)].HeaderText = "Mã";
-            grid.Columns[nameof(ConfigLookupItem.Name)].HeaderText = table.DisplayName;
+            grid.Columns[nameof(ConfigLookupItem.Id)].HeaderText = GetHeaderText(category, nameof(ConfigLookupItem.Id), "Mã");
+            grid.Columns[nameof(ConfigLookupItem.Name)].HeaderText = GetHeaderText(category, nameof(ConfigLookupItem.Name), table.DisplayName);
             grid.Columns[nameof(ConfigLookupItem.Id)].FillWeight = 80;
             grid.Columns[nameof(ConfigLookupItem.Name)].FillWeight = 420;
             grid.Columns[nameof(ConfigLookupItem.Id)].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            grid.Columns[nameof(ConfigLookupItem.Id)].SortMode = DataGridViewColumnSortMode.Programmatic;
+            grid.Columns[nameof(ConfigLookupItem.Name)].SortMode = DataGridViewColumnSortMode.Programmatic;
+        }
+
+        private List<ConfigLookupItem> ApplySort(ConfigCategory category, List<ConfigLookupItem> items)
+        {
+            string column;
+            bool ascending;
+            if (!this.sortColumns.TryGetValue(category, out column))
+            {
+                column = nameof(ConfigLookupItem.Id);
+                this.sortColumns[category] = column;
+            }
+
+            if (!this.sortAscending.TryGetValue(category, out ascending))
+            {
+                ascending = true;
+                this.sortAscending[category] = ascending;
+            }
+
+            IEnumerable<ConfigLookupItem> sorted = column == nameof(ConfigLookupItem.Name)
+                ? ascending
+                    ? items.OrderBy(item => item.Name, StringComparer.CurrentCultureIgnoreCase)
+                    : items.OrderByDescending(item => item.Name, StringComparer.CurrentCultureIgnoreCase)
+                : ascending
+                    ? items.OrderBy(item => item.Id)
+                    : items.OrderByDescending(item => item.Id);
+
+            return sorted.ToList();
+        }
+
+        private string GetHeaderText(ConfigCategory category, string columnName, string text)
+        {
+            string activeColumn;
+            bool ascending;
+            if (!this.sortColumns.TryGetValue(category, out activeColumn) || activeColumn != columnName)
+            {
+                return text;
+            }
+
+            if (!this.sortAscending.TryGetValue(category, out ascending))
+            {
+                ascending = true;
+            }
+
+            return text + (ascending ? " ↑" : " ↓");
+        }
+
+        private static void UpdateGridHeight(DataGridView grid, int rowCount)
+        {
+            int rowsToShow = Math.Max(2, Math.Min(rowCount, 8));
+            grid.Height = grid.ColumnHeadersHeight + (rowsToShow * grid.RowTemplate.Height) + 3;
+            if (grid.Parent != null)
+            {
+                grid.Parent.Height = grid.Height + 32;
+            }
+
+            TabPage tab = grid.Parent == null ? null : grid.Parent.Parent as TabPage;
+            if (tab != null && tab.Parent != null)
+            {
+                tab.Parent.Height = grid.Parent.Height + 58;
+            }
+        }
+
+        private void Grid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridView grid = sender as DataGridView;
+            if (grid == null || e.ColumnIndex < 0 || e.ColumnIndex >= grid.Columns.Count)
+            {
+                return;
+            }
+
+            ConfigCategory category = (ConfigCategory)grid.Tag;
+            string column = grid.Columns[e.ColumnIndex].DataPropertyName;
+            if (string.IsNullOrEmpty(column))
+            {
+                column = grid.Columns[e.ColumnIndex].Name;
+            }
+
+            string currentColumn;
+            bool ascending;
+            if (this.sortColumns.TryGetValue(category, out currentColumn) && currentColumn == column)
+            {
+                this.sortAscending.TryGetValue(category, out ascending);
+                this.sortAscending[category] = !ascending;
+            }
+            else
+            {
+                this.sortColumns[category] = column;
+                this.sortAscending[category] = true;
+            }
+
+            LoadTab(category);
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
@@ -325,8 +454,16 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UpdateAddButtonText();
+        }
+
+        private void UpdateAddButtonText()
+        {
             ConfigTable table = ConfigurationRepository.GetTable(GetCurrentCategory());
             this.btnAdd.Text = "+  Thêm " + table.DisplayName;
+            int textWidth = TextRenderer.MeasureText(this.btnAdd.Text, this.btnAdd.Font).Width;
+            this.btnAdd.Width = Math.Max(194, textWidth + 44);
+            LayoutActionButtons();
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
