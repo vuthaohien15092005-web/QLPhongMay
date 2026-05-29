@@ -17,11 +17,18 @@ namespace QLPhongMay.GUI.Forms.Schedule
         private readonly ScheduleRepository repository;
         private List<ScheduleRow> filteredRows = new List<ScheduleRow>();
         private int currentPage = 1;
+        private Panel pnlSummary;
+        private Label lblTotalSchedules;
+        private Label lblScheduledCount;
+        private Label lblCompletedCount;
+        private Label lblCancelledCount;
 
         public frmQuanLyLich()
         {
             this.repository = new ScheduleRepository();
             InitializeComponent();
+            CreateSummaryPanel();
+            this.dgvSchedules.CellFormatting += DgvSchedules_CellFormatting;
             this.Load += frmQuanLyLich_Load;
             this.Resize += frmQuanLyLich_Resize;
         }
@@ -62,6 +69,7 @@ namespace QLPhongMay.GUI.Forms.Schedule
         private void frmQuanLyLich_Load(object sender, EventArgs e)
         {
             LayoutResponsive();
+            ApplyDateFormat();
             this.dtpFrom.Value = DateTime.Today.AddMonths(-1);
             this.dtpTo.Value = DateTime.Today.AddMonths(1);
             LoadLookups();
@@ -93,7 +101,12 @@ namespace QLPhongMay.GUI.Forms.Schedule
             this.pnlFilter.Size = new Size(contentWidth, 152);
             LayoutFilterControls();
 
-            int gridTop = this.pnlFilter.Bottom + 24;
+            int summaryTop = this.pnlFilter.Bottom + 18;
+            this.pnlSummary.Location = new Point(margin, summaryTop);
+            this.pnlSummary.Size = new Size(contentWidth, 72);
+            LayoutSummaryCards();
+
+            int gridTop = this.pnlSummary.Bottom + 18;
             int pagingTop = contentHeight - 50;
             int gridHeight = Math.Max(260, pagingTop - gridTop - 18);
             this.dgvSchedules.Location = new Point(margin, gridTop);
@@ -159,6 +172,56 @@ namespace QLPhongMay.GUI.Forms.Schedule
             this.btnFilter.Location = new Point(this.btnClear.Left - this.btnFilter.Width - 14, 106);
         }
 
+        private void CreateSummaryPanel()
+        {
+            this.pnlSummary = new Panel();
+            this.pnlSummary.BackColor = Color.Transparent;
+
+            this.lblTotalSchedules = CreateSummaryCard("Tổng lịch", "0", Color.FromArgb(15, 76, 129));
+            this.lblScheduledCount = CreateSummaryCard("Đã lên lịch", "0", Color.FromArgb(37, 99, 235));
+            this.lblCompletedCount = CreateSummaryCard("Hoàn thành", "0", Color.FromArgb(22, 163, 74));
+            this.lblCancelledCount = CreateSummaryCard("Đã hủy", "0", Color.FromArgb(100, 116, 139));
+
+            this.pnlSummary.Controls.Add(this.lblTotalSchedules);
+            this.pnlSummary.Controls.Add(this.lblScheduledCount);
+            this.pnlSummary.Controls.Add(this.lblCompletedCount);
+            this.pnlSummary.Controls.Add(this.lblCancelledCount);
+            this.Controls.Add(this.pnlSummary);
+        }
+
+        private static Label CreateSummaryCard(string title, string value, Color accentColor)
+        {
+            Label label = new Label();
+            label.BackColor = Color.White;
+            label.BorderStyle = BorderStyle.FixedSingle;
+            label.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            label.ForeColor = accentColor;
+            label.TextAlign = ContentAlignment.MiddleCenter;
+            label.Text = title + Environment.NewLine + value;
+            return label;
+        }
+
+        private void LayoutSummaryCards()
+        {
+            int gap = 14;
+            int cardWidth = Math.Max(130, (this.pnlSummary.ClientSize.Width - gap * 3) / 4);
+            Label[] cards = { this.lblTotalSchedules, this.lblScheduledCount, this.lblCompletedCount, this.lblCancelledCount };
+
+            for (int i = 0; i < cards.Length; i++)
+            {
+                cards[i].Location = new Point(i * (cardWidth + gap), 0);
+                cards[i].Size = new Size(cardWidth, 62);
+            }
+        }
+
+        private void ApplyDateFormat()
+        {
+            this.dtpFrom.Format = DateTimePickerFormat.Custom;
+            this.dtpFrom.CustomFormat = "dd/MM/yyyy";
+            this.dtpTo.Format = DateTimePickerFormat.Custom;
+            this.dtpTo.CustomFormat = "dd/MM/yyyy";
+        }
+
         private void LoadLookups()
         {
             BindLookup(this.cboRoom, this.repository.GetRooms());
@@ -222,6 +285,7 @@ namespace QLPhongMay.GUI.Forms.Schedule
 
             this.dgvSchedules.DataSource = pageRows;
             ConfigureColumns();
+            UpdateSummary();
             this.lblCount.Text = totalRows == 0
                 ? "Không có lịch phù hợp"
                 : string.Format("Hiển thị {0}-{1} trong {2} lịch", skip + 1, skip + pageRows.Count, totalRows);
@@ -248,6 +312,81 @@ namespace QLPhongMay.GUI.Forms.Schedule
             this.dgvSchedules.Columns[nameof(ScheduleRow.Status)].HeaderText = "Trạng thái";
             this.dgvSchedules.Columns[nameof(ScheduleRow.Stt)].FillWeight = 45;
             this.dgvSchedules.Columns[nameof(ScheduleRow.StudentCount)].FillWeight = 80;
+        }
+
+        private void UpdateSummary()
+        {
+            int total = this.filteredRows.Count;
+            int scheduled = this.filteredRows.Count(row => NormalizeStatusText(row.Status) == "Đã lên lịch");
+            int completed = this.filteredRows.Count(row => NormalizeStatusText(row.Status) == "Hoàn thành");
+            int cancelled = this.filteredRows.Count(row => NormalizeStatusText(row.Status) == "Đã hủy");
+
+            this.lblTotalSchedules.Text = "Tổng lịch" + Environment.NewLine + total;
+            this.lblScheduledCount.Text = "Đã lên lịch" + Environment.NewLine + scheduled;
+            this.lblCompletedCount.Text = "Hoàn thành" + Environment.NewLine + completed;
+            this.lblCancelledCount.Text = "Đã hủy" + Environment.NewLine + cancelled;
+        }
+
+        private void DgvSchedules_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (this.dgvSchedules.Columns.Count == 0 || e.RowIndex < 0)
+            {
+                return;
+            }
+
+            DataGridViewColumn statusColumn = this.dgvSchedules.Columns[nameof(ScheduleRow.Status)];
+            if (statusColumn == null || e.ColumnIndex != statusColumn.Index)
+            {
+                return;
+            }
+
+            Color backColor;
+            Color foreColor;
+            GetStatusColors(Convert.ToString(e.Value), out backColor, out foreColor);
+            e.CellStyle.BackColor = backColor;
+            e.CellStyle.ForeColor = foreColor;
+            e.CellStyle.SelectionBackColor = backColor;
+            e.CellStyle.SelectionForeColor = foreColor;
+            e.CellStyle.Font = new Font(this.dgvSchedules.Font, FontStyle.Bold);
+        }
+
+        private static void GetStatusColors(string status, out Color backColor, out Color foreColor)
+        {
+            switch (NormalizeStatusText(status))
+            {
+                case "Hoàn thành":
+                    backColor = Color.FromArgb(220, 252, 231);
+                    foreColor = Color.FromArgb(22, 101, 52);
+                    break;
+                case "Đã hủy":
+                    backColor = Color.FromArgb(241, 245, 249);
+                    foreColor = Color.FromArgb(71, 85, 105);
+                    break;
+                default:
+                    backColor = Color.FromArgb(219, 234, 254);
+                    foreColor = Color.FromArgb(30, 64, 175);
+                    break;
+            }
+        }
+
+        private static string NormalizeStatusText(string status)
+        {
+            if (string.IsNullOrWhiteSpace(status) || status == "DaLenLich")
+            {
+                return "Đã lên lịch";
+            }
+
+            if (status == "HoanThanh")
+            {
+                return "Hoàn thành";
+            }
+
+            if (status == "DaHuy")
+            {
+                return "Đã hủy";
+            }
+
+            return status.Trim();
         }
 
         private int? GetSelectedDayOfWeek()
@@ -345,6 +484,12 @@ namespace QLPhongMay.GUI.Forms.Schedule
             ScheduleRow row = GetSelectedRow();
             if (row == null)
             {
+                return;
+            }
+
+            if (NormalizeStatusText(row.Status) == "Hoàn thành")
+            {
+                MessageBox.Show("Lịch đã hoàn thành không được xóa để đảm bảo dữ liệu lịch sử và thống kê.", "Không thể xóa", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
