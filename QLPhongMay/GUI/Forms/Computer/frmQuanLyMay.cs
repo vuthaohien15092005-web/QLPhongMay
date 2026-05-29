@@ -31,6 +31,7 @@ namespace QLPhongMay.GUI.Forms.Computer
             InitializeComponent();
             SetSearchPlaceholder();
             this.Load += FrmQuanLyMay_Load;
+            this.Resize += FrmQuanLyMay_Resize;
         }
 
 
@@ -66,6 +67,7 @@ namespace QLPhongMay.GUI.Forms.Computer
 
         private void FrmQuanLyMay_Load(object sender, EventArgs e)
         {
+            LayoutResponsive();
             try
             {
                 LoadFilterLookups();
@@ -75,6 +77,104 @@ namespace QLPhongMay.GUI.Forms.Computer
             {
                 ShowError("Không thể tải dữ liệu máy tính từ database QuanLyPhongMay.", ex);
             }
+        }
+
+        private void FrmQuanLyMay_Resize(object sender, EventArgs e)
+        {
+            LayoutResponsive();
+            BuildPagination(Math.Max(1, (int)Math.Ceiling(GetFilteredRows().Count() / (double)PageSize)));
+        }
+
+        private void LayoutResponsive()
+        {
+            if (this.pnlRoot == null)
+            {
+                return;
+            }
+
+            int rootWidth = this.pnlRoot.ClientSize.Width;
+            int rootHeight = this.pnlRoot.ClientSize.Height;
+            if (rootWidth <= 0 || rootHeight <= 0)
+            {
+                return;
+            }
+
+            this.btnBack.Location = new Point(0, 4);
+            this.lblTitle.Location = new Point(this.btnBack.Right + 18, 0);
+            this.lblSubtitle.Location = new Point(this.lblTitle.Left + 4, 48);
+            this.lblSubtitle.MaximumSize = new Size(Math.Max(340, rootWidth - this.lblSubtitle.Left - 24), 0);
+            this.btnAdd.Location = new Point(rootWidth - this.btnAdd.Width, 92);
+
+            this.pnlStats.Location = new Point(0, 82);
+            this.pnlStats.Size = new Size(Math.Max(520, this.btnAdd.Left - 28), 88);
+            LayoutStatCards();
+
+            this.pnlFilter.Location = new Point(0, 188);
+            this.pnlFilter.Size = new Size(rootWidth, 122);
+            LayoutFilterControls();
+
+            int gridTop = this.pnlFilter.Bottom + 18;
+            int pagingHeight = 46;
+            int pagingTop = rootHeight - pagingHeight;
+            this.dgvComputers.Location = new Point(0, gridTop);
+            this.dgvComputers.Size = new Size(rootWidth, Math.Max(260, pagingTop - gridTop - 8));
+
+            this.pnlPaging.Location = new Point(0, pagingTop);
+            this.pnlPaging.Size = new Size(rootWidth, pagingHeight);
+            this.pnlPageButtons.Left = this.pnlPaging.Width - this.pnlPageButtons.Width - 18;
+        }
+
+        private void LayoutStatCards()
+        {
+            int count = this.pnlStats.Controls.Count;
+            if (count == 0)
+            {
+                return;
+            }
+
+            int gap = 12;
+            int cardWidth = Math.Max(170, (this.pnlStats.ClientSize.Width - gap * (count - 1)) / count);
+            int left = 0;
+            foreach (Control card in this.pnlStats.Controls)
+            {
+                card.Location = new Point(left, 0);
+                card.Size = new Size(cardWidth, 78);
+                left += cardWidth + gap;
+            }
+        }
+
+        private void LayoutFilterControls()
+        {
+            int width = this.pnlFilter.ClientSize.Width;
+            int left = 22;
+            int gap = 20;
+            int row1 = 18;
+            int row2 = 72;
+
+            int statusWidth = 190;
+            int roomWidth = Math.Min(250, Math.Max(180, (width - left * 2 - statusWidth - gap * 2) / 3));
+            this.txtSearch.Location = new Point(left, row1);
+            this.txtSearch.Size = new Size(Math.Max(300, width - left * 2 - roomWidth - statusWidth - gap * 2), 30);
+            this.cboRoom.Location = new Point(this.txtSearch.Right + gap, row1);
+            this.cboRoom.Size = new Size(roomWidth, 30);
+            this.cboStatus.Location = new Point(width - left - statusWidth, row1);
+            this.cboStatus.Size = new Size(statusWidth, 30);
+
+            int resetWidth = this.btnResetConfigFilters.Width;
+            int available = width - left * 2 - resetWidth - gap * 5;
+            int ramWidth = 150;
+            int cpuWidth = Math.Max(220, available - ramWidth - 180 - 190);
+            int monitorWidth = 180;
+            int osWidth = 190;
+            this.cboRam.Location = new Point(left, row2);
+            this.cboRam.Size = new Size(ramWidth, 30);
+            this.cboCpu.Location = new Point(this.cboRam.Right + gap, row2);
+            this.cboCpu.Size = new Size(cpuWidth, 30);
+            this.cboMonitor.Location = new Point(this.cboCpu.Right + gap, row2);
+            this.cboMonitor.Size = new Size(monitorWidth, 30);
+            this.cboOs.Location = new Point(this.cboMonitor.Right + gap, row2);
+            this.cboOs.Size = new Size(osWidth, 30);
+            this.btnResetConfigFilters.Location = new Point(width - left - resetWidth, 70);
         }
 
         private void LoadFilterLookups()
@@ -100,6 +200,7 @@ namespace QLPhongMay.GUI.Forms.Computer
             AddStatCard("Máy đang hoạt động", this.rows.Count(x => IsActive(x.RawStatus)).ToString(), Color.FromArgb(22, 163, 74), Color.FromArgb(240, 253, 244), "OK");
             AddStatCard("Máy bảo trì / hỏng", this.rows.Count(x => IsMaintenance(x.RawStatus) || IsBroken(x.RawStatus)).ToString(), Color.FromArgb(245, 158, 11), Color.FromArgb(255, 251, 235), "!");
             AddStatCard("Tổng số phòng máy", this.rows.Select(x => x.MaPhong).Distinct().Count().ToString(), Color.FromArgb(20, 184, 166), Color.FromArgb(240, 253, 250), "P");
+            LayoutStatCards();
         }
 
         private void LoadComputers(bool resetPage)

@@ -42,6 +42,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
         {
             InitializeComponent();
             Load += frmQLCaHoc_Load;
+            Resize += frmQLCaHoc_Resize;
         }
 
         private void InitializeComponent()
@@ -54,6 +55,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSubtitle = new System.Windows.Forms.Label();
             this.pnlStats = new System.Windows.Forms.FlowLayoutPanel();
             this.btnCreate = new System.Windows.Forms.Button();
+            this.dgvCaHoc = new System.Windows.Forms.DataGridView();
+            this.Actions = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pnlPaging = new System.Windows.Forms.Panel();
+            this.lblPagingInfo = new System.Windows.Forms.Label();
+            this.pnlPageButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlEditor = new System.Windows.Forms.Panel();
             this.txtMaCa = new System.Windows.Forms.TextBox();
             this.txtTenCa = new System.Windows.Forms.TextBox();
@@ -65,23 +71,14 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.pnlFilter = new System.Windows.Forms.Panel();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.cboDuration = new System.Windows.Forms.ComboBox();
-            this.dgvCaHoc = new System.Windows.Forms.DataGridView();
-            System.Windows.Forms.DataGridViewTextBoxColumn colMaCa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            System.Windows.Forms.DataGridViewTextBoxColumn colTenCa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            System.Windows.Forms.DataGridViewTextBoxColumn colGioBatDau = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            System.Windows.Forms.DataGridViewTextBoxColumn colGioKetThuc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Actions = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pnlPaging = new System.Windows.Forms.Panel();
-            this.lblPagingInfo = new System.Windows.Forms.Label();
-            this.pnlPageButtons = new System.Windows.Forms.FlowLayoutPanel();
             this.ViewAction = new System.Windows.Forms.DataGridViewButtonColumn();
             this.EditAction = new System.Windows.Forms.DataGridViewButtonColumn();
             this.DeleteAction = new System.Windows.Forms.DataGridViewButtonColumn();
             this.pnlRoot.SuspendLayout();
-            this.pnlEditor.SuspendLayout();
-            this.pnlFilter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCaHoc)).BeginInit();
             this.pnlPaging.SuspendLayout();
+            this.pnlEditor.SuspendLayout();
+            this.pnlFilter.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlRoot
@@ -125,7 +122,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
             this.lblTitle.Location = new System.Drawing.Point(146, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(262, 47);
+            this.lblTitle.Size = new System.Drawing.Size(209, 38);
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "Quản lý ca học";
             // 
@@ -136,7 +133,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblSubtitle.Location = new System.Drawing.Point(150, 48);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(438, 23);
+            this.lblSubtitle.Size = new System.Drawing.Size(350, 19);
             this.lblSubtitle.TabIndex = 2;
             this.lblSubtitle.Text = "Theo dõi và cập nhật các khung giờ học trong hệ thống";
             // 
@@ -169,6 +166,95 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.btnCreate.UseVisualStyleBackColor = false;
             this.btnCreate.Click += new System.EventHandler(this.BtnCreate_Click);
             // 
+            // dgvCaHoc
+            // 
+            this.dgvCaHoc.AllowUserToAddRows = false;
+            this.dgvCaHoc.AllowUserToDeleteRows = false;
+            this.dgvCaHoc.AllowUserToResizeRows = false;
+            this.dgvCaHoc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvCaHoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCaHoc.BackgroundColor = System.Drawing.Color.White;
+            this.dgvCaHoc.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvCaHoc.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dgvCaHoc.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.dgvCaHoc.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvCaHoc.ColumnHeadersHeight = 48;
+            this.dgvCaHoc.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Actions});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCaHoc.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvCaHoc.EnableHeadersVisualStyles = false;
+            this.dgvCaHoc.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.dgvCaHoc.Location = new System.Drawing.Point(3, 188);
+            this.dgvCaHoc.MultiSelect = false;
+            this.dgvCaHoc.Name = "dgvCaHoc";
+            this.dgvCaHoc.ReadOnly = true;
+            this.dgvCaHoc.RowHeadersVisible = false;
+            this.dgvCaHoc.RowHeadersWidth = 51;
+            this.dgvCaHoc.RowTemplate.Height = 44;
+            this.dgvCaHoc.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCaHoc.Size = new System.Drawing.Size(984, 383);
+            this.dgvCaHoc.TabIndex = 6;
+            this.dgvCaHoc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCaHoc_CellClick);
+            this.dgvCaHoc.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCaHoc_CellMouseLeave);
+            this.dgvCaHoc.CellMouseMove += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvCaHoc_CellMouseMove);
+            this.dgvCaHoc.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DgvCaHoc_CellPainting);
+            // 
+            // Actions
+            // 
+            this.Actions.FillWeight = 120F;
+            this.Actions.HeaderText = "Hành động";
+            this.Actions.MinimumWidth = 110;
+            this.Actions.Name = "Actions";
+            this.Actions.ReadOnly = true;
+            // 
+            // pnlPaging
+            // 
+            this.pnlPaging.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlPaging.BackColor = System.Drawing.Color.White;
+            this.pnlPaging.Controls.Add(this.lblPagingInfo);
+            this.pnlPaging.Controls.Add(this.pnlPageButtons);
+            this.pnlPaging.Location = new System.Drawing.Point(0, 579);
+            this.pnlPaging.Name = "pnlPaging";
+            this.pnlPaging.Size = new System.Drawing.Size(984, 46);
+            this.pnlPaging.TabIndex = 7;
+            this.pnlPaging.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelBorder_Paint);
+            this.pnlPaging.Resize += new System.EventHandler(this.PnlPaging_Resize);
+            // 
+            // lblPagingInfo
+            // 
+            this.lblPagingInfo.AutoSize = true;
+            this.lblPagingInfo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPagingInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.lblPagingInfo.Location = new System.Drawing.Point(18, 13);
+            this.lblPagingInfo.Name = "lblPagingInfo";
+            this.lblPagingInfo.Size = new System.Drawing.Size(152, 15);
+            this.lblPagingInfo.TabIndex = 0;
+            this.lblPagingInfo.Text = "Hiển thị 0-0 trong 0 kết quả";
+            // 
+            // pnlPageButtons
+            // 
+            this.pnlPageButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlPageButtons.Location = new System.Drawing.Point(760, 7);
+            this.pnlPageButtons.Name = "pnlPageButtons";
+            this.pnlPageButtons.Size = new System.Drawing.Size(206, 32);
+            this.pnlPageButtons.TabIndex = 1;
+            this.pnlPageButtons.WrapContents = false;
+            // 
             // pnlEditor
             // 
             this.pnlEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -196,7 +282,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.txtMaCa.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.txtMaCa.Location = new System.Drawing.Point(22, 16);
             this.txtMaCa.Name = "txtMaCa";
-            this.txtMaCa.Size = new System.Drawing.Size(120, 30);
+            this.txtMaCa.Size = new System.Drawing.Size(120, 25);
             this.txtMaCa.TabIndex = 0;
             this.txtMaCa.Tag = "Mã ca";
             this.txtMaCa.Text = "Mã ca";
@@ -211,7 +297,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.txtTenCa.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.txtTenCa.Location = new System.Drawing.Point(156, 16);
             this.txtTenCa.Name = "txtTenCa";
-            this.txtTenCa.Size = new System.Drawing.Size(240, 30);
+            this.txtTenCa.Size = new System.Drawing.Size(240, 25);
             this.txtTenCa.TabIndex = 1;
             this.txtTenCa.Tag = "Tên ca";
             this.txtTenCa.Text = "Tên ca";
@@ -226,7 +312,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.txtGioBatDau.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.txtGioBatDau.Location = new System.Drawing.Point(410, 16);
             this.txtGioBatDau.Name = "txtGioBatDau";
-            this.txtGioBatDau.Size = new System.Drawing.Size(170, 30);
+            this.txtGioBatDau.Size = new System.Drawing.Size(170, 25);
             this.txtGioBatDau.TabIndex = 2;
             this.txtGioBatDau.Tag = "Giờ bắt đầu HH:mm";
             this.txtGioBatDau.Text = "Giờ bắt đầu HH:mm";
@@ -241,7 +327,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.txtGioKetThuc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.txtGioKetThuc.Location = new System.Drawing.Point(594, 16);
             this.txtGioKetThuc.Name = "txtGioKetThuc";
-            this.txtGioKetThuc.Size = new System.Drawing.Size(170, 30);
+            this.txtGioKetThuc.Size = new System.Drawing.Size(170, 25);
             this.txtGioKetThuc.TabIndex = 3;
             this.txtGioKetThuc.Tag = "Giờ kết thúc HH:mm";
             this.txtGioKetThuc.Text = "Giờ kết thúc HH:mm";
@@ -316,7 +402,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.txtSearch.Location = new System.Drawing.Point(22, 16);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(560, 30);
+            this.txtSearch.Size = new System.Drawing.Size(560, 25);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.Tag = "Tìm kiếm theo mã ca, tên ca, giờ bắt đầu, giờ kết thúc";
             this.txtSearch.Text = "Tìm kiếm theo mã ca, tên ca, giờ bắt đầu, giờ kết thúc";
@@ -337,123 +423,9 @@ namespace QLPhongMay.GUI.Forms.Catalog
             "Trên 4 giờ"});
             this.cboDuration.Location = new System.Drawing.Point(772, 16);
             this.cboDuration.Name = "cboDuration";
-            this.cboDuration.Size = new System.Drawing.Size(190, 31);
+            this.cboDuration.Size = new System.Drawing.Size(190, 25);
             this.cboDuration.TabIndex = 1;
             this.cboDuration.SelectedIndexChanged += new System.EventHandler(this.FilterChanged);
-            // 
-            // dgvCaHoc
-            // 
-            this.dgvCaHoc.AllowUserToAddRows = false;
-            this.dgvCaHoc.AllowUserToDeleteRows = false;
-            this.dgvCaHoc.AllowUserToResizeRows = false;
-            this.dgvCaHoc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvCaHoc.AutoGenerateColumns = false;
-            this.dgvCaHoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvCaHoc.BackgroundColor = System.Drawing.Color.White;
-            this.dgvCaHoc.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvCaHoc.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dgvCaHoc.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.dgvCaHoc.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvCaHoc.ColumnHeadersHeight = 48;
-            this.dgvCaHoc.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            colMaCa,
-            colTenCa,
-            colGioBatDau,
-            colGioKetThuc,
-            this.Actions});
-            colMaCa.DataPropertyName = "MaCa";
-            colMaCa.FillWeight = 90F;
-            colMaCa.HeaderText = "Mã ca";
-            colMaCa.Name = "colMaCa";
-            colMaCa.ReadOnly = true;
-            colTenCa.DataPropertyName = "TenCa";
-            colTenCa.FillWeight = 190F;
-            colTenCa.HeaderText = "Tên ca";
-            colTenCa.Name = "colTenCa";
-            colTenCa.ReadOnly = true;
-            colGioBatDau.DataPropertyName = "GioBatDauText";
-            colGioBatDau.FillWeight = 120F;
-            colGioBatDau.HeaderText = "Giờ bắt đầu";
-            colGioBatDau.Name = "colGioBatDau";
-            colGioBatDau.ReadOnly = true;
-            colGioKetThuc.DataPropertyName = "GioKetThucText";
-            colGioKetThuc.FillWeight = 120F;
-            colGioKetThuc.HeaderText = "Giờ kết thúc";
-            colGioKetThuc.Name = "colGioKetThuc";
-            colGioKetThuc.ReadOnly = true;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCaHoc.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvCaHoc.EnableHeadersVisualStyles = false;
-            this.dgvCaHoc.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.dgvCaHoc.Location = new System.Drawing.Point(3, 188);
-            this.dgvCaHoc.MultiSelect = false;
-            this.dgvCaHoc.Name = "dgvCaHoc";
-            this.dgvCaHoc.ReadOnly = true;
-            this.dgvCaHoc.RowHeadersVisible = false;
-            this.dgvCaHoc.RowHeadersWidth = 51;
-            this.dgvCaHoc.RowTemplate.Height = 44;
-            this.dgvCaHoc.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCaHoc.Size = new System.Drawing.Size(984, 383);
-            this.dgvCaHoc.TabIndex = 6;
-            this.dgvCaHoc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCaHoc_CellClick);
-            this.dgvCaHoc.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvCaHoc_CellMouseLeave);
-            this.dgvCaHoc.CellMouseMove += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvCaHoc_CellMouseMove);
-            this.dgvCaHoc.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.DgvCaHoc_CellPainting);
-            // 
-            // Actions
-            // 
-            this.Actions.FillWeight = 120F;
-            this.Actions.HeaderText = "Hành động";
-            this.Actions.MinimumWidth = 110;
-            this.Actions.Name = "Actions";
-            this.Actions.ReadOnly = true;
-            // 
-            // pnlPaging
-            // 
-            this.pnlPaging.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlPaging.BackColor = System.Drawing.Color.White;
-            this.pnlPaging.Controls.Add(this.lblPagingInfo);
-            this.pnlPaging.Controls.Add(this.pnlPageButtons);
-            this.pnlPaging.Location = new System.Drawing.Point(0, 579);
-            this.pnlPaging.Name = "pnlPaging";
-            this.pnlPaging.Size = new System.Drawing.Size(984, 46);
-            this.pnlPaging.TabIndex = 7;
-            this.pnlPaging.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelBorder_Paint);
-            this.pnlPaging.Resize += new System.EventHandler(this.PnlPaging_Resize);
-            // 
-            // lblPagingInfo
-            // 
-            this.lblPagingInfo.AutoSize = true;
-            this.lblPagingInfo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPagingInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
-            this.lblPagingInfo.Location = new System.Drawing.Point(18, 13);
-            this.lblPagingInfo.Name = "lblPagingInfo";
-            this.lblPagingInfo.Size = new System.Drawing.Size(192, 20);
-            this.lblPagingInfo.TabIndex = 0;
-            this.lblPagingInfo.Text = "Hiển thị 0-0 trong 0 kết quả";
-            // 
-            // pnlPageButtons
-            // 
-            this.pnlPageButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlPageButtons.Location = new System.Drawing.Point(760, 7);
-            this.pnlPageButtons.Name = "pnlPageButtons";
-            this.pnlPageButtons.Size = new System.Drawing.Size(206, 32);
-            this.pnlPageButtons.TabIndex = 1;
-            this.pnlPageButtons.WrapContents = false;
             // 
             // ViewAction
             // 
@@ -490,10 +462,10 @@ namespace QLPhongMay.GUI.Forms.Catalog
             // 
             // frmQLCaHoc
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(251)))));
-            this.ClientSize = new System.Drawing.Size(1042, 673);
+            this.ClientSize = new System.Drawing.Size(1044, 681);
             this.Controls.Add(this.pnlRoot);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MinimumSize = new System.Drawing.Size(1060, 720);
@@ -501,19 +473,113 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.Text = "Quản lý ca học";
             this.pnlRoot.ResumeLayout(false);
             this.pnlRoot.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCaHoc)).EndInit();
+            this.pnlPaging.ResumeLayout(false);
+            this.pnlPaging.PerformLayout();
             this.pnlEditor.ResumeLayout(false);
             this.pnlEditor.PerformLayout();
             this.pnlFilter.ResumeLayout(false);
             this.pnlFilter.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCaHoc)).EndInit();
-            this.pnlPaging.ResumeLayout(false);
-            this.pnlPaging.PerformLayout();
             this.ResumeLayout(false);
 
         }
         private void frmQLCaHoc_Load(object sender, EventArgs e)
         {
+            LayoutResponsive();
             RefreshCaHoc(true);
+        }
+
+        private void frmQLCaHoc_Resize(object sender, EventArgs e)
+        {
+            LayoutResponsive();
+        }
+
+        private void LayoutResponsive()
+        {
+            if (pnlRoot == null)
+            {
+                return;
+            }
+
+            int rootWidth = pnlRoot.ClientSize.Width;
+            int rootHeight = pnlRoot.ClientSize.Height;
+            if (rootWidth <= 0 || rootHeight <= 0)
+            {
+                return;
+            }
+
+            btnBack.Location = new Point(0, 4);
+            lblTitle.Location = new Point(btnBack.Right + 18, 0);
+            lblSubtitle.Location = new Point(lblTitle.Left + 4, 48);
+            lblSubtitle.MaximumSize = new Size(Math.Max(320, rootWidth - lblSubtitle.Left - 24), 0);
+            btnCreate.Location = new Point(rootWidth - btnCreate.Width, 92);
+
+            pnlStats.Location = new Point(0, 82);
+            pnlStats.Size = new Size(Math.Max(520, btnCreate.Left - 28), 88);
+            LayoutStatCards();
+
+            pnlEditor.Location = new Point(0, 188);
+            pnlEditor.Size = new Size(rootWidth, 110);
+            LayoutEditorControls();
+
+            pnlFilter.Location = new Point(0, 188);
+            pnlFilter.Size = new Size(rootWidth, 66);
+            txtSearch.Location = new Point(22, 16);
+            cboDuration.Location = new Point(rootWidth - cboDuration.Width - 22, 16);
+            txtSearch.Size = new Size(Math.Max(300, cboDuration.Left - 44), 30);
+
+            int topPanelBottom = pnlEditor.Visible ? pnlEditor.Bottom : pnlFilter.Visible ? pnlFilter.Bottom : 188;
+            int gridTop = topPanelBottom + 16;
+            int pagingTop = rootHeight - 46;
+            dgvCaHoc.Location = new Point(0, gridTop);
+            dgvCaHoc.Size = new Size(rootWidth, Math.Max(240, pagingTop - gridTop - 8));
+
+            pnlPaging.Location = new Point(0, pagingTop);
+            pnlPaging.Size = new Size(rootWidth, 46);
+            pnlPageButtons.Left = Math.Max(220, pnlRoot.Width - pnlPageButtons.Width - 18);
+        }
+
+        private void LayoutStatCards()
+        {
+            int count = pnlStats.Controls.Count;
+            if (count == 0)
+            {
+                return;
+            }
+
+            int gap = 16;
+            int cardWidth = Math.Max(170, (pnlStats.ClientSize.Width - gap * (count - 1)) / count);
+            int left = 0;
+            foreach (Control card in pnlStats.Controls)
+            {
+                card.Location = new Point(left, 0);
+                card.Size = new Size(cardWidth, 78);
+                left += cardWidth + gap;
+            }
+        }
+
+        private void LayoutEditorControls()
+        {
+            int left = 22;
+            int gap = 14;
+            int y = 20;
+            int buttonY = 64;
+            int buttonWidth = 108;
+            int available = pnlEditor.ClientSize.Width - left * 2 - gap * 3;
+            int fieldWidth = Math.Max(120, available / 4);
+
+            txtMaCa.Location = new Point(left, y);
+            txtMaCa.Size = new Size(fieldWidth, 30);
+            txtTenCa.Location = new Point(txtMaCa.Right + gap, y);
+            txtTenCa.Size = new Size(fieldWidth, 30);
+            txtGioBatDau.Location = new Point(txtTenCa.Right + gap, y);
+            txtGioBatDau.Size = new Size(fieldWidth, 30);
+            txtGioKetThuc.Location = new Point(txtGioBatDau.Right + gap, y);
+            txtGioKetThuc.Size = new Size(Math.Max(120, pnlEditor.ClientSize.Width - txtGioBatDau.Right - gap - left), 30);
+
+            btnClear.Location = new Point(pnlEditor.ClientSize.Width - left - buttonWidth, buttonY);
+            btnDelete.Location = new Point(btnClear.Left - buttonWidth - gap, buttonY);
+            btnUpdate.Location = new Point(btnDelete.Left - buttonWidth - gap, buttonY);
         }
 
         private void ConfigureTextBox(TextBox textBox, string placeholder, int x, int y, int width)
@@ -598,6 +664,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             AddStatCard("Tổng ca học", caHocs.Count.ToString(), Color.FromArgb(37, 99, 235));
             AddStatCard("Ca buổi sáng", caHocs.Count(item => item.GioBatDau < new TimeSpan(12, 0, 0)).ToString(), Color.FromArgb(245, 158, 11));
             AddStatCard("Ca buổi chiều", caHocs.Count(item => item.GioBatDau >= new TimeSpan(12, 0, 0)).ToString(), Color.FromArgb(22, 163, 74));
+            LayoutStatCards();
         }
 
         private void AddStatCard(string title, string value, Color accent)

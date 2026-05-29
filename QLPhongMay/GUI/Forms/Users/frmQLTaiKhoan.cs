@@ -43,6 +43,7 @@ namespace QLPhongMay.GUI.Forms.Users
             this.currentPage = 1;
             InitializeComponent();
             this.Load += new EventHandler(this.frmQLTaiKhoan_Load);
+            this.Resize += new EventHandler(this.frmQLTaiKhoan_Resize);
         }
 
         private void InitializeComponent()
@@ -320,9 +321,69 @@ namespace QLPhongMay.GUI.Forms.Users
 
         private void frmQLTaiKhoan_Load(object sender, EventArgs e)
         {
+            LayoutResponsive();
             ApplySearchPlaceholder();
             this.cboRole.SelectedIndex = 0;
             RefreshAccounts();
+        }
+
+        private void frmQLTaiKhoan_Resize(object sender, EventArgs e)
+        {
+            LayoutResponsive();
+        }
+
+        private void LayoutResponsive()
+        {
+            if (this.pnlRoot == null)
+            {
+                return;
+            }
+
+            int rootWidth = this.pnlRoot.ClientSize.Width;
+            int rootHeight = this.pnlRoot.ClientSize.Height;
+            if (rootWidth <= 0 || rootHeight <= 0)
+            {
+                return;
+            }
+
+            this.btnBack.Location = new Point(0, 8);
+            this.lblTitle.Location = new Point(this.btnBack.Right + 24, 0);
+            this.lblSubtitle.Location = new Point(this.lblTitle.Left + 4, 52);
+            this.lblSubtitle.MaximumSize = new Size(Math.Max(360, rootWidth - this.lblSubtitle.Left - 24), 0);
+
+            this.btnAdd.Location = new Point(rootWidth - this.btnAdd.Width, 92);
+
+            int statsWidth = Math.Max(560, this.btnAdd.Left - 32);
+            this.pnlStats.Location = new Point(0, 92);
+            this.pnlStats.Size = new Size(statsWidth, 84);
+
+            int statsInnerWidth = Math.Max(360, this.pnlStats.ClientSize.Width - 44);
+            int statsColumnWidth = statsInnerWidth / 3;
+            this.lblTotalAccounts.Location = new Point(22, 14);
+            this.lblTotalAccounts.Size = new Size(statsColumnWidth, 54);
+            this.lblAdminAccounts.Location = new Point(22 + statsColumnWidth, 14);
+            this.lblAdminAccounts.Size = new Size(statsColumnWidth, 54);
+            this.lblStaffAccounts.Location = new Point(22 + statsColumnWidth * 2, 14);
+            this.lblStaffAccounts.Size = new Size(statsInnerWidth - statsColumnWidth * 2, 54);
+
+            this.pnlFilter.Location = new Point(0, 194);
+            this.pnlFilter.Size = new Size(rootWidth, 66);
+            this.cboRole.Location = new Point(rootWidth - this.cboRole.Width - 22, 17);
+            this.txtSearch.Location = new Point(18, 17);
+            this.txtSearch.Size = new Size(Math.Max(320, this.cboRole.Left - 36), 30);
+
+            int gridTop = 282;
+            int pagingTop = rootHeight - 46;
+            int gridHeight = Math.Max(260, pagingTop - gridTop - 16);
+            this.dgvAccounts.Location = new Point(0, gridTop);
+            this.dgvAccounts.Size = new Size(rootWidth, gridHeight);
+
+            this.lblSummary.Location = new Point(4, pagingTop + 6);
+            this.lblSummary.MaximumSize = new Size(Math.Max(360, rootWidth - 260), 0);
+
+            this.btnNextPage.Location = new Point(rootWidth - this.btnNextPage.Width, pagingTop);
+            this.lblPageInfo.Location = new Point(this.btnNextPage.Left - this.lblPageInfo.Width - 8, pagingTop);
+            this.btnPreviousPage.Location = new Point(this.lblPageInfo.Left - this.btnPreviousPage.Width - 8, pagingTop);
         }
 
         private void BtnBack_Click(object sender, EventArgs e)

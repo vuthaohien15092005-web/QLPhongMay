@@ -65,6 +65,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
             InitializeComponent();
             this.Shown += new EventHandler(this.frmQLLopHoc_Shown);
+            this.Resize += new EventHandler(this.frmQLLopHoc_Resize);
         }
 
         protected override void Dispose(bool disposing)
@@ -548,7 +549,62 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         private async void frmQLLopHoc_Shown(object sender, EventArgs e)
         {
+            LayoutResponsive();
             await RefreshDataAsync(true);
+        }
+
+        private void frmQLLopHoc_Resize(object sender, EventArgs e)
+        {
+            LayoutResponsive();
+        }
+
+        private void LayoutResponsive()
+        {
+            if (this.pnlRoot == null)
+            {
+                return;
+            }
+
+            int rootWidth = this.pnlRoot.ClientSize.Width;
+            int rootHeight = this.pnlRoot.ClientSize.Height;
+            if (rootWidth <= 0 || rootHeight <= 0)
+            {
+                return;
+            }
+
+            this.btnBack.Location = new Point(0, 4);
+            this.lblTitle.Location = new Point(this.btnBack.Right + 18, 0);
+            this.lblSubtitle.Location = new Point(this.lblTitle.Left + 4, 48);
+            this.lblSubtitle.MaximumSize = new Size(Math.Max(320, rootWidth - this.lblSubtitle.Left - 24), 0);
+            this.btnAdd.Location = new Point(rootWidth - this.btnAdd.Width, 92);
+
+            int statsArea = Math.Max(540, this.btnAdd.Left - 28);
+            int statsWidth = Math.Max(170, (statsArea - 28) / 3);
+            this.pnlTotalClasses.Location = new Point(0, 82);
+            this.pnlTotalClasses.Size = new Size(statsWidth, 78);
+            this.pnlTotalStudents.Location = new Point(this.pnlTotalClasses.Right + 14, 82);
+            this.pnlTotalStudents.Size = new Size(statsWidth, 78);
+            this.pnlAverageStudents.Location = new Point(this.pnlTotalStudents.Right + 14, 82);
+            this.pnlAverageStudents.Size = new Size(statsWidth, 78);
+
+            this.pnlFilter.Location = new Point(0, 188);
+            this.pnlFilter.Size = new Size(rootWidth, 66);
+            this.lblSearch.Location = new Point(22, 8);
+            this.txtSearch.Location = new Point(22, 28);
+            this.cboSort.Location = new Point(rootWidth - this.cboSort.Width - 22, 28);
+            this.lblSort.Location = new Point(this.cboSort.Left, 8);
+            this.cboSiSo.Location = new Point(this.cboSort.Left - this.cboSiSo.Width - 18, 28);
+            this.lblSiSoFilter.Location = new Point(this.cboSiSo.Left, 8);
+            this.txtSearch.Size = new Size(Math.Max(300, this.cboSiSo.Left - 44), 30);
+
+            int gridTop = this.pnlFilter.Bottom + 6;
+            int pagingTop = rootHeight - 46;
+            this.dgvLopHoc.Location = new Point(0, gridTop);
+            this.dgvLopHoc.Size = new Size(rootWidth, Math.Max(260, pagingTop - gridTop - 8));
+
+            this.pnlPaging.Location = new Point(0, pagingTop);
+            this.pnlPaging.Size = new Size(rootWidth, 46);
+            this.pnlPageButtons.Left = this.pnlPaging.Width - this.pnlPageButtons.Width - 18;
         }
 
         private async Task RefreshDataAsync(bool resetPage)

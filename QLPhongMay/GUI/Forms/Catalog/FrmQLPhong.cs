@@ -45,6 +45,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
         {
             InitializeComponent();
             Load += FrmQLPhong_Load;
+            Resize += FrmQLPhong_Resize;
         }
 
         private void InitializeComponent()
@@ -301,7 +302,97 @@ namespace QLPhongMay.GUI.Forms.Catalog
 
         private void FrmQLPhong_Load(object sender, EventArgs e)
         {
+            LayoutResponsive();
             RefreshRooms(true);
+        }
+
+        private void FrmQLPhong_Resize(object sender, EventArgs e)
+        {
+            LayoutResponsive();
+        }
+
+        private void LayoutResponsive()
+        {
+            if (pnlRoot == null)
+            {
+                return;
+            }
+
+            int rootWidth = pnlRoot.ClientSize.Width;
+            int rootHeight = pnlRoot.ClientSize.Height;
+            if (rootWidth <= 0 || rootHeight <= 0)
+            {
+                return;
+            }
+
+            btnBack.Location = new Point(0, 4);
+            lblTitle.Location = new Point(btnBack.Right + 18, 0);
+            lblSubtitle.Location = new Point(lblTitle.Left + 4, 48);
+            lblSubtitle.MaximumSize = new Size(Math.Max(320, rootWidth - lblSubtitle.Left - 24), 0);
+            btnCreate.Location = new Point(rootWidth - btnCreate.Width, 92);
+
+            pnlStats.Location = new Point(0, 82);
+            pnlStats.Size = new Size(Math.Max(520, btnCreate.Left - 28), 88);
+            LayoutStatCards();
+
+            pnlFilter.Location = new Point(0, 188);
+            pnlFilter.Size = new Size(rootWidth, 66);
+            LayoutFilterControls();
+
+            int gridTop = pnlFilter.Bottom + 16;
+            int pagingTop = rootHeight - 46;
+            dgvPhong.Location = new Point(0, gridTop);
+            dgvPhong.Size = new Size(rootWidth, Math.Max(260, pagingTop - gridTop - 8));
+
+            pnlPaging.Location = new Point(0, pagingTop);
+            pnlPaging.Size = new Size(rootWidth, 46);
+            pnlPageButtons.Left = pnlPaging.Width - pnlPageButtons.Width - 18;
+        }
+
+        private void LayoutStatCards()
+        {
+            int count = pnlStats.Controls.Count;
+            if (count == 0)
+            {
+                return;
+            }
+
+            int gap = 12;
+            int cardWidth = Math.Max(170, (pnlStats.ClientSize.Width - gap * (count - 1)) / count);
+            int left = 0;
+            foreach (Control card in pnlStats.Controls)
+            {
+                card.Location = new Point(left, 0);
+                card.Size = new Size(cardWidth, 78);
+                left += cardWidth + gap;
+            }
+        }
+
+        private void LayoutFilterControls()
+        {
+            int width = pnlFilter.ClientSize.Width;
+            int left = 18;
+            int gap = 16;
+            int y = 18;
+
+            int statusWidth = 180;
+            int dateWidth = 140;
+            int shiftWidth = 160;
+            int dayWidth = 140;
+            int checkWidth = chkPhongTrong.Width;
+            int searchWidth = Math.Max(260, width - left * 2 - statusWidth - dateWidth - shiftWidth - dayWidth - checkWidth - gap * 5);
+
+            txtSearch.Location = new Point(left, y);
+            txtSearch.Size = new Size(searchWidth, 30);
+            cboStatus.Location = new Point(txtSearch.Right + gap, y);
+            cboStatus.Size = new Size(statusWidth, 30);
+            chkPhongTrong.Location = new Point(cboStatus.Right + gap, y + 4);
+            dtpNgay.Location = new Point(chkPhongTrong.Right + gap, y);
+            dtpNgay.Size = new Size(dateWidth, 30);
+            cboCa.Location = new Point(dtpNgay.Right + gap, y);
+            cboCa.Size = new Size(shiftWidth, 30);
+            cboThu.Location = new Point(cboCa.Right + gap, y);
+            cboThu.Size = new Size(Math.Max(120, width - cboCa.Right - gap - left), 30);
         }
 
         private void RefreshRooms(bool resetPage)
@@ -374,6 +465,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             pnlStats.Controls.Add(CreateStatCard("Σ", "Tổng phòng", phongMays.Count.ToString(CultureInfo.InvariantCulture), primaryColor));
             pnlStats.Controls.Add(CreateStatCard("H", "Hoạt động", phongMays.Count(item => NormalizeStatus(item.TrangThai) == "HoatDong").ToString(CultureInfo.InvariantCulture), Color.FromArgb(22, 163, 74)));
             pnlStats.Controls.Add(CreateStatCard("B", "Bảo trì", phongMays.Count(item => NormalizeStatus(item.TrangThai) == "BaoTri").ToString(CultureInfo.InvariantCulture), Color.FromArgb(245, 158, 11)));
+            LayoutStatCards();
         }
 
         private Panel CreateStatCard(string iconText, string title, string value, Color accent)

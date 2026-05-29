@@ -160,6 +160,9 @@
     <EmbeddedResource Include="GUI\Forms\Reports\frmBaoCaoThongKe.resx">
       <DependentUpon>frmBaoCaoThongKe.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\Schedule\FrmScheduleEditor2.resx">
+      <DependentUpon>FrmScheduleEditor2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Forms\Users\frmQLTaiKhoan.resx">
       <DependentUpon>frmQLTaiKhoan.cs</DependentUpon>
     </EmbeddedResource>
@@ -191,7 +194,7 @@
     <Compile Include="GUI\Forms\Schedule\frmQuanLyLich.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Forms\Schedule\FrmScheduleEditor.cs">
+    <Compile Include="GUI\Forms\Schedule\FrmScheduleEditor2.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\Forms\Reports\frmBaoCaoThongKe.cs">
