@@ -14,6 +14,7 @@ namespace QLPhongMay.GUI.Forms.Reports
         private int activeReportTab;
 
         private Panel rootPanel;
+        private Button btnBack;
         private Label lblTitle;
         private Label lblSubtitle;
         private Panel tabPanel;
@@ -55,6 +56,7 @@ namespace QLPhongMay.GUI.Forms.Reports
         private void InitializeComponent()
         {
             rootPanel = new Panel();
+            btnBack = new Button();
             lblTitle = new Label();
             lblSubtitle = new Label();
             tabPanel = new Panel();
@@ -80,6 +82,7 @@ namespace QLPhongMay.GUI.Forms.Reports
 
             rootPanel.AutoScroll = true;
             rootPanel.BackColor = Color.FromArgb(239, 246, 255);
+            rootPanel.Controls.Add(btnBack);
             rootPanel.Controls.Add(lblTitle);
             rootPanel.Controls.Add(lblSubtitle);
             rootPanel.Controls.Add(tabPanel);
@@ -90,9 +93,23 @@ namespace QLPhongMay.GUI.Forms.Reports
             rootPanel.Name = "rootPanel";
             rootPanel.Size = new Size(1280, 760);
 
+            btnBack.BackColor = Color.White;
+            btnBack.Cursor = Cursors.Hand;
+            btnBack.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
+            btnBack.FlatStyle = FlatStyle.Flat;
+            btnBack.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnBack.ForeColor = Color.FromArgb(30, 41, 59);
+            btnBack.Location = new Point(24, 24);
+            btnBack.Name = "btnBack";
+            btnBack.Size = new Size(118, 38);
+            btnBack.TabIndex = 0;
+            btnBack.Text = "< Quay lại";
+            btnBack.UseVisualStyleBackColor = false;
+            btnBack.Click += new EventHandler(this.BtnBack_Click);
+
             lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
-            lblTitle.Location = new Point(28, 22);
+            lblTitle.Location = new Point(166, 22);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(560, 38);
             lblTitle.Text = "Quản lý Báo cáo & Thống kê";
@@ -100,7 +117,7 @@ namespace QLPhongMay.GUI.Forms.Reports
 
             lblSubtitle.Font = new Font("Segoe UI", 10F);
             lblSubtitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblSubtitle.Location = new Point(30, 62);
+            lblSubtitle.Location = new Point(168, 62);
             lblSubtitle.Name = "lblSubtitle";
             lblSubtitle.Size = new Size(650, 24);
             lblSubtitle.Text = "Theo dõi lịch thực hành, mức sử dụng phòng và trạng thái máy tính";
@@ -314,6 +331,11 @@ namespace QLPhongMay.GUI.Forms.Reports
             cboGroupMode.SelectedIndex = 0;
             cboRoom.SelectedIndex = 0;
             LoadReportData();
+        }
+
+        private void BtnBack_Click(object sender, EventArgs e)
+        {
+            Close();
         }
 
         private void SelectReportTab(int tabIndex)

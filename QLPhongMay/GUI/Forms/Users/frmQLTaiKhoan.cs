@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using QLPhongMay.BLL;
 using QLPhongMay.DAL;
@@ -12,7 +13,10 @@ namespace QLPhongMay.GUI.Forms.Users
     public partial class frmQLTaiKhoan : Form
     {
         private readonly UserRepository userRepository;
+        private const int PageSize = 5;
         private List<AccountListItem> accounts;
+        private List<AccountListItem> filteredAccounts;
+        private int currentPage;
         private Panel pnlRoot;
         private Button btnBack;
         private Label lblTitle;
@@ -27,11 +31,16 @@ namespace QLPhongMay.GUI.Forms.Users
         private ComboBox cboRole;
         private DataGridView dgvAccounts;
         private Label lblSummary;
+        private Button btnPreviousPage;
+        private Label lblPageInfo;
+        private Button btnNextPage;
 
         public frmQLTaiKhoan()
         {
             this.userRepository = new UserRepository();
             this.accounts = new List<AccountListItem>();
+            this.filteredAccounts = new List<AccountListItem>();
+            this.currentPage = 1;
             InitializeComponent();
             this.Load += new EventHandler(this.frmQLTaiKhoan_Load);
         }
@@ -52,6 +61,9 @@ namespace QLPhongMay.GUI.Forms.Users
             this.cboRole = new ComboBox();
             this.dgvAccounts = new DataGridView();
             this.lblSummary = new Label();
+            this.btnPreviousPage = new Button();
+            this.lblPageInfo = new Label();
+            this.btnNextPage = new Button();
             this.pnlRoot.SuspendLayout();
             this.pnlStats.SuspendLayout();
             this.pnlFilter.SuspendLayout();
@@ -69,6 +81,9 @@ namespace QLPhongMay.GUI.Forms.Users
             this.pnlRoot.Controls.Add(this.pnlFilter);
             this.pnlRoot.Controls.Add(this.dgvAccounts);
             this.pnlRoot.Controls.Add(this.lblSummary);
+            this.pnlRoot.Controls.Add(this.btnPreviousPage);
+            this.pnlRoot.Controls.Add(this.lblPageInfo);
+            this.pnlRoot.Controls.Add(this.btnNextPage);
             this.pnlRoot.Location = new Point(24, 22);
             this.pnlRoot.Name = "pnlRoot";
             this.pnlRoot.Size = new Size(1132, 816);
@@ -237,6 +252,51 @@ namespace QLPhongMay.GUI.Forms.Users
             this.lblSummary.TabIndex = 7;
             this.lblSummary.Text = "Tổng tài khoản: 0";
             // 
+            // btnPreviousPage
+            // 
+            this.btnPreviousPage.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            this.btnPreviousPage.BackColor = Color.White;
+            this.btnPreviousPage.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
+            this.btnPreviousPage.FlatStyle = FlatStyle.Flat;
+            this.btnPreviousPage.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.btnPreviousPage.ForeColor = Color.FromArgb(37, 99, 235);
+            this.btnPreviousPage.Location = new Point(940, 770);
+            this.btnPreviousPage.Name = "btnPreviousPage";
+            this.btnPreviousPage.Size = new Size(46, 36);
+            this.btnPreviousPage.TabIndex = 8;
+            this.btnPreviousPage.Text = "<";
+            this.btnPreviousPage.UseVisualStyleBackColor = false;
+            this.btnPreviousPage.Click += new EventHandler(this.BtnPreviousPage_Click);
+            // 
+            // lblPageInfo
+            // 
+            this.lblPageInfo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            this.lblPageInfo.BackColor = Color.FromArgb(37, 99, 235);
+            this.lblPageInfo.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblPageInfo.ForeColor = Color.White;
+            this.lblPageInfo.Location = new Point(994, 770);
+            this.lblPageInfo.Name = "lblPageInfo";
+            this.lblPageInfo.Size = new Size(84, 36);
+            this.lblPageInfo.TabIndex = 9;
+            this.lblPageInfo.Text = "1 / 1";
+            this.lblPageInfo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnNextPage
+            // 
+            this.btnNextPage.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            this.btnNextPage.BackColor = Color.White;
+            this.btnNextPage.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
+            this.btnNextPage.FlatStyle = FlatStyle.Flat;
+            this.btnNextPage.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.btnNextPage.ForeColor = Color.FromArgb(37, 99, 235);
+            this.btnNextPage.Location = new Point(1086, 770);
+            this.btnNextPage.Name = "btnNextPage";
+            this.btnNextPage.Size = new Size(46, 36);
+            this.btnNextPage.TabIndex = 10;
+            this.btnNextPage.Text = ">";
+            this.btnNextPage.UseVisualStyleBackColor = false;
+            this.btnNextPage.Click += new EventHandler(this.BtnNextPage_Click);
+            // 
             // frmQLTaiKhoan
             // 
             this.AutoScaleDimensions = new SizeF(8F, 20F);
@@ -260,6 +320,7 @@ namespace QLPhongMay.GUI.Forms.Users
 
         private void frmQLTaiKhoan_Load(object sender, EventArgs e)
         {
+            ApplySearchPlaceholder();
             this.cboRole.SelectedIndex = 0;
             RefreshAccounts();
         }
@@ -350,6 +411,7 @@ namespace QLPhongMay.GUI.Forms.Users
 
         private void FilterChanged(object sender, EventArgs e)
         {
+            this.currentPage = 1;
             LoadGrid();
         }
 
@@ -372,10 +434,23 @@ namespace QLPhongMay.GUI.Forms.Users
                 source = source.Where(item => GetRoleName(item) == roleFilter);
             }
 
-            var rows = source
+            this.filteredAccounts = source.ToList();
+            int totalFiltered = this.filteredAccounts.Count;
+            int totalPages = Math.Max(1, (int)Math.Ceiling(totalFiltered / (double)PageSize));
+            if (this.currentPage > totalPages)
+            {
+                this.currentPage = totalPages;
+            }
+
+            var pageItems = this.filteredAccounts
+                .Skip((this.currentPage - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
+
+            var rows = pageItems
                 .Select((item, index) => new AccountRow
                 {
-                    Stt = index + 1,
+                    Stt = ((this.currentPage - 1) * PageSize) + index + 1,
                     Username = item.TenDangNhap,
                     FullName = item.HoTen,
                     Email = item.Email,
@@ -386,8 +461,58 @@ namespace QLPhongMay.GUI.Forms.Users
             this.dgvAccounts.Columns.Clear();
             this.dgvAccounts.DataSource = rows;
             ConfigureGridColumns();
-            this.lblSummary.Text = "Đang hiển thị: " + rows.Count + " / " + this.accounts.Count + " tài khoản";
+            UpdatePaging(totalFiltered, totalPages, rows.Count);
         }
+
+        private void UpdatePaging(int totalFiltered, int totalPages, int visibleCount)
+        {
+            if (totalFiltered == 0)
+            {
+                this.lblSummary.Text = "Không có tài khoản phù hợp";
+                this.lblPageInfo.Text = "0 / 0";
+                this.btnPreviousPage.Enabled = false;
+                this.btnNextPage.Enabled = false;
+                return;
+            }
+
+            int from = ((this.currentPage - 1) * PageSize) + 1;
+            int to = from + visibleCount - 1;
+            this.lblSummary.Text = "Hiển thị " + from + "-" + to + " / " + totalFiltered + " tài khoản";
+            this.lblPageInfo.Text = this.currentPage + " / " + totalPages;
+            this.btnPreviousPage.Enabled = this.currentPage > 1;
+            this.btnNextPage.Enabled = this.currentPage < totalPages;
+        }
+
+        private void BtnPreviousPage_Click(object sender, EventArgs e)
+        {
+            if (this.currentPage <= 1)
+            {
+                return;
+            }
+
+            this.currentPage--;
+            LoadGrid();
+        }
+
+        private void BtnNextPage_Click(object sender, EventArgs e)
+        {
+            int totalPages = Math.Max(1, (int)Math.Ceiling(this.filteredAccounts.Count / (double)PageSize));
+            if (this.currentPage >= totalPages)
+            {
+                return;
+            }
+
+            this.currentPage++;
+            LoadGrid();
+        }
+
+        private void ApplySearchPlaceholder()
+        {
+            SendMessage(this.txtSearch.Handle, 0x1501, (IntPtr)1, "Tìm kiếm theo họ tên, tên đăng nhập, email");
+        }
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, string lParam);
 
         private static bool ContainsText(string text, string keyword)
         {
