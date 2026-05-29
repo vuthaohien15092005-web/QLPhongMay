@@ -55,10 +55,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\AuthService.cs" />
+    <Compile Include="BLL\CaHocService.cs" />
+    <Compile Include="BLL\ComputerService.cs" />
+    <Compile Include="BLL\ConfigurationService.cs" />
+    <Compile Include="BLL\LopHocService.cs" />
+    <Compile Include="BLL\ScheduleService.cs" />
     <Compile Include="BLL\UserService.cs" />
     <Compile Include="BLL\Session.cs" />
     <Compile Include="BLL\PasswordHasher.cs" />
     <Compile Include="DAL\AppDbContext.cs" />
+    <Compile Include="DAL\CaHocRepository.cs" />
     <Compile Include="DAL\ConfigurationRepository.cs" />
     <Compile Include="DAL\ComputerRepository.cs" />
     <Compile Include="DAL\LopHocRepository.cs" />
