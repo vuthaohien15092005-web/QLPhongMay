@@ -1,8 +1,6 @@
-﻿using System;
+using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Guna.UI2.WinForms;
 using QLPhongMay.BLL;
 using QLPhongMay.DTO;
 
@@ -39,37 +37,26 @@ namespace QLPhongMay.GUI.Forms.Users
             public AccountField Field { get; private set; }
         }
 
-        private readonly Color primaryColor = Color.FromArgb(37, 99, 235);
-        private readonly Color mutedTextColor = Color.FromArgb(100, 116, 139);
-        private readonly Color borderColor = Color.FromArgb(226, 232, 240);
-        private readonly Color inputBackColor = Color.FromArgb(248, 250, 252);
-        private readonly Color dangerColor = Color.FromArgb(220, 38, 38);
         private readonly AccountDialogMode mode;
         private readonly AccountListItem account;
-
-        private System.ComponentModel.IContainer components;
-        private Guna2BorderlessForm borderlessForm;
-        private Guna2ShadowForm shadowForm;
-        private Guna2Panel pnlRoot;
-        private Guna2ControlBox btnClose;
-        private Guna2HtmlLabel lblTitle;
-        private Guna2HtmlLabel lblSubtitle;
-        private Guna2HtmlLabel lblFullName;
-        private Guna2TextBox txtFullName;
-        private Guna2HtmlLabel lblUsername;
-        private Guna2TextBox txtUsername;
-        private Guna2HtmlLabel lblPassword;
-        private Guna2TextBox txtPassword;
-        private Guna2HtmlLabel lblNewPassword;
-        private Guna2TextBox txtNewPassword;
-        private Guna2HtmlLabel lblEmail;
-        private Guna2TextBox txtEmail;
-        private Guna2HtmlLabel lblRole;
-        private Guna2ComboBox cboRole;
-        private Guna2HtmlLabel lblError;
-        private Guna2Button btnCancel;
-        private Guna2Button btnSave;
-        private bool passwordVisible;
+        private Label lblTitle;
+        private Label lblSubtitle;
+        private Label lblFullName;
+        private TextBox txtFullName;
+        private Label lblUsername;
+        private TextBox txtUsername;
+        private Label lblPassword;
+        private TextBox txtPassword;
+        private Label lblNewPassword;
+        private TextBox txtNewPassword;
+        private Label lblEmail;
+        private TextBox txtEmail;
+        private Label lblRole;
+        private ComboBox cboRole;
+        private CheckBox chkShowPassword;
+        private Label lblError;
+        private Button btnSave;
+        private Button btnCancel;
 
         public Func<FrmAddAccount, AccountValidationError> ExternalValidator { get; set; }
 
@@ -126,189 +113,257 @@ namespace QLPhongMay.GUI.Forms.Users
             get { return this.RoleName == "Admin" ? 1 : 2; }
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && this.components != null)
-            {
-                this.components.Dispose();
-            }
-
-            base.Dispose(disposing);
-        }
-
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.borderlessForm = new Guna2BorderlessForm(this.components);
-            this.shadowForm = new Guna2ShadowForm(this.components);
-            this.pnlRoot = new Guna2Panel();
-            this.btnClose = new Guna2ControlBox();
-            this.lblTitle = new Guna2HtmlLabel();
-            this.lblSubtitle = new Guna2HtmlLabel();
-            this.lblFullName = new Guna2HtmlLabel();
-            this.txtFullName = new Guna2TextBox();
-            this.lblUsername = new Guna2HtmlLabel();
-            this.txtUsername = new Guna2TextBox();
-            this.lblPassword = new Guna2HtmlLabel();
-            this.txtPassword = new Guna2TextBox();
-            this.lblNewPassword = new Guna2HtmlLabel();
-            this.txtNewPassword = new Guna2TextBox();
-            this.lblEmail = new Guna2HtmlLabel();
-            this.txtEmail = new Guna2TextBox();
-            this.lblRole = new Guna2HtmlLabel();
-            this.cboRole = new Guna2ComboBox();
-            this.lblError = new Guna2HtmlLabel();
-            this.btnCancel = new Guna2Button();
-            this.btnSave = new Guna2Button();
-            this.pnlRoot.SuspendLayout();
+            this.lblTitle = new Label();
+            this.lblSubtitle = new Label();
+            this.lblFullName = new Label();
+            this.txtFullName = new TextBox();
+            this.lblUsername = new Label();
+            this.txtUsername = new TextBox();
+            this.lblPassword = new Label();
+            this.txtPassword = new TextBox();
+            this.lblNewPassword = new Label();
+            this.txtNewPassword = new TextBox();
+            this.lblEmail = new Label();
+            this.txtEmail = new TextBox();
+            this.lblRole = new Label();
+            this.cboRole = new ComboBox();
+            this.chkShowPassword = new CheckBox();
+            this.lblError = new Label();
+            this.btnSave = new Button();
+            this.btnCancel = new Button();
             this.SuspendLayout();
-
-            this.borderlessForm.BorderRadius = 18;
-            this.borderlessForm.ContainerControl = this;
-            this.borderlessForm.DockIndicatorTransparencyValue = 0.6D;
-            this.borderlessForm.ResizeForm = false;
-            this.borderlessForm.TransparentWhileDrag = true;
-
-            this.shadowForm.BorderRadius = 18;
-            this.shadowForm.TargetForm = this;
-
-            this.pnlRoot.BorderColor = this.borderColor;
-            this.pnlRoot.BorderRadius = 18;
-            this.pnlRoot.BorderThickness = 1;
-            this.pnlRoot.Controls.Add(this.btnClose);
-            this.pnlRoot.Controls.Add(this.lblTitle);
-            this.pnlRoot.Controls.Add(this.lblSubtitle);
-            this.pnlRoot.Controls.Add(this.lblFullName);
-            this.pnlRoot.Controls.Add(this.txtFullName);
-            this.pnlRoot.Controls.Add(this.lblUsername);
-            this.pnlRoot.Controls.Add(this.txtUsername);
-            this.pnlRoot.Controls.Add(this.lblPassword);
-            this.pnlRoot.Controls.Add(this.txtPassword);
-            this.pnlRoot.Controls.Add(this.lblNewPassword);
-            this.pnlRoot.Controls.Add(this.txtNewPassword);
-            this.pnlRoot.Controls.Add(this.lblEmail);
-            this.pnlRoot.Controls.Add(this.txtEmail);
-            this.pnlRoot.Controls.Add(this.lblRole);
-            this.pnlRoot.Controls.Add(this.cboRole);
-            this.pnlRoot.Controls.Add(this.lblError);
-            this.pnlRoot.Controls.Add(this.btnCancel);
-            this.pnlRoot.Controls.Add(this.btnSave);
-            this.pnlRoot.Dock = DockStyle.Fill;
-            this.pnlRoot.FillColor = Color.White;
-            this.pnlRoot.Location = new Point(0, 0);
-            this.pnlRoot.Name = "pnlRoot";
-            this.pnlRoot.Padding = new Padding(28);
-            this.pnlRoot.Size = new Size(520, 650);
-
-            this.btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            this.btnClose.BorderRadius = 8;
-            this.btnClose.FillColor = Color.Transparent;
-            this.btnClose.HoverState.FillColor = Color.FromArgb(241, 245, 249);
-            this.btnClose.IconColor = Color.FromArgb(71, 85, 105);
-            this.btnClose.Location = new Point(464, 24);
-            this.btnClose.Size = new Size(32, 32);
-
-            ConfigureLabel(this.lblTitle, "Thêm tài khoản mới", 28, 24, 18F, true);
-            ConfigureLabel(this.lblSubtitle, "Nhập thông tin để cấp quyền truy cập hệ thống", 30, 69, 10F, false);
-            ConfigureLabel(this.lblFullName, "Họ và tên", 31, 118, 9.5F, true);
-            ConfigureTextBox(this.txtFullName, "Nhập họ và tên", 30, 148, 1);
-            ConfigureLabel(this.lblUsername, "Tên đăng nhập", 31, 216, 9.5F, true);
-            ConfigureTextBox(this.txtUsername, "Nhập tên đăng nhập", 30, 246, 2);
-            ConfigureLabel(this.lblPassword, "Mật khẩu", 31, 314, 9.5F, true);
-            ConfigureTextBox(this.txtPassword, "Nhập mật khẩu", 30, 344, 3);
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
+            this.lblTitle.Location = new Point(28, 24);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new Size(269, 41);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Thêm tài khoản mới";
+            // 
+            // lblSubtitle
+            // 
+            this.lblSubtitle.AutoSize = true;
+            this.lblSubtitle.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.lblSubtitle.ForeColor = Color.FromArgb(100, 116, 139);
+            this.lblSubtitle.Location = new Point(32, 68);
+            this.lblSubtitle.Name = "lblSubtitle";
+            this.lblSubtitle.Size = new Size(374, 23);
+            this.lblSubtitle.TabIndex = 1;
+            this.lblSubtitle.Text = "Nhập thông tin để cấp quyền truy cập hệ thống";
+            // 
+            // lblFullName
+            // 
+            this.lblFullName.AutoSize = true;
+            this.lblFullName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblFullName.Location = new Point(32, 116);
+            this.lblFullName.Name = "lblFullName";
+            this.lblFullName.Size = new Size(85, 21);
+            this.lblFullName.TabIndex = 2;
+            this.lblFullName.Text = "Họ và tên";
+            // 
+            // txtFullName
+            // 
+            this.txtFullName.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.txtFullName.Location = new Point(35, 142);
+            this.txtFullName.Name = "txtFullName";
+            this.txtFullName.Size = new Size(450, 30);
+            this.txtFullName.TabIndex = 3;
+            // 
+            // lblUsername
+            // 
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblUsername.Location = new Point(32, 188);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new Size(122, 21);
+            this.lblUsername.TabIndex = 4;
+            this.lblUsername.Text = "Tên đăng nhập";
+            // 
+            // txtUsername
+            // 
+            this.txtUsername.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.txtUsername.Location = new Point(35, 214);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new Size(450, 30);
+            this.txtUsername.TabIndex = 5;
+            // 
+            // lblPassword
+            // 
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblPassword.Location = new Point(32, 260);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new Size(79, 21);
+            this.lblPassword.TabIndex = 6;
+            this.lblPassword.Text = "Mật khẩu";
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.txtPassword.Location = new Point(35, 286);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new Size(450, 30);
+            this.txtPassword.TabIndex = 7;
             this.txtPassword.UseSystemPasswordChar = true;
-            this.txtPassword.IconRight = CreateEyeIcon(this.mutedTextColor, false);
-            this.txtPassword.IconRightOffset = new Point(8, 0);
-            this.txtPassword.IconRightSize = new Size(18, 18);
-            this.txtPassword.IconRightClick += new EventHandler(this.TxtPassword_IconRightClick);
-            ConfigureLabel(this.lblNewPassword, "Mật khẩu mới", 31, 412, 9.5F, true);
-            ConfigureTextBox(this.txtNewPassword, "Để trống nếu không đổi mật khẩu", 30, 442, 4);
+            // 
+            // lblNewPassword
+            // 
+            this.lblNewPassword.AutoSize = true;
+            this.lblNewPassword.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblNewPassword.Location = new Point(32, 332);
+            this.lblNewPassword.Name = "lblNewPassword";
+            this.lblNewPassword.Size = new Size(113, 21);
+            this.lblNewPassword.TabIndex = 8;
+            this.lblNewPassword.Text = "Mật khẩu mới";
             this.lblNewPassword.Visible = false;
-            this.txtNewPassword.Visible = false;
+            // 
+            // txtNewPassword
+            // 
+            this.txtNewPassword.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.txtNewPassword.Location = new Point(35, 358);
+            this.txtNewPassword.Name = "txtNewPassword";
+            this.txtNewPassword.Size = new Size(450, 30);
+            this.txtNewPassword.TabIndex = 9;
             this.txtNewPassword.UseSystemPasswordChar = true;
-            ConfigureLabel(this.lblEmail, "Email", 31, 412, 9.5F, true);
-            ConfigureTextBox(this.txtEmail, "Nhập email", 30, 442, 4);
-            ConfigureLabel(this.lblRole, "Vai trò", 31, 510, 9.5F, true);
-
-            this.cboRole.BackColor = Color.Transparent;
-            this.cboRole.BorderColor = this.borderColor;
-            this.cboRole.BorderRadius = 8;
-            this.cboRole.Cursor = Cursors.Hand;
-            this.cboRole.DrawMode = DrawMode.OwnerDrawFixed;
+            this.txtNewPassword.Visible = false;
+            // 
+            // lblEmail
+            // 
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblEmail.Location = new Point(32, 332);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new Size(50, 21);
+            this.lblEmail.TabIndex = 10;
+            this.lblEmail.Text = "Email";
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.txtEmail.Location = new Point(35, 358);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new Size(450, 30);
+            this.txtEmail.TabIndex = 11;
+            // 
+            // lblRole
+            // 
+            this.lblRole.AutoSize = true;
+            this.lblRole.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.lblRole.Location = new Point(32, 404);
+            this.lblRole.Name = "lblRole";
+            this.lblRole.Size = new Size(55, 21);
+            this.lblRole.TabIndex = 12;
+            this.lblRole.Text = "Vai trò";
+            // 
+            // cboRole
+            // 
             this.cboRole.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.cboRole.FillColor = this.inputBackColor;
-            this.cboRole.FocusedColor = this.primaryColor;
-            this.cboRole.FocusedState.BorderColor = this.primaryColor;
             this.cboRole.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.cboRole.ForeColor = Color.FromArgb(51, 65, 85);
-            this.cboRole.HoverState.BorderColor = this.primaryColor;
-            this.cboRole.ItemHeight = 40;
-            this.cboRole.Items.AddRange(new object[] { "Admin", "Quản lý phòng máy" });
-            this.cboRole.Location = new Point(30, 540);
+            this.cboRole.FormattingEnabled = true;
+            this.cboRole.Items.AddRange(new object[] {
+            "Admin",
+            "Quản lý phòng máy"});
+            this.cboRole.Location = new Point(35, 430);
             this.cboRole.Name = "cboRole";
-            this.cboRole.Size = new Size(460, 46);
-            this.cboRole.StartIndex = 0;
-            this.cboRole.TabIndex = 5;
-            this.cboRole.SelectedIndexChanged += new EventHandler(this.CboRole_SelectedIndexChanged);
-
-            this.lblError.BackColor = Color.Transparent;
-            this.lblError.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.lblError.ForeColor = this.dangerColor;
-            this.lblError.Location = new Point(31, 596);
-            this.lblError.Text = string.Empty;
-
-            this.btnCancel.Animated = true;
-            this.btnCancel.BorderColor = this.borderColor;
-            this.btnCancel.BorderRadius = 8;
-            this.btnCancel.BorderThickness = 1;
-            this.btnCancel.Cursor = Cursors.Hand;
-            this.btnCancel.DialogResult = DialogResult.Cancel;
-            this.btnCancel.FillColor = Color.White;
-            this.btnCancel.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.btnCancel.ForeColor = Color.FromArgb(51, 65, 85);
-            this.btnCancel.HoverState.FillColor = Color.FromArgb(248, 250, 252);
-            this.btnCancel.Location = new Point(250, 598);
-            this.btnCancel.Size = new Size(112, 42);
-            this.btnCancel.TabIndex = 7;
-            this.btnCancel.Text = "Hủy";
-            this.btnCancel.Click += new EventHandler(this.BtnCancel_Click);
-
-            this.btnSave.Animated = true;
-            this.btnSave.BorderRadius = 8;
-            this.btnSave.Cursor = Cursors.Hand;
-            this.btnSave.FillColor = this.primaryColor;
+            this.cboRole.Size = new Size(450, 31);
+            this.cboRole.TabIndex = 13;
+            // 
+            // chkShowPassword
+            // 
+            this.chkShowPassword.AutoSize = true;
+            this.chkShowPassword.Location = new Point(35, 477);
+            this.chkShowPassword.Name = "chkShowPassword";
+            this.chkShowPassword.Size = new Size(130, 24);
+            this.chkShowPassword.TabIndex = 14;
+            this.chkShowPassword.Text = "Hiện mật khẩu";
+            this.chkShowPassword.UseVisualStyleBackColor = true;
+            this.chkShowPassword.CheckedChanged += new EventHandler(this.ChkShowPassword_CheckedChanged);
+            // 
+            // lblError
+            // 
+            this.lblError.AutoSize = true;
+            this.lblError.ForeColor = Color.FromArgb(220, 38, 38);
+            this.lblError.Location = new Point(32, 512);
+            this.lblError.MaximumSize = new Size(450, 0);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new Size(0, 20);
+            this.lblError.TabIndex = 15;
+            // 
+            // btnSave
+            // 
+            this.btnSave.BackColor = Color.FromArgb(37, 99, 235);
+            this.btnSave.FlatStyle = FlatStyle.Flat;
             this.btnSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             this.btnSave.ForeColor = Color.White;
-            this.btnSave.HoverState.FillColor = Color.FromArgb(29, 78, 216);
-            this.btnSave.Location = new Point(374, 598);
-            this.btnSave.Size = new Size(116, 42);
-            this.btnSave.TabIndex = 6;
+            this.btnSave.Location = new Point(355, 548);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new Size(130, 42);
+            this.btnSave.TabIndex = 16;
             this.btnSave.Text = "Thêm";
+            this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new EventHandler(this.BtnSave_Click);
-
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.DialogResult = DialogResult.Cancel;
+            this.btnCancel.FlatStyle = FlatStyle.Flat;
+            this.btnCancel.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.btnCancel.Location = new Point(219, 548);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new Size(120, 42);
+            this.btnCancel.TabIndex = 17;
+            this.btnCancel.Text = "Hủy";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new EventHandler(this.BtnCancel_Click);
+            // 
+            // FrmAddAccount
+            // 
             this.AcceptButton = this.btnSave;
-            this.AutoScaleDimensions = new SizeF(7F, 15F);
+            this.AutoScaleDimensions = new SizeF(8F, 20F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.BackColor = Color.White;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new Size(520, 650);
-            this.Controls.Add(this.pnlRoot);
+            this.ClientSize = new Size(520, 620);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.lblError);
+            this.Controls.Add(this.chkShowPassword);
+            this.Controls.Add(this.cboRole);
+            this.Controls.Add(this.lblRole);
+            this.Controls.Add(this.txtEmail);
+            this.Controls.Add(this.lblEmail);
+            this.Controls.Add(this.txtNewPassword);
+            this.Controls.Add(this.lblNewPassword);
+            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.lblPassword);
+            this.Controls.Add(this.txtUsername);
+            this.Controls.Add(this.lblUsername);
+            this.Controls.Add(this.txtFullName);
+            this.Controls.Add(this.lblFullName);
+            this.Controls.Add(this.lblSubtitle);
+            this.Controls.Add(this.lblTitle);
             this.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.FormBorderStyle = FormBorderStyle.None;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmAddAccount";
             this.ShowInTaskbar = false;
             this.StartPosition = FormStartPosition.CenterParent;
             this.Text = "Thêm tài khoản mới";
-            this.pnlRoot.ResumeLayout(false);
-            this.pnlRoot.PerformLayout();
             this.ResumeLayout(false);
-            ApplyPasswordVisibilityForRole();
+            this.PerformLayout();
         }
 
         private void ApplyMode()
         {
+            this.cboRole.SelectedIndex = 0;
+
             if (this.account != null)
             {
                 this.txtFullName.Text = this.account.HoTen ?? string.Empty;
@@ -321,28 +376,20 @@ namespace QLPhongMay.GUI.Forms.Users
             {
                 this.lblTitle.Text = "Sửa tài khoản";
                 this.lblSubtitle.Text = "Cập nhật thông tin và quyền truy cập";
-                this.lblFullName.Location = new Point(31, 108);
-                this.txtFullName.Location = new Point(30, 132);
-                this.lblUsername.Location = new Point(31, 188);
-                this.txtUsername.Location = new Point(30, 212);
-                this.lblPassword.Location = new Point(31, 268);
-                this.txtPassword.Location = new Point(30, 292);
                 this.lblPassword.Text = "Mật khẩu cũ";
-                this.txtPassword.PlaceholderText = "Nhập mật khẩu hiện tại";
                 this.lblNewPassword.Visible = true;
                 this.txtNewPassword.Visible = true;
-                this.lblNewPassword.Location = new Point(31, 348);
-                this.txtNewPassword.Location = new Point(30, 372);
-                this.lblEmail.Location = new Point(31, 428);
-                this.txtEmail.Location = new Point(30, 452);
-                this.lblRole.Location = new Point(31, 508);
-                this.cboRole.Location = new Point(30, 532);
-                this.lblError.Location = new Point(31, 596);
-                this.btnCancel.Location = new Point(250, 598);
-                this.btnSave.Location = new Point(374, 598);
-                this.ClientSize = new Size(520, 650);
+                this.lblEmail.Location = new Point(32, 404);
+                this.txtEmail.Location = new Point(35, 430);
+                this.lblRole.Location = new Point(32, 476);
+                this.cboRole.Location = new Point(35, 502);
+                this.chkShowPassword.Location = new Point(35, 548);
+                this.lblError.Location = new Point(32, 580);
+                this.btnCancel.Location = new Point(219, 608);
+                this.btnSave.Location = new Point(355, 608);
+                this.ClientSize = new Size(520, 680);
                 this.txtUsername.ReadOnly = true;
-                this.txtUsername.FillColor = Color.FromArgb(241, 245, 249);
+                this.txtUsername.BackColor = Color.FromArgb(241, 245, 249);
                 this.btnSave.Text = "Lưu";
                 this.Text = "Sửa tài khoản";
             }
@@ -354,82 +401,36 @@ namespace QLPhongMay.GUI.Forms.Users
                 this.txtPassword.Visible = false;
                 this.lblNewPassword.Visible = false;
                 this.txtNewPassword.Visible = false;
-                this.lblEmail.Location = new Point(31, 314);
-                this.txtEmail.Location = new Point(30, 344);
-                this.lblRole.Location = new Point(31, 412);
-                this.cboRole.Location = new Point(30, 442);
+                this.chkShowPassword.Visible = false;
+                this.lblEmail.Location = new Point(32, 260);
+                this.txtEmail.Location = new Point(35, 286);
+                this.lblRole.Location = new Point(32, 332);
+                this.cboRole.Location = new Point(35, 358);
                 this.lblError.Visible = false;
-                this.btnCancel.Location = new Point(374, 520);
-                this.ClientSize = new Size(520, 572);
+                this.btnSave.Visible = false;
+                this.btnCancel.Location = new Point(355, 430);
+                this.btnCancel.Text = "Đóng";
+                this.ClientSize = new Size(520, 500);
                 SetReadOnly(this.txtFullName);
                 SetReadOnly(this.txtUsername);
                 SetReadOnly(this.txtEmail);
                 this.cboRole.Enabled = false;
-                this.btnSave.Visible = false;
-                this.btnCancel.Text = "Đóng";
                 this.AcceptButton = this.btnCancel;
                 this.Text = "Chi tiết tài khoản";
             }
         }
 
-        private void ConfigureLabel(Guna2HtmlLabel label, string text, int x, int y, float size, bool bold)
-        {
-            label.BackColor = Color.Transparent;
-            label.Font = new Font("Segoe UI", size, bold ? FontStyle.Bold : FontStyle.Regular, GraphicsUnit.Point, 0);
-            label.ForeColor = bold ? Color.FromArgb(51, 65, 85) : this.mutedTextColor;
-            label.Location = new Point(x, y);
-            label.Text = text;
-        }
-
-        private void ConfigureTextBox(Guna2TextBox textBox, string placeholder, int x, int y, int tabIndex)
-        {
-            textBox.BorderColor = this.borderColor;
-            textBox.BorderRadius = 8;
-            textBox.Cursor = Cursors.IBeam;
-            textBox.DefaultText = string.Empty;
-            textBox.FillColor = this.inputBackColor;
-            textBox.FocusedState.BorderColor = this.primaryColor;
-            textBox.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox.ForeColor = Color.FromArgb(15, 23, 42);
-            textBox.HoverState.BorderColor = this.primaryColor;
-            textBox.Location = new Point(x, y);
-            textBox.Margin = new Padding(3, 5, 3, 5);
-            textBox.PlaceholderForeColor = Color.FromArgb(148, 163, 184);
-            textBox.PlaceholderText = placeholder;
-            textBox.SelectedText = string.Empty;
-            textBox.Size = new Size(460, 46);
-            textBox.TabIndex = tabIndex;
-        }
-
-        private static void SetReadOnly(Guna2TextBox textBox)
+        private static void SetReadOnly(TextBox textBox)
         {
             textBox.ReadOnly = true;
-            textBox.FillColor = Color.FromArgb(241, 245, 249);
-            textBox.Cursor = Cursors.Default;
+            textBox.BackColor = Color.FromArgb(241, 245, 249);
         }
 
-        private void TxtPassword_IconRightClick(object sender, EventArgs e)
+        private void ChkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
-            this.passwordVisible = !this.passwordVisible;
-            this.txtPassword.UseSystemPasswordChar = !this.passwordVisible;
-            this.txtPassword.IconRight = CreateEyeIcon(this.passwordVisible ? this.primaryColor : this.mutedTextColor, this.passwordVisible);
-        }
-
-        private void CboRole_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ApplyPasswordVisibilityForRole();
-        }
-
-        private void ApplyPasswordVisibilityForRole()
-        {
-            if (this.mode != AccountDialogMode.Create)
-            {
-                return;
-            }
-
-            this.passwordVisible = this.RoleId == 1;
-            this.txtPassword.UseSystemPasswordChar = !this.passwordVisible;
-            this.txtPassword.IconRight = CreateEyeIcon(this.passwordVisible ? this.primaryColor : this.mutedTextColor, this.passwordVisible);
+            bool hidePassword = !this.chkShowPassword.Checked;
+            this.txtPassword.UseSystemPasswordChar = hidePassword;
+            this.txtNewPassword.UseSystemPasswordChar = hidePassword;
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -532,27 +533,6 @@ namespace QLPhongMay.GUI.Forms.Users
                 default:
                     return this.txtUsername;
             }
-        }
-
-        private static Image CreateEyeIcon(Color color, bool active)
-        {
-            Bitmap bitmap = new Bitmap(24, 24, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            using (Graphics graphics = Graphics.FromImage(bitmap))
-            using (Pen pen = new Pen(color, 2F))
-            using (SolidBrush brush = new SolidBrush(color))
-            {
-                graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                graphics.DrawArc(pen, 3, 7, 18, 10, 180, 180);
-                graphics.DrawArc(pen, 3, 7, 18, 10, 0, 180);
-                graphics.FillEllipse(brush, 10, 10, 4, 4);
-
-                if (!active)
-                {
-                    graphics.DrawLine(pen, 5, 20, 20, 4);
-                }
-            }
-
-            return bitmap;
         }
     }
 }

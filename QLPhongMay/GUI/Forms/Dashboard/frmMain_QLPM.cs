@@ -7,6 +7,7 @@ using QLPhongMay.DTO;
 using QLPhongMay.Enums;
 using QLPhongMay.GUI.Forms.Catalog;
 using QLPhongMay.GUI.Forms.Computer;
+using QLPhongMay.GUI.Forms.Reports;
 using QLPhongMay.GUI.Forms.Schedule;
 
 namespace QLPhongMay.GUI.Forms.Dashboard
@@ -191,13 +192,13 @@ namespace QLPhongMay.GUI.Forms.Dashboard
         private void BuildMenu()
         {
             int top = 152;
-            AddMenuButton("Quản lý lịch", top, OpenScheduleForm);
-            AddMenuButton("Quản lý phòng máy", top += 56, OpenRoomForm);
-            AddMenuButton("Quản lý máy tính", top += 56, OpenComputerForm);
-            AddMenuButton("Quản lý cấu hình", top += 56, OpenConfigForm);
-            AddMenuButton("Quản lý lớp học", top += 56, OpenClassForm);
-            AddMenuButton("Quản lý ca học", top += 56, OpenShiftForm);
-            AddMenuButton("Báo cáo & Thống kê", top += 56, OpenReportForm);
+            AddMenuButton("Quản lý lịch", top, this.OpenScheduleForm);
+            AddMenuButton("Quản lý phòng máy", top += 56, this.OpenRoomForm);
+            AddMenuButton("Quản lý máy tính", top += 56, this.OpenComputerForm);
+            AddMenuButton("Quản lý cấu hình", top += 56, this.OpenConfigForm);
+            AddMenuButton("Quản lý lớp học", top += 56, this.OpenClassForm);
+            AddMenuButton("Quản lý ca học", top += 56, this.OpenShiftForm);
+            AddMenuButton("Báo cáo và Thống kê", top += 56, this.OpenReportForm);
         }
 
         private void AddMenuButton(string text, int top, EventHandler clickHandler)
@@ -207,12 +208,13 @@ namespace QLPhongMay.GUI.Forms.Dashboard
             button.Cursor = Cursors.Hand;
             button.FlatAppearance.BorderColor = Color.FromArgb(147, 197, 253);
             button.FlatStyle = FlatStyle.Flat;
-            button.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            button.Font = new Font("Segoe UI", text.Length > 18 ? 8.5F : 10F, FontStyle.Bold);
             button.ForeColor = Color.White;
             button.Location = new Point(18, top);
             button.Name = "btn" + text.Replace(" ", string.Empty);
             button.Size = new Size(204, 44);
             button.Text = text;
+            button.TextAlign = ContentAlignment.MiddleCenter;
             button.UseVisualStyleBackColor = false;
             button.Click += clickHandler;
             button.MouseEnter += delegate { button.BackColor = Color.FromArgb(37, 99, 235); };
@@ -301,7 +303,10 @@ namespace QLPhongMay.GUI.Forms.Dashboard
 
         private void OpenReportForm(object sender, EventArgs e)
         {
-            OpenPlaceholderForm("Báo cáo & Thống kê");
+            using (frmBaoCaoThongKe form = new frmBaoCaoThongKe())
+            {
+                form.ShowDialog(this);
+            }
         }
 
         private void OpenPlaceholderForm(string title)

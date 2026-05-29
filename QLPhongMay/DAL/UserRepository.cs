@@ -12,8 +12,20 @@ namespace QLPhongMay.DAL
         private readonly string connectionString;
 
         public UserRepository()
-            : this(ConfigurationManager.ConnectionStrings["QLPhongMayDbContext"].ConnectionString)
+            : this(GetConnectionString())
         {
+        }
+
+        private static string GetConnectionString()
+        {
+            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["QLPhongMayDbContext"];
+
+            if (settings != null && !string.IsNullOrWhiteSpace(settings.ConnectionString))
+            {
+                return settings.ConnectionString;
+            }
+
+            return @"Data Source=.\SQLEXPRESS;Initial Catalog=QuanLyPhongMay;Integrated Security=True;Encrypt=False";
         }
 
         public UserRepository(string connectionString)
