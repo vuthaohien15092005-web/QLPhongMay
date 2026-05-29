@@ -10,6 +10,7 @@
     <AssemblyName>QLPhongMay</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
+    <NuGetPackageRoot>F:\NuGetPackages\</NuGetPackageRoot>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -60,6 +61,7 @@
     <Compile Include="DAL\AppDbContext.cs" />
     <Compile Include="DAL\ComputerRepository.cs" />
     <Compile Include="DAL\LopHocRepository.cs" />
+    <Compile Include="DAL\ReportRepository.cs" />
     <Compile Include="DAL\UserRepository.cs" />
     <Compile Include="DTO\User.cs" />
     <Compile Include="Enums\ComputerStatus.cs" />
@@ -144,6 +146,9 @@
     <EmbeddedResource Include="GUI\Forms\Dashboard\frmMain_Admin.resx">
       <DependentUpon>frmMain_Admin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Forms\Reports\frmBaoCaoThongKe.resx">
+      <DependentUpon>frmBaoCaoThongKe.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Forms\Users\frmQLTaiKhoan.resx">
       <DependentUpon>frmQLTaiKhoan.cs</DependentUpon>
     </EmbeddedResource>
@@ -168,11 +173,27 @@
     <Compile Include="DAL\ScheduleRepository.cs" />
     <Compile Include="DTO\ScheduleListItem.cs" />
     <Compile Include="DTO\RoomSuggestionItem.cs" />
+    <Compile Include="DTO\ReportChartItem.cs" />
+    <Compile Include="DTO\ReportSummary.cs" />
+    <Compile Include="DTO\ScheduleReportRow.cs" />
+    <Compile Include="DTO\RoomUsageReportRow.cs" />
     <Compile Include="GUI\Forms\Schedule\frmQuanLyLich.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\Forms\Schedule\FrmScheduleEditor.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Reports\frmBaoCaoThongKe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Reports\ucBaoCaoLichThucHanh.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Reports\ucBaoCaoSuDungPhong.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Forms\Reports\ucBaoCaoTrangThaiMay.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <None Include="..\database\seed-login-users.sql" />
     <Compile Include="GUI\Forms\Schedule\frmQuanLyLich.Designer.cs">
@@ -187,6 +208,7 @@
     <PackageReference Include="Dapper" Version="2.1.72" />
     <PackageReference Include="EntityFramework" Version="6.5.2" />
     <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
+    <PackageReference Include="Krypton.Toolkit" Version="105.26.4.110" />
     <PackageReference Include="LiveCharts.WinForms" Version="0.9.7.1" />
   </ItemGroup>
   <ItemGroup>
