@@ -48,23 +48,23 @@ namespace QLPhongMay.GUI.Forms.Users
 
         private void InitializeComponent()
         {
-            this.pnlRoot = new Panel();
-            this.btnBack = new Button();
-            this.lblTitle = new Label();
-            this.lblSubtitle = new Label();
-            this.btnAdd = new Button();
-            this.pnlStats = new Panel();
-            this.lblTotalAccounts = new Label();
-            this.lblAdminAccounts = new Label();
-            this.lblStaffAccounts = new Label();
-            this.pnlFilter = new Panel();
-            this.txtSearch = new TextBox();
-            this.cboRole = new ComboBox();
-            this.dgvAccounts = new DataGridView();
-            this.lblSummary = new Label();
-            this.btnPreviousPage = new Button();
-            this.lblPageInfo = new Label();
-            this.btnNextPage = new Button();
+            this.pnlRoot = new System.Windows.Forms.Panel();
+            this.btnBack = new System.Windows.Forms.Button();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblSubtitle = new System.Windows.Forms.Label();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.pnlStats = new System.Windows.Forms.Panel();
+            this.lblTotalAccounts = new System.Windows.Forms.Label();
+            this.lblAdminAccounts = new System.Windows.Forms.Label();
+            this.lblStaffAccounts = new System.Windows.Forms.Label();
+            this.pnlFilter = new System.Windows.Forms.Panel();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.cboRole = new System.Windows.Forms.ComboBox();
+            this.dgvAccounts = new System.Windows.Forms.DataGridView();
+            this.lblSummary = new System.Windows.Forms.Label();
+            this.btnPreviousPage = new System.Windows.Forms.Button();
+            this.lblPageInfo = new System.Windows.Forms.Label();
+            this.btnNextPage = new System.Windows.Forms.Button();
             this.pnlRoot.SuspendLayout();
             this.pnlStats.SuspendLayout();
             this.pnlFilter.SuspendLayout();
@@ -73,7 +73,9 @@ namespace QLPhongMay.GUI.Forms.Users
             // 
             // pnlRoot
             // 
-            this.pnlRoot.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            this.pnlRoot.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlRoot.Controls.Add(this.btnBack);
             this.pnlRoot.Controls.Add(this.lblTitle);
             this.pnlRoot.Controls.Add(this.lblSubtitle);
@@ -85,230 +87,245 @@ namespace QLPhongMay.GUI.Forms.Users
             this.pnlRoot.Controls.Add(this.btnPreviousPage);
             this.pnlRoot.Controls.Add(this.lblPageInfo);
             this.pnlRoot.Controls.Add(this.btnNextPage);
-            this.pnlRoot.Location = new Point(24, 22);
+            this.pnlRoot.Location = new System.Drawing.Point(24, 22);
             this.pnlRoot.Name = "pnlRoot";
-            this.pnlRoot.Size = new Size(1132, 816);
+            this.pnlRoot.Size = new System.Drawing.Size(1132, 816);
             this.pnlRoot.TabIndex = 0;
             // 
             // btnBack
             // 
-            this.btnBack.FlatStyle = FlatStyle.Flat;
-            this.btnBack.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.btnBack.Location = new Point(0, 8);
+            this.btnBack.BackColor = System.Drawing.Color.White;
+            this.btnBack.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBack.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBack.Location = new System.Drawing.Point(0, 8);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new Size(124, 42);
+            this.btnBack.Size = new System.Drawing.Size(124, 42);
             this.btnBack.TabIndex = 0;
             this.btnBack.Text = "< Quay lại";
-            this.btnBack.UseVisualStyleBackColor = true;
-            this.btnBack.Click += new EventHandler(this.BtnBack_Click);
+            this.btnBack.UseVisualStyleBackColor = false;
+            this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
-            this.lblTitle.Location = new Point(148, 0);
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.lblTitle.Location = new System.Drawing.Point(148, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new Size(330, 50);
+            this.lblTitle.Size = new System.Drawing.Size(392, 60);
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "Quản lý tài khoản";
             // 
             // lblSubtitle
             // 
             this.lblSubtitle.AutoSize = true;
-            this.lblSubtitle.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.lblSubtitle.ForeColor = Color.FromArgb(100, 116, 139);
-            this.lblSubtitle.Location = new Point(152, 52);
+            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.lblSubtitle.Location = new System.Drawing.Point(152, 52);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new Size(402, 23);
+            this.lblSubtitle.Size = new System.Drawing.Size(446, 28);
             this.lblSubtitle.TabIndex = 2;
             this.lblSubtitle.Text = "Theo dõi và phân quyền tài khoản trong hệ thống";
             // 
             // btnAdd
             // 
-            this.btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            this.btnAdd.BackColor = Color.FromArgb(37, 99, 235);
-            this.btnAdd.FlatStyle = FlatStyle.Flat;
-            this.btnAdd.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.btnAdd.ForeColor = Color.White;
-            this.btnAdd.Location = new Point(932, 92);
+            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.btnAdd.FlatAppearance.BorderSize = 0;
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdd.ForeColor = System.Drawing.Color.White;
+            this.btnAdd.Location = new System.Drawing.Point(932, 92);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new Size(200, 42);
+            this.btnAdd.Size = new System.Drawing.Size(200, 42);
             this.btnAdd.TabIndex = 3;
             this.btnAdd.Text = "+ Thêm tài khoản";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new EventHandler(this.BtnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // pnlStats
             // 
-            this.pnlStats.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            this.pnlStats.BackColor = Color.White;
-            this.pnlStats.BorderStyle = BorderStyle.FixedSingle;
+            this.pnlStats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlStats.BackColor = System.Drawing.Color.White;
             this.pnlStats.Controls.Add(this.lblTotalAccounts);
             this.pnlStats.Controls.Add(this.lblAdminAccounts);
             this.pnlStats.Controls.Add(this.lblStaffAccounts);
-            this.pnlStats.Location = new Point(0, 92);
+            this.pnlStats.Location = new System.Drawing.Point(0, 92);
             this.pnlStats.Name = "pnlStats";
-            this.pnlStats.Size = new Size(900, 84);
+            this.pnlStats.Size = new System.Drawing.Size(868, 84);
             this.pnlStats.TabIndex = 4;
             // 
             // lblTotalAccounts
             // 
-            this.lblTotalAccounts.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.lblTotalAccounts.ForeColor = Color.FromArgb(37, 99, 235);
-            this.lblTotalAccounts.Location = new Point(22, 14);
+            this.lblTotalAccounts.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalAccounts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.lblTotalAccounts.Location = new System.Drawing.Point(22, 14);
             this.lblTotalAccounts.Name = "lblTotalAccounts";
-            this.lblTotalAccounts.Size = new Size(250, 54);
+            this.lblTotalAccounts.Size = new System.Drawing.Size(250, 54);
             this.lblTotalAccounts.TabIndex = 0;
             this.lblTotalAccounts.Text = "Tổng tài khoản: 0";
-            this.lblTotalAccounts.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblTotalAccounts.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblAdminAccounts
             // 
-            this.lblAdminAccounts.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.lblAdminAccounts.ForeColor = Color.FromArgb(124, 58, 237);
-            this.lblAdminAccounts.Location = new Point(314, 14);
+            this.lblAdminAccounts.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAdminAccounts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(124)))), ((int)(((byte)(58)))), ((int)(((byte)(237)))));
+            this.lblAdminAccounts.Location = new System.Drawing.Point(314, 14);
             this.lblAdminAccounts.Name = "lblAdminAccounts";
-            this.lblAdminAccounts.Size = new Size(220, 54);
+            this.lblAdminAccounts.Size = new System.Drawing.Size(220, 54);
             this.lblAdminAccounts.TabIndex = 1;
             this.lblAdminAccounts.Text = "Admin: 0";
-            this.lblAdminAccounts.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblAdminAccounts.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblStaffAccounts
             // 
-            this.lblStaffAccounts.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.lblStaffAccounts.ForeColor = Color.FromArgb(22, 163, 74);
-            this.lblStaffAccounts.Location = new Point(586, 14);
+            this.lblStaffAccounts.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStaffAccounts.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(163)))), ((int)(((byte)(74)))));
+            this.lblStaffAccounts.Location = new System.Drawing.Point(586, 14);
             this.lblStaffAccounts.Name = "lblStaffAccounts";
-            this.lblStaffAccounts.Size = new Size(250, 54);
+            this.lblStaffAccounts.Size = new System.Drawing.Size(250, 54);
             this.lblStaffAccounts.TabIndex = 2;
             this.lblStaffAccounts.Text = "Quản lý phòng máy: 0";
-            this.lblStaffAccounts.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblStaffAccounts.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pnlFilter
             // 
-            this.pnlFilter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            this.pnlFilter.BackColor = Color.White;
-            this.pnlFilter.BorderStyle = BorderStyle.FixedSingle;
+            this.pnlFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlFilter.BackColor = System.Drawing.Color.White;
             this.pnlFilter.Controls.Add(this.txtSearch);
             this.pnlFilter.Controls.Add(this.cboRole);
-            this.pnlFilter.Location = new Point(0, 194);
+            this.pnlFilter.Location = new System.Drawing.Point(0, 194);
             this.pnlFilter.Name = "pnlFilter";
-            this.pnlFilter.Size = new Size(1132, 66);
+            this.pnlFilter.Size = new System.Drawing.Size(1132, 66);
             this.pnlFilter.TabIndex = 5;
             // 
             // txtSearch
             // 
-            this.txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            this.txtSearch.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.txtSearch.Location = new Point(18, 17);
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearch.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(18, 17);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new Size(850, 30);
+            this.txtSearch.Size = new System.Drawing.Size(850, 27);
             this.txtSearch.TabIndex = 0;
-            this.txtSearch.TextChanged += new EventHandler(this.FilterChanged);
+            this.txtSearch.TextChanged += new System.EventHandler(this.FilterChanged);
             // 
             // cboRole
             // 
-            this.cboRole.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            this.cboRole.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.cboRole.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.cboRole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboRole.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.cboRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRole.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboRole.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboRole.FormattingEnabled = true;
             this.cboRole.Items.AddRange(new object[] {
             "Tất cả vai trò",
             "Admin",
             "Quản lý phòng máy"});
-            this.cboRole.Location = new Point(898, 17);
+            this.cboRole.Location = new System.Drawing.Point(898, 17);
             this.cboRole.Name = "cboRole";
-            this.cboRole.Size = new Size(210, 31);
+            this.cboRole.Size = new System.Drawing.Size(210, 36);
             this.cboRole.TabIndex = 1;
-            this.cboRole.SelectedIndexChanged += new EventHandler(this.FilterChanged);
+            this.cboRole.SelectedIndexChanged += new System.EventHandler(this.FilterChanged);
             // 
             // dgvAccounts
             // 
             this.dgvAccounts.AllowUserToAddRows = false;
             this.dgvAccounts.AllowUserToDeleteRows = false;
-            this.dgvAccounts.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            this.dgvAccounts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvAccounts.BackgroundColor = Color.White;
+            this.dgvAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvAccounts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvAccounts.BackgroundColor = System.Drawing.Color.White;
+            this.dgvAccounts.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvAccounts.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dgvAccounts.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dgvAccounts.ColumnHeadersHeight = 36;
-            this.dgvAccounts.Location = new Point(0, 282);
+            this.dgvAccounts.EnableHeadersVisualStyles = false;
+            this.dgvAccounts.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.dgvAccounts.Location = new System.Drawing.Point(0, 282);
             this.dgvAccounts.MultiSelect = false;
             this.dgvAccounts.Name = "dgvAccounts";
             this.dgvAccounts.ReadOnly = true;
             this.dgvAccounts.RowHeadersWidth = 36;
             this.dgvAccounts.RowTemplate.Height = 34;
-            this.dgvAccounts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAccounts.Size = new Size(1132, 476);
+            this.dgvAccounts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvAccounts.Size = new System.Drawing.Size(1132, 476);
             this.dgvAccounts.TabIndex = 6;
-            this.dgvAccounts.CellContentClick += new DataGridViewCellEventHandler(this.DgvAccounts_CellContentClick);
+            this.dgvAccounts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvAccounts_CellContentClick);
             // 
             // lblSummary
             // 
-            this.lblSummary.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            this.lblSummary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblSummary.AutoSize = true;
-            this.lblSummary.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.lblSummary.Location = new Point(4, 778);
+            this.lblSummary.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSummary.Location = new System.Drawing.Point(4, 778);
             this.lblSummary.Name = "lblSummary";
-            this.lblSummary.Size = new Size(146, 23);
+            this.lblSummary.Size = new System.Drawing.Size(178, 28);
             this.lblSummary.TabIndex = 7;
             this.lblSummary.Text = "Tổng tài khoản: 0";
             // 
             // btnPreviousPage
             // 
-            this.btnPreviousPage.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            this.btnPreviousPage.BackColor = Color.White;
-            this.btnPreviousPage.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
-            this.btnPreviousPage.FlatStyle = FlatStyle.Flat;
-            this.btnPreviousPage.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.btnPreviousPage.ForeColor = Color.FromArgb(37, 99, 235);
-            this.btnPreviousPage.Location = new Point(940, 770);
+            this.btnPreviousPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPreviousPage.BackColor = System.Drawing.Color.White;
+            this.btnPreviousPage.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnPreviousPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPreviousPage.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPreviousPage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.btnPreviousPage.Location = new System.Drawing.Point(940, 770);
             this.btnPreviousPage.Name = "btnPreviousPage";
-            this.btnPreviousPage.Size = new Size(46, 36);
+            this.btnPreviousPage.Size = new System.Drawing.Size(46, 36);
             this.btnPreviousPage.TabIndex = 8;
             this.btnPreviousPage.Text = "<";
             this.btnPreviousPage.UseVisualStyleBackColor = false;
-            this.btnPreviousPage.Click += new EventHandler(this.BtnPreviousPage_Click);
+            this.btnPreviousPage.Click += new System.EventHandler(this.BtnPreviousPage_Click);
             // 
             // lblPageInfo
             // 
-            this.lblPageInfo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            this.lblPageInfo.BackColor = Color.FromArgb(37, 99, 235);
-            this.lblPageInfo.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.lblPageInfo.ForeColor = Color.White;
-            this.lblPageInfo.Location = new Point(994, 770);
+            this.lblPageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPageInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.lblPageInfo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPageInfo.ForeColor = System.Drawing.Color.White;
+            this.lblPageInfo.Location = new System.Drawing.Point(994, 770);
             this.lblPageInfo.Name = "lblPageInfo";
-            this.lblPageInfo.Size = new Size(84, 36);
+            this.lblPageInfo.Size = new System.Drawing.Size(84, 36);
             this.lblPageInfo.TabIndex = 9;
             this.lblPageInfo.Text = "1 / 1";
-            this.lblPageInfo.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblPageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnNextPage
             // 
-            this.btnNextPage.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            this.btnNextPage.BackColor = Color.White;
-            this.btnNextPage.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
-            this.btnNextPage.FlatStyle = FlatStyle.Flat;
-            this.btnNextPage.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            this.btnNextPage.ForeColor = Color.FromArgb(37, 99, 235);
-            this.btnNextPage.Location = new Point(1086, 770);
+            this.btnNextPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNextPage.BackColor = System.Drawing.Color.White;
+            this.btnNextPage.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnNextPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNextPage.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNextPage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.btnNextPage.Location = new System.Drawing.Point(1086, 770);
             this.btnNextPage.Name = "btnNextPage";
-            this.btnNextPage.Size = new Size(46, 36);
+            this.btnNextPage.Size = new System.Drawing.Size(46, 36);
             this.btnNextPage.TabIndex = 10;
             this.btnNextPage.Text = ">";
             this.btnNextPage.UseVisualStyleBackColor = false;
-            this.btnNextPage.Click += new EventHandler(this.BtnNextPage_Click);
+            this.btnNextPage.Click += new System.EventHandler(this.BtnNextPage_Click);
             // 
             // frmQLTaiKhoan
             // 
-            this.AutoScaleDimensions = new SizeF(8F, 20F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.BackColor = Color.FromArgb(246, 248, 252);
-            this.ClientSize = new Size(1180, 860);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(248)))), ((int)(((byte)(252)))));
+            this.ClientSize = new System.Drawing.Size(1180, 860);
             this.Controls.Add(this.pnlRoot);
-            this.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            this.MinimumSize = new Size(1080, 760);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MinimumSize = new System.Drawing.Size(1080, 760);
             this.Name = "frmQLTaiKhoan";
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý tài khoản";
             this.pnlRoot.ResumeLayout(false);
             this.pnlRoot.PerformLayout();
@@ -317,6 +334,7 @@ namespace QLPhongMay.GUI.Forms.Users
             this.pnlFilter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAccounts)).EndInit();
             this.ResumeLayout(false);
+
         }
 
         private void frmQLTaiKhoan_Load(object sender, EventArgs e)
@@ -617,6 +635,11 @@ namespace QLPhongMay.GUI.Forms.Users
         private void AddButtonColumn(string name, string text)
         {
             DataGridViewButtonColumn column = new DataGridViewButtonColumn();
+            column.DefaultCellStyle.BackColor = Color.White;
+            column.DefaultCellStyle.ForeColor = Color.FromArgb(37, 99, 235);
+            column.DefaultCellStyle.SelectionBackColor = Color.FromArgb(239, 246, 255);
+            column.DefaultCellStyle.SelectionForeColor = Color.FromArgb(37, 99, 235);
+            column.FlatStyle = FlatStyle.Flat;
             column.Name = name;
             column.HeaderText = text;
             column.Text = text;

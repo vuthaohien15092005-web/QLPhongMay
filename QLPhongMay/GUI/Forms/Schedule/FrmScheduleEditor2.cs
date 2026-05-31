@@ -410,10 +410,10 @@ namespace QLPhongMay.GUI.Forms.Schedule
 
         private void LoadLookups()
         {
-            BindLookup(this.cboUser, this.repository.GetUsers());
-            BindLookup(this.cboClass, this.repository.GetClasses());
-            BindLookup(this.cboRoom, this.repository.GetRooms());
-            BindLookup(this.cboShift, this.repository.GetShifts());
+            BindLookup(this.cboUser, this.repository.GetUsers(), "-- Chọn người tạo --");
+            BindLookup(this.cboClass, this.repository.GetClasses(), "-- Chọn lớp --");
+            BindLookup(this.cboRoom, this.repository.GetRooms(), "-- Chọn phòng --");
+            BindLookup(this.cboShift, this.repository.GetShifts(), "-- Chọn ca --");
         }
 
         private void WireRuntimeEvents()
@@ -425,11 +425,19 @@ namespace QLPhongMay.GUI.Forms.Schedule
             this.btnSave.Click += this.BtnSave_Click;
         }
 
-        private static void BindLookup(ComboBox comboBox, List<LookupItem> items)
+        private static void BindLookup(ComboBox comboBox, List<LookupItem> items, string placeholder)
         {
-            comboBox.DataSource = items;
+            List<LookupItem> source = new List<LookupItem>();
+            source.Add(new LookupItem { Id = string.Empty, Name = placeholder });
+            if (items != null)
+            {
+                source.AddRange(items);
+            }
+
+            comboBox.DataSource = source;
             comboBox.DisplayMember = "Name";
             comboBox.ValueMember = "Id";
+            comboBox.SelectedIndex = 0;
         }
 
         private void BindSchedule()

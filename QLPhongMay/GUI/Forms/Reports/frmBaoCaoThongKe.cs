@@ -51,228 +51,303 @@ namespace QLPhongMay.GUI.Forms.Reports
             SetupRuntimeControls();
             Load += FrmBaoCaoThongKe_Load;
             Resize += FrmBaoCaoThongKe_Resize;
+            FormClosed += FrmBaoCaoThongKe_FormClosed;
         }
 
         private void InitializeComponent()
         {
-            rootPanel = new Panel();
-            btnBack = new Button();
-            lblTitle = new Label();
-            lblSubtitle = new Label();
-            tabPanel = new Panel();
-            btnScheduleTab = new Button();
-            btnRoomTab = new Button();
-            btnStatusTab = new Button();
-            filterPanel = new Panel();
-            lblFrom = new Label();
-            lblTo = new Label();
-            lblGroup = new Label();
-            lblRoom = new Label();
-            dtpFrom = new DateTimePicker();
-            dtpTo = new DateTimePicker();
-            cboGroupMode = new ComboBox();
-            cboRoom = new ComboBox();
-            btnFilter = new Button();
-            btnClear = new Button();
-            contentPanel = new Panel();
-            rootPanel.SuspendLayout();
-            tabPanel.SuspendLayout();
-            filterPanel.SuspendLayout();
-            SuspendLayout();
+            this.rootPanel = new System.Windows.Forms.Panel();
+            this.btnBack = new System.Windows.Forms.Button();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblSubtitle = new System.Windows.Forms.Label();
+            this.tabPanel = new System.Windows.Forms.Panel();
+            this.btnScheduleTab = new System.Windows.Forms.Button();
+            this.btnRoomTab = new System.Windows.Forms.Button();
+            this.btnStatusTab = new System.Windows.Forms.Button();
+            this.filterPanel = new System.Windows.Forms.Panel();
+            this.lblFrom = new System.Windows.Forms.Label();
+            this.lblTo = new System.Windows.Forms.Label();
+            this.lblGroup = new System.Windows.Forms.Label();
+            this.lblRoom = new System.Windows.Forms.Label();
+            this.dtpFrom = new System.Windows.Forms.DateTimePicker();
+            this.dtpTo = new System.Windows.Forms.DateTimePicker();
+            this.cboGroupMode = new System.Windows.Forms.ComboBox();
+            this.cboRoom = new System.Windows.Forms.ComboBox();
+            this.btnFilter = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.contentPanel = new System.Windows.Forms.Panel();
+            this.rootPanel.SuspendLayout();
+            this.tabPanel.SuspendLayout();
+            this.filterPanel.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // rootPanel
+            // 
+            this.rootPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
+            this.rootPanel.Controls.Add(this.btnBack);
+            this.rootPanel.Controls.Add(this.lblTitle);
+            this.rootPanel.Controls.Add(this.lblSubtitle);
+            this.rootPanel.Controls.Add(this.tabPanel);
+            this.rootPanel.Controls.Add(this.filterPanel);
+            this.rootPanel.Controls.Add(this.contentPanel);
+            this.rootPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rootPanel.Location = new System.Drawing.Point(0, 0);
+            this.rootPanel.Name = "rootPanel";
+            this.rootPanel.Size = new System.Drawing.Size(1280, 760);
+            this.rootPanel.TabIndex = 0;
+            // 
+            // btnBack
+            // 
+            this.btnBack.BackColor = System.Drawing.Color.White;
+            this.btnBack.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnBack.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBack.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.btnBack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.btnBack.Location = new System.Drawing.Point(24, 24);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(118, 38);
+            this.btnBack.TabIndex = 0;
+            this.btnBack.Text = "< Quay lại";
+            this.btnBack.UseVisualStyleBackColor = false;
+            this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 19F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.lblTitle.Location = new System.Drawing.Point(166, 30);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(620, 48);
+            this.lblTitle.TabIndex = 1;
+            this.lblTitle.Text = "Quản lý Báo cáo & Thống kê";
+            this.lblTitle.UseMnemonic = false;
+            // 
+            // lblSubtitle
+            // 
+            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.lblSubtitle.Location = new System.Drawing.Point(168, 82);
+            this.lblSubtitle.Name = "lblSubtitle";
+            this.lblSubtitle.Size = new System.Drawing.Size(651, 32);
+            this.lblSubtitle.TabIndex = 2;
+            this.lblSubtitle.Text = "Theo dõi lịch thực hành, mức sử dụng phòng và trạng thái máy tính";
+            // 
+            // tabPanel
+            // 
+            this.tabPanel.BackColor = System.Drawing.Color.White;
+            this.tabPanel.Controls.Add(this.btnScheduleTab);
+            this.tabPanel.Controls.Add(this.btnRoomTab);
+            this.tabPanel.Controls.Add(this.btnStatusTab);
+            this.tabPanel.Location = new System.Drawing.Point(24, 130);
+            this.tabPanel.Name = "tabPanel";
+            this.tabPanel.Size = new System.Drawing.Size(1230, 46);
+            this.tabPanel.TabIndex = 3;
+            // 
+            // btnScheduleTab
+            // 
+            this.btnScheduleTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.btnScheduleTab.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnScheduleTab.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
+            this.btnScheduleTab.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnScheduleTab.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnScheduleTab.ForeColor = System.Drawing.Color.White;
+            this.btnScheduleTab.Location = new System.Drawing.Point(0, 0);
+            this.btnScheduleTab.Name = "btnScheduleTab";
+            this.btnScheduleTab.Size = new System.Drawing.Size(410, 46);
+            this.btnScheduleTab.TabIndex = 0;
+            this.btnScheduleTab.Text = "Lịch thực hành theo thời gian";
+            this.btnScheduleTab.UseMnemonic = false;
+            this.btnScheduleTab.UseVisualStyleBackColor = false;
+            // 
+            // btnRoomTab
+            // 
+            this.btnRoomTab.BackColor = System.Drawing.Color.White;
+            this.btnRoomTab.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRoomTab.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
+            this.btnRoomTab.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRoomTab.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnRoomTab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.btnRoomTab.Location = new System.Drawing.Point(410, 0);
+            this.btnRoomTab.Name = "btnRoomTab";
+            this.btnRoomTab.Size = new System.Drawing.Size(410, 46);
+            this.btnRoomTab.TabIndex = 1;
+            this.btnRoomTab.Text = "Tỷ lệ sử dụng phòng máy";
+            this.btnRoomTab.UseMnemonic = false;
+            this.btnRoomTab.UseVisualStyleBackColor = false;
+            // 
+            // btnStatusTab
+            // 
+            this.btnStatusTab.BackColor = System.Drawing.Color.White;
+            this.btnStatusTab.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnStatusTab.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
+            this.btnStatusTab.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStatusTab.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnStatusTab.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.btnStatusTab.Location = new System.Drawing.Point(820, 0);
+            this.btnStatusTab.Name = "btnStatusTab";
+            this.btnStatusTab.Size = new System.Drawing.Size(410, 46);
+            this.btnStatusTab.TabIndex = 2;
+            this.btnStatusTab.Text = "Thống kê trạng thái máy tính";
+            this.btnStatusTab.UseMnemonic = false;
+            this.btnStatusTab.UseVisualStyleBackColor = false;
+            // 
+            // filterPanel
+            // 
+            this.filterPanel.BackColor = System.Drawing.Color.White;
+            this.filterPanel.Controls.Add(this.lblFrom);
+            this.filterPanel.Controls.Add(this.lblTo);
+            this.filterPanel.Controls.Add(this.lblGroup);
+            this.filterPanel.Controls.Add(this.lblRoom);
+            this.filterPanel.Controls.Add(this.dtpFrom);
+            this.filterPanel.Controls.Add(this.dtpTo);
+            this.filterPanel.Controls.Add(this.cboGroupMode);
+            this.filterPanel.Controls.Add(this.cboRoom);
+            this.filterPanel.Controls.Add(this.btnFilter);
+            this.filterPanel.Controls.Add(this.btnClear);
+            this.filterPanel.Location = new System.Drawing.Point(24, 190);
+            this.filterPanel.Name = "filterPanel";
+            this.filterPanel.Size = new System.Drawing.Size(1230, 86);
+            this.filterPanel.TabIndex = 4;
+            // 
+            // lblFrom
+            // 
+            this.lblFrom.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this.lblFrom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.lblFrom.Location = new System.Drawing.Point(18, 12);
+            this.lblFrom.Name = "lblFrom";
+            this.lblFrom.Size = new System.Drawing.Size(120, 20);
+            this.lblFrom.TabIndex = 0;
+            this.lblFrom.Text = "Từ ngày";
+            // 
+            // lblTo
+            // 
+            this.lblTo.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this.lblTo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.lblTo.Location = new System.Drawing.Point(244, 12);
+            this.lblTo.Name = "lblTo";
+            this.lblTo.Size = new System.Drawing.Size(120, 20);
+            this.lblTo.TabIndex = 1;
+            this.lblTo.Text = "Đến ngày";
+            // 
+            // lblGroup
+            // 
+            this.lblGroup.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this.lblGroup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.lblGroup.Location = new System.Drawing.Point(477, 12);
+            this.lblGroup.Name = "lblGroup";
+            this.lblGroup.Size = new System.Drawing.Size(120, 20);
+            this.lblGroup.TabIndex = 2;
+            this.lblGroup.Text = "Nhóm lịch";
+            // 
+            // lblRoom
+            // 
+            this.lblRoom.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this.lblRoom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.lblRoom.Location = new System.Drawing.Point(693, 12);
+            this.lblRoom.Name = "lblRoom";
+            this.lblRoom.Size = new System.Drawing.Size(120, 20);
+            this.lblRoom.TabIndex = 3;
+            this.lblRoom.Text = "Phòng máy";
+            // 
+            // dtpFrom
+            // 
+            this.dtpFrom.CustomFormat = "dd/MM/yyyy";
+            this.dtpFrom.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpFrom.Location = new System.Drawing.Point(18, 36);
+            this.dtpFrom.Name = "dtpFrom";
+            this.dtpFrom.Size = new System.Drawing.Size(210, 34);
+            this.dtpFrom.TabIndex = 4;
+            // 
+            // dtpTo
+            // 
+            this.dtpTo.CustomFormat = "dd/MM/yyyy";
+            this.dtpTo.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpTo.Location = new System.Drawing.Point(244, 36);
+            this.dtpTo.Name = "dtpTo";
+            this.dtpTo.Size = new System.Drawing.Size(210, 34);
+            this.dtpTo.TabIndex = 5;
+            // 
+            // cboGroupMode
+            // 
+            this.cboGroupMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboGroupMode.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cboGroupMode.Items.AddRange(new object[] {
+            "Theo ngày",
+            "Theo tháng",
+            "Theo năm"});
+            this.cboGroupMode.Location = new System.Drawing.Point(477, 35);
+            this.cboGroupMode.Name = "cboGroupMode";
+            this.cboGroupMode.Size = new System.Drawing.Size(190, 36);
+            this.cboGroupMode.TabIndex = 6;
+            // 
+            // cboRoom
+            // 
+            this.cboRoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRoom.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cboRoom.Items.AddRange(new object[] {
+            "Tất cả phòng"});
+            this.cboRoom.Location = new System.Drawing.Point(693, 35);
+            this.cboRoom.Name = "cboRoom";
+            this.cboRoom.Size = new System.Drawing.Size(198, 36);
+            this.cboRoom.TabIndex = 7;
+            // 
+            // btnFilter
+            // 
+            this.btnFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
+            this.btnFilter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFilter.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
+            this.btnFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilter.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFilter.ForeColor = System.Drawing.Color.White;
+            this.btnFilter.Location = new System.Drawing.Point(940, 32);
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Size = new System.Drawing.Size(115, 34);
+            this.btnFilter.TabIndex = 8;
+            this.btnFilter.Text = "Hiển thị";
+            this.btnFilter.UseVisualStyleBackColor = false;
+            // 
+            // btnClear
+            // 
+            this.btnClear.BackColor = System.Drawing.Color.White;
+            this.btnClear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
+            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClear.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.btnClear.Location = new System.Drawing.Point(1093, 32);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(115, 34);
+            this.btnClear.TabIndex = 9;
+            this.btnClear.Text = "Làm mới";
+            this.btnClear.UseVisualStyleBackColor = false;
+            // 
+            // contentPanel
+            // 
+            this.contentPanel.BackColor = System.Drawing.Color.White;
+            this.contentPanel.Location = new System.Drawing.Point(24, 296);
+            this.contentPanel.Name = "contentPanel";
+            this.contentPanel.Size = new System.Drawing.Size(1230, 420);
+            this.contentPanel.TabIndex = 5;
+            // 
+            // frmBaoCaoThongKe
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(246)))), ((int)(((byte)(255)))));
+            this.ClientSize = new System.Drawing.Size(1280, 760);
+            this.Controls.Add(this.rootPanel);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.MinimumSize = new System.Drawing.Size(1100, 700);
+            this.Name = "frmBaoCaoThongKe";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Quản lý Báo cáo & Thống kê";
+            this.rootPanel.ResumeLayout(false);
+            this.tabPanel.ResumeLayout(false);
+            this.filterPanel.ResumeLayout(false);
+            this.ResumeLayout(false);
 
-            rootPanel.AutoScroll = true;
-            rootPanel.BackColor = Color.FromArgb(239, 246, 255);
-            rootPanel.Controls.Add(btnBack);
-            rootPanel.Controls.Add(lblTitle);
-            rootPanel.Controls.Add(lblSubtitle);
-            rootPanel.Controls.Add(tabPanel);
-            rootPanel.Controls.Add(filterPanel);
-            rootPanel.Controls.Add(contentPanel);
-            rootPanel.Dock = DockStyle.Fill;
-            rootPanel.Location = new Point(0, 0);
-            rootPanel.Name = "rootPanel";
-            rootPanel.Size = new Size(1280, 760);
-
-            btnBack.BackColor = Color.White;
-            btnBack.Cursor = Cursors.Hand;
-            btnBack.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240);
-            btnBack.FlatStyle = FlatStyle.Flat;
-            btnBack.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnBack.ForeColor = Color.FromArgb(30, 41, 59);
-            btnBack.Location = new Point(24, 24);
-            btnBack.Name = "btnBack";
-            btnBack.Size = new Size(118, 38);
-            btnBack.TabIndex = 0;
-            btnBack.Text = "< Quay lại";
-            btnBack.UseVisualStyleBackColor = false;
-            btnBack.Click += new EventHandler(this.BtnBack_Click);
-
-            lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
-            lblTitle.Location = new Point(166, 22);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(560, 38);
-            lblTitle.Text = "Quản lý Báo cáo & Thống kê";
-            lblTitle.UseMnemonic = false;
-
-            lblSubtitle.Font = new Font("Segoe UI", 10F);
-            lblSubtitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblSubtitle.Location = new Point(168, 62);
-            lblSubtitle.Name = "lblSubtitle";
-            lblSubtitle.Size = new Size(650, 24);
-            lblSubtitle.Text = "Theo dõi lịch thực hành, mức sử dụng phòng và trạng thái máy tính";
-
-            tabPanel.BackColor = Color.White;
-            tabPanel.Controls.Add(btnScheduleTab);
-            tabPanel.Controls.Add(btnRoomTab);
-            tabPanel.Controls.Add(btnStatusTab);
-            tabPanel.Location = new Point(24, 106);
-            tabPanel.Name = "tabPanel";
-            tabPanel.Size = new Size(1230, 46);
-
-            btnScheduleTab.BackColor = Color.White;
-            btnScheduleTab.Cursor = Cursors.Hand;
-            btnScheduleTab.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 225);
-            btnScheduleTab.FlatStyle = FlatStyle.Flat;
-            btnScheduleTab.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnScheduleTab.ForeColor = Color.FromArgb(37, 99, 235);
-            btnScheduleTab.Location = new Point(0, 0);
-            btnScheduleTab.Size = new Size(410, 46);
-            btnScheduleTab.Text = "Lịch thực hành theo thời gian";
-            btnScheduleTab.UseMnemonic = false;
-            btnScheduleTab.UseVisualStyleBackColor = false;
-
-            btnRoomTab.BackColor = Color.White;
-            btnRoomTab.Cursor = Cursors.Hand;
-            btnRoomTab.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 225);
-            btnRoomTab.FlatStyle = FlatStyle.Flat;
-            btnRoomTab.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnRoomTab.ForeColor = Color.FromArgb(37, 99, 235);
-            btnRoomTab.Location = new Point(410, 0);
-            btnRoomTab.Size = new Size(410, 46);
-            btnRoomTab.Text = "Tỷ lệ sử dụng phòng máy";
-            btnRoomTab.UseMnemonic = false;
-            btnRoomTab.UseVisualStyleBackColor = false;
-
-            btnStatusTab.BackColor = Color.White;
-            btnStatusTab.Cursor = Cursors.Hand;
-            btnStatusTab.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 225);
-            btnStatusTab.FlatStyle = FlatStyle.Flat;
-            btnStatusTab.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnStatusTab.ForeColor = Color.FromArgb(37, 99, 235);
-            btnStatusTab.Location = new Point(820, 0);
-            btnStatusTab.Size = new Size(410, 46);
-            btnStatusTab.Text = "Thống kê trạng thái máy tính";
-            btnStatusTab.UseMnemonic = false;
-            btnStatusTab.UseVisualStyleBackColor = false;
-            btnScheduleTab.BackColor = Color.FromArgb(37, 99, 235);
-            btnScheduleTab.ForeColor = Color.White;
-
-            filterPanel.BackColor = Color.White;
-            filterPanel.Controls.Add(lblFrom);
-            filterPanel.Controls.Add(lblTo);
-            filterPanel.Controls.Add(lblGroup);
-            filterPanel.Controls.Add(lblRoom);
-            filterPanel.Controls.Add(dtpFrom);
-            filterPanel.Controls.Add(dtpTo);
-            filterPanel.Controls.Add(cboGroupMode);
-            filterPanel.Controls.Add(cboRoom);
-            filterPanel.Controls.Add(btnFilter);
-            filterPanel.Controls.Add(btnClear);
-            filterPanel.Location = new Point(24, 166);
-            filterPanel.Name = "filterPanel";
-            filterPanel.Size = new Size(1230, 86);
-
-            lblFrom.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            lblFrom.ForeColor = Color.FromArgb(71, 85, 105);
-            lblFrom.Location = new Point(18, 12);
-            lblFrom.Size = new Size(120, 20);
-            lblFrom.Text = "Từ ngày";
-
-            lblTo.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            lblTo.ForeColor = Color.FromArgb(71, 85, 105);
-            lblTo.Location = new Point(244, 12);
-            lblTo.Size = new Size(120, 20);
-            lblTo.Text = "Đến ngày";
-
-            lblGroup.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            lblGroup.ForeColor = Color.FromArgb(71, 85, 105);
-            lblGroup.Location = new Point(477, 12);
-            lblGroup.Size = new Size(120, 20);
-            lblGroup.Text = "Nhóm lịch";
-
-            lblRoom.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            lblRoom.ForeColor = Color.FromArgb(71, 85, 105);
-            lblRoom.Location = new Point(693, 12);
-            lblRoom.Size = new Size(120, 20);
-            lblRoom.Text = "Phòng máy";
-
-            dtpFrom.CustomFormat = "dd/MM/yyyy";
-            dtpFrom.Font = new Font("Segoe UI", 10F);
-            dtpFrom.Format = DateTimePickerFormat.Custom;
-            dtpFrom.Location = new Point(18, 36);
-            dtpFrom.Size = new Size(210, 30);
-
-            dtpTo.CustomFormat = "dd/MM/yyyy";
-            dtpTo.Font = new Font("Segoe UI", 10F);
-            dtpTo.Format = DateTimePickerFormat.Custom;
-            dtpTo.Location = new Point(244, 36);
-            dtpTo.Size = new Size(210, 30);
-
-            cboGroupMode.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboGroupMode.Font = new Font("Segoe UI", 10F);
-            cboGroupMode.Items.AddRange(new object[] { "Theo ngày", "Theo tháng", "Theo năm" });
-            cboGroupMode.Location = new Point(477, 35);
-            cboGroupMode.Name = "cboGroupMode";
-            cboGroupMode.Size = new Size(190, 31);
-
-            cboRoom.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboRoom.Font = new Font("Segoe UI", 10F);
-            cboRoom.Items.AddRange(new object[] { "Tất cả phòng" });
-            cboRoom.Location = new Point(693, 35);
-            cboRoom.Name = "cboRoom";
-            cboRoom.Size = new Size(198, 31);
-
-            btnFilter.BackColor = Color.FromArgb(34, 139, 34);
-            btnFilter.Cursor = Cursors.Hand;
-            btnFilter.FlatAppearance.BorderColor = Color.FromArgb(148, 163, 184);
-            btnFilter.FlatStyle = FlatStyle.Flat;
-            btnFilter.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnFilter.ForeColor = Color.White;
-            btnFilter.Location = new Point(940, 32);
-            btnFilter.Size = new Size(115, 34);
-            btnFilter.Text = "Hiển thị";
-            btnFilter.UseVisualStyleBackColor = false;
-
-            btnClear.BackColor = Color.White;
-            btnClear.Cursor = Cursors.Hand;
-            btnClear.FlatAppearance.BorderColor = Color.FromArgb(148, 163, 184);
-            btnClear.FlatStyle = FlatStyle.Flat;
-            btnClear.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnClear.ForeColor = Color.FromArgb(37, 99, 235);
-            btnClear.Location = new Point(1093, 32);
-            btnClear.Size = new Size(115, 34);
-            btnClear.Text = "Làm mới";
-            btnClear.UseVisualStyleBackColor = false;
-
-            contentPanel.BackColor = Color.White;
-            contentPanel.Location = new Point(24, 272);
-            contentPanel.Name = "contentPanel";
-            contentPanel.Size = new Size(1230, 420);
-
-            BackColor = Color.FromArgb(239, 246, 255);
-            ClientSize = new Size(1280, 760);
-            Controls.Add(rootPanel);
-            Font = new Font("Segoe UI", 9F);
-            MinimumSize = new Size(1100, 700);
-            Name = "frmBaoCaoThongKe";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Quản lý Báo cáo & Thống kê";
-
-            rootPanel.ResumeLayout(false);
-            tabPanel.ResumeLayout(false);
-            filterPanel.ResumeLayout(false);
-            ResumeLayout(false);
         }
 
         private static bool IsDesignerMode()
@@ -324,6 +399,16 @@ namespace QLPhongMay.GUI.Forms.Reports
             LayoutControls();
         }
 
+        private void FrmBaoCaoThongKe_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (Owner != null && !Owner.IsDisposed)
+            {
+                Owner.PerformLayout();
+                Owner.Invalidate(true);
+                Owner.Update();
+            }
+        }
+
         private void BtnClear_Click(object sender, EventArgs e)
         {
             dtpFrom.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
@@ -358,7 +443,7 @@ namespace QLPhongMay.GUI.Forms.Reports
         private void LayoutControls()
         {
             int contentWidth = Math.Max(1040, ClientSize.Width - 48);
-            int contentTop = activeReportTab == 0 ? 272 : 166;
+            int contentTop = activeReportTab == 0 ? 296 : 190;
             int contentHeight = Math.Max(420, ClientSize.Height - contentTop - 36);
 
             tabPanel.Size = new Size(contentWidth, 46);
@@ -373,7 +458,6 @@ namespace QLPhongMay.GUI.Forms.Reports
             filterPanel.Size = new Size(contentWidth, 86);
             contentPanel.Location = new Point(24, contentTop);
             contentPanel.Size = new Size(contentWidth, contentHeight);
-            rootPanel.AutoScrollMinSize = new Size(contentWidth + 48, contentTop + contentHeight + 24);
         }
 
         private void LoadRoomFilter()

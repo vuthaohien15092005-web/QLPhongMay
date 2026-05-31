@@ -34,22 +34,68 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.sortAscending = new Dictionary<ConfigCategory, bool>();
 
             InitializeComponent();
+            this.Controls.Clear();
             BuildInterface();
             this.Load += FrmCauHinh_Load;
         }
 
         private void InitializeComponent()
         {
+            this.pnlRoot = new Panel();
+            this.lblTitle = new Label();
+            this.lblSubtitle = new Label();
+            this.tabControl = new TabControl();
             this.SuspendLayout();
+            this.pnlRoot.SuspendLayout();
+            this.tabControl.SuspendLayout();
             this.AutoScaleDimensions = new SizeF(7F, 15F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.BackColor = Color.FromArgb(246, 248, 252);
             this.ClientSize = new Size(1180, 760);
+            this.Controls.Add(this.pnlRoot);
             this.Font = new Font("Segoe UI", 9F);
             this.MinimumSize = new Size(1080, 680);
             this.Name = "frmCauHinh";
             this.StartPosition = FormStartPosition.CenterParent;
             this.Text = "Quản lý cấu hình";
+
+            this.pnlRoot.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            this.pnlRoot.BackColor = Color.Transparent;
+            this.pnlRoot.Controls.Add(this.lblTitle);
+            this.pnlRoot.Controls.Add(this.lblSubtitle);
+            this.pnlRoot.Controls.Add(this.tabControl);
+            this.pnlRoot.Location = new Point(28, 24);
+            this.pnlRoot.Name = "pnlRoot";
+            this.pnlRoot.Size = new Size(1124, 708);
+
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new Font("Segoe UI", 21F, FontStyle.Bold);
+            this.lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
+            this.lblTitle.Location = new Point(146, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Text = "Quản lý cấu hình";
+
+            this.lblSubtitle.AutoSize = true;
+            this.lblSubtitle.Font = new Font("Segoe UI", 10F);
+            this.lblSubtitle.ForeColor = Color.FromArgb(100, 116, 139);
+            this.lblSubtitle.Location = new Point(150, 48);
+            this.lblSubtitle.Name = "lblSubtitle";
+            this.lblSubtitle.Text = "Quản lý danh mục RAM, màn hình, hệ điều hành và CPU";
+
+            this.tabControl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            this.tabControl.Controls.Add(new TabPage("RAM"));
+            this.tabControl.Controls.Add(new TabPage("Màn hình"));
+            this.tabControl.Controls.Add(new TabPage("Hệ điều hành"));
+            this.tabControl.Controls.Add(new TabPage("CPU"));
+            this.tabControl.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            this.tabControl.Location = new Point(0, 96);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new Size(1124, 612);
+
+            this.tabControl.ResumeLayout(false);
+            this.pnlRoot.ResumeLayout(false);
+            this.pnlRoot.PerformLayout();
             this.ResumeLayout(false);
         }
 

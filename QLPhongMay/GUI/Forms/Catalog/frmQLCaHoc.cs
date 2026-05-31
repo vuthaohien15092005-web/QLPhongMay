@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Data.Entity;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -21,6 +23,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
         private readonly ToolTip actionToolTip = new ToolTip();
         private List<CaHocRow> caHocs = new List<CaHocRow>();
         private int currentPage = 1;
+        private bool caHocColumnsConfigured;
 
         private Panel pnlRoot;
         private FlowLayoutPanel pnlStats;
@@ -174,6 +177,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             this.dgvCaHoc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvCaHoc.AutoGenerateColumns = false;
             this.dgvCaHoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCaHoc.BackgroundColor = System.Drawing.Color.White;
             this.dgvCaHoc.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -616,6 +620,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
             column.Name = propertyName;
             column.HeaderText = headerText;
             column.FillWeight = fillWeight;
+            column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgvCaHoc.Columns.Add(column);
         }
 
@@ -641,21 +647,55 @@ namespace QLPhongMay.GUI.Forms.Catalog
         {
             try
             {
-                using (AppDbContext db = new AppDbContext())
+                const string sql = @"
+SELECT maCa, tenCa, gioBatDau, gioKetThuc
+FROM Ca
+ORDER BY gioBatDau, maCa;";
+
+                List<CaHocRow> rows = new List<CaHocRow>();
+                string connectionString = ConfigurationManager.ConnectionStrings["QLPhongMayDbContext"].ConnectionString;
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    caHocs = db.CaHocs.AsNoTracking()
-                        .OrderBy(item => item.GioBatDau)
-                        .ThenBy(item => item.MaCa)
-                        .ToList()
-                        .Select(ToCaHocRow)
-                        .ToList();
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            rows.Add(ToCaHocRow(new CaHoc
+                            {
+                                MaCa = reader.GetInt32(0),
+                                TenCa = reader.GetString(1),
+                                GioBatDau = ReadTime(reader, 2),
+                                GioKetThuc = ReadTime(reader, 3)
+                            }));
+                        }
+                    }
                 }
+
+                caHocs = rows;
             }
             catch (Exception ex)
             {
                 caHocs = new List<CaHocRow>();
                 ShowDataError("Không thể tải dữ liệu ca học từ database QuanLyPhongMay.", ex);
             }
+        }
+
+        private static TimeSpan ReadTime(SqlDataReader reader, int ordinal)
+        {
+            object value = reader.GetValue(ordinal);
+            if (value is TimeSpan)
+            {
+                return (TimeSpan)value;
+            }
+
+            if (value is DateTime)
+            {
+                return ((DateTime)value).TimeOfDay;
+            }
+
+            return TimeSpan.Parse(Convert.ToString(value, CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
         }
 
         private void BuildStatCards()
@@ -713,11 +753,43 @@ namespace QLPhongMay.GUI.Forms.Catalog
                 .Select((item, index) => item.CloneWithStt(((currentPage - 1) * PageSize) + index + 1))
                 .ToList();
 
+            ConfigureCaHocColumns();
             dgvCaHoc.DataSource = pageItems;
             int start = totalItems == 0 ? 0 : ((currentPage - 1) * PageSize) + 1;
             int end = Math.Min(currentPage * PageSize, totalItems);
             lblPagingInfo.Text = string.Format("Hiển thị {0}-{1} trong {2} kết quả", start, end, totalItems);
             BuildPagination(totalPages);
+        }
+
+        private void ConfigureCaHocColumns()
+        {
+            if (caHocColumnsConfigured)
+            {
+                return;
+            }
+
+            dgvCaHoc.AutoGenerateColumns = false;
+            dgvCaHoc.Columns.Clear();
+            AddTextColumn("Stt", "STT", 55F);
+            AddTextColumn("TenCa", "Tên ca", 180F);
+            AddTextColumn("GioBatDauText", "Giờ bắt đầu", 135F);
+            AddTextColumn("GioKetThucText", "Giờ kết thúc", 135F);
+            AddTextColumn("ThoiLuongText", "Thời lượng", 120F);
+            AddActionColumn();
+            caHocColumnsConfigured = true;
+        }
+
+        private void AddActionColumn()
+        {
+            DataGridViewTextBoxColumn column = new DataGridViewTextBoxColumn();
+            column.FillWeight = 150F;
+            column.HeaderText = "Hành động";
+            column.MinimumWidth = 150;
+            column.Name = "Actions";
+            column.ReadOnly = true;
+            column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvCaHoc.Columns.Add(column);
         }
 
         private IEnumerable<CaHocRow> GetFilteredCaHoc()
@@ -1255,7 +1327,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
             };
 
             int iconSize = 30;
-            int totalWidth = (iconSize * icons.Length) + 12;
+            int gap = 10;
+            int totalWidth = (iconSize * icons.Length) + gap;
             int startX = e.CellBounds.Left + (e.CellBounds.Width - totalWidth) / 2;
             int y = e.CellBounds.Top + (e.CellBounds.Height - iconSize) / 2;
 
@@ -1264,7 +1337,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
             {
                 for (int i = 0; i < icons.Length; i++)
                 {
-                    Rectangle iconBounds = new Rectangle(startX + (i * (iconSize + 6)), y, iconSize, iconSize);
+                    Rectangle iconBounds = new Rectangle(startX + (i * (iconSize + gap)), y, iconSize, iconSize);
                     using (GraphicsPath path = CreateRoundRectanglePath(iconBounds, 6))
                     using (SolidBrush backBrush = new SolidBrush(Color.FromArgb(248, 250, 252)))
                     using (Pen borderPen = new Pen(Color.FromArgb(226, 232, 240)))
@@ -1303,7 +1376,8 @@ namespace QLPhongMay.GUI.Forms.Catalog
         private static string GetActionFromMouseX(int cellWidth, int x)
         {
             int iconSize = 30;
-            int totalWidth = (iconSize * 2) + 6;
+            int gap = 10;
+            int totalWidth = (iconSize * 2) + gap;
             int startX = (cellWidth - totalWidth) / 2;
 
             if (x >= startX && x <= startX + iconSize)
@@ -1311,7 +1385,7 @@ namespace QLPhongMay.GUI.Forms.Catalog
                 return "Edit";
             }
 
-            if (x >= startX + iconSize + 6 && x <= startX + (iconSize * 2) + 6)
+            if (x >= startX + iconSize + gap && x <= startX + (iconSize * 2) + gap)
             {
                 return "Delete";
             }

@@ -105,7 +105,7 @@ namespace QLPhongMay.Auth
             this.lblBrand.ForeColor = System.Drawing.Color.White;
             this.lblBrand.Location = new System.Drawing.Point(0, 92);
             this.lblBrand.Name = "lblBrand";
-            this.lblBrand.Size = new System.Drawing.Size(254, 46);
+            this.lblBrand.Size = new System.Drawing.Size(376, 67);
             this.lblBrand.TabIndex = 0;
             this.lblBrand.Text = "QL Phòng Máy";
             // 
@@ -143,7 +143,7 @@ namespace QLPhongMay.Auth
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(37)))), ((int)(((byte)(84)))));
             this.lblTitle.Location = new System.Drawing.Point(34, 36);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(172, 41);
+            this.lblTitle.Size = new System.Drawing.Size(251, 60);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Đăng nhập";
             // 
@@ -154,7 +154,7 @@ namespace QLPhongMay.Auth
             this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(114)))), ((int)(((byte)(128)))));
             this.lblSubtitle.Location = new System.Drawing.Point(36, 90);
             this.lblSubtitle.Name = "lblSubtitle";
-            this.lblSubtitle.Size = new System.Drawing.Size(163, 17);
+            this.lblSubtitle.Size = new System.Drawing.Size(235, 25);
             this.lblSubtitle.TabIndex = 1;
             this.lblSubtitle.Text = "Nhập tài khoản để tiếp tục";
             // 
@@ -165,18 +165,18 @@ namespace QLPhongMay.Auth
             this.lblUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
             this.lblUsername.Location = new System.Drawing.Point(36, 138);
             this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(100, 17);
+            this.lblUsername.Size = new System.Drawing.Size(144, 25);
             this.lblUsername.TabIndex = 2;
             this.lblUsername.Text = "Tên đăng nhập";
             // 
             // txtUsername
             // 
-            this.txtUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtUsername.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.txtUsername.Location = new System.Drawing.Point(36, 166);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(254, 27);
+            this.txtUsername.Size = new System.Drawing.Size(254, 37);
             this.txtUsername.TabIndex = 0;
             // 
             // lblPassword
@@ -186,19 +186,19 @@ namespace QLPhongMay.Auth
             this.lblPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(65)))), ((int)(((byte)(81)))));
             this.lblPassword.Location = new System.Drawing.Point(36, 224);
             this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(66, 17);
+            this.lblPassword.Size = new System.Drawing.Size(96, 25);
             this.lblPassword.TabIndex = 3;
             this.lblPassword.Text = "Mật khẩu";
             // 
             // txtPassword
             // 
-            this.txtPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.txtPassword.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.txtPassword.Location = new System.Drawing.Point(36, 252);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(254, 27);
+            this.txtPassword.Size = new System.Drawing.Size(254, 37);
             this.txtPassword.TabIndex = 1;
             this.txtPassword.UseSystemPasswordChar = true;
             // 
@@ -240,7 +240,7 @@ namespace QLPhongMay.Auth
             // FrmLogin
             // 
             this.AcceptButton = this.btnLogin;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.btnClose;

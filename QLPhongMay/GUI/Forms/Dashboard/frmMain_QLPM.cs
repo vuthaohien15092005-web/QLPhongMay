@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using QLPhongMay.Auth;
@@ -303,9 +304,18 @@ namespace QLPhongMay.GUI.Forms.Dashboard
 
         private void OpenReportForm(object sender, EventArgs e)
         {
-            using (frmBaoCaoThongKe form = new frmBaoCaoThongKe())
+            try
             {
-                form.ShowDialog(this);
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = Application.ExecutablePath,
+                    Arguments = "--report",
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể mở báo cáo thống kê.\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

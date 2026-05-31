@@ -4,16 +4,23 @@ using QLPhongMay.Auth;
 using QLPhongMay.BLL;
 using QLPhongMay.Enums;
 using QLPhongMay.GUI.Forms.Dashboard;
+using QLPhongMay.GUI.Forms.Reports;
 
 namespace QLPhongMay
 {
     internal static class Program
     {
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            if (args != null && args.Length > 0 && string.Equals(args[0], "--report", StringComparison.OrdinalIgnoreCase))
+            {
+                Application.Run(new frmBaoCaoThongKe());
+                return;
+            }
 
             using (FrmLogin login = new FrmLogin())
             {
