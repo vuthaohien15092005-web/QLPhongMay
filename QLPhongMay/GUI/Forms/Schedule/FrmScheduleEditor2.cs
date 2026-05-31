@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using QLPhongMay.BLL;
 using QLPhongMay.DAL;
 using QLPhongMay.DTO;
 
@@ -390,10 +391,26 @@ namespace QLPhongMay.GUI.Forms.Schedule
         private void ApplyModeLayout()
         {
             this.Text = this.editMode ? "Chỉnh sửa lịch" : "Tạo lịch";
-            this.ClientSize = new Size(720, this.editMode ? 620 : 576);
+            this.ClientSize = new Size(720, this.editMode ? 620 : 532);
+            this.lblUser.Visible = this.editMode;
+            this.cboUser.Visible = this.editMode;
             this.lblStatus.Visible = this.editMode;
             this.cboStatus.Visible = this.editMode;
-            this.pnlSuggestion.Top = this.editMode ? 336 : 292;
+            if (!this.editMode)
+            {
+                this.lblClass.Top = 28;
+                this.cboClass.Top = 20;
+                this.lblRoom.Top = 72;
+                this.cboRoom.Top = 64;
+                this.lblShift.Top = 116;
+                this.cboShift.Top = 108;
+                this.lblDate.Top = 160;
+                this.dtpDate.Top = 154;
+                this.lblStudentCount.Top = 204;
+                this.nudStudentCount.Top = 196;
+            }
+
+            this.pnlSuggestion.Top = this.editMode ? 336 : 248;
             this.pnlSuggestion.Height = 190;
             this.btnCancel.Top = this.ClientSize.Height - 62;
             this.btnSave.Top = this.ClientSize.Height - 62;
@@ -442,7 +459,11 @@ namespace QLPhongMay.GUI.Forms.Schedule
 
         private void BindSchedule()
         {
-            SelectValue(this.cboUser, this.ScheduleItem.TenDangNhap);
+            if (this.editMode)
+            {
+                SelectValue(this.cboUser, this.ScheduleItem.TenDangNhap);
+            }
+
             SelectValue(this.cboClass, this.ScheduleItem.MaLop);
             SelectValue(this.cboRoom, this.ScheduleItem.MaPhong);
             SelectValue(this.cboShift, this.ScheduleItem.MaCa);
@@ -585,7 +606,9 @@ namespace QLPhongMay.GUI.Forms.Schedule
                 return;
             }
 
-            this.ScheduleItem.TenDangNhap = Convert.ToString(this.cboUser.SelectedValue);
+            this.ScheduleItem.TenDangNhap = this.editMode
+                ? Convert.ToString(this.cboUser.SelectedValue)
+                : Session.CurrentUser.TenDangNhap;
             this.ScheduleItem.MaLop = Convert.ToString(this.cboClass.SelectedValue);
             this.ScheduleItem.MaPhong = Convert.ToString(this.cboRoom.SelectedValue);
             this.ScheduleItem.MaCa = Convert.ToString(this.cboShift.SelectedValue);
@@ -606,9 +629,15 @@ namespace QLPhongMay.GUI.Forms.Schedule
 
         private bool ValidateSelections()
         {
-            if (!HasSelectedValue(this.cboUser))
+            if (this.editMode && !HasSelectedValue(this.cboUser))
             {
                 return ShowValidationWarning("Vui lòng chọn người tạo.", this.cboUser);
+            }
+
+            if (!this.editMode && (Session.CurrentUser == null || string.IsNullOrWhiteSpace(Session.CurrentUser.TenDangNhap)))
+            {
+                MessageBox.Show("Không xác định được tài khoản đang đăng nhập. Vui lòng đăng nhập lại.", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
 
             if (!HasSelectedValue(this.cboClass))
