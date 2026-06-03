@@ -266,8 +266,11 @@ namespace QLPhongMay.GUI.Forms.Catalog
             ConfigTable table = ConfigurationRepository.GetTable(category);
             grid.Columns[nameof(ConfigLookupItem.Id)].HeaderText = GetHeaderText(category, nameof(ConfigLookupItem.Id), "Mã");
             grid.Columns[nameof(ConfigLookupItem.Name)].HeaderText = GetHeaderText(category, nameof(ConfigLookupItem.Name), table.DisplayName);
-            grid.Columns[nameof(ConfigLookupItem.Id)].FillWeight = 80;
-            grid.Columns[nameof(ConfigLookupItem.Name)].FillWeight = 420;
+            grid.Columns[nameof(ConfigLookupItem.Id)].FillWeight = 45;
+            grid.Columns[nameof(ConfigLookupItem.Name)].FillWeight = 455;
+            grid.Columns[nameof(ConfigLookupItem.Id)].MinimumWidth = 90;
+            grid.Columns[nameof(ConfigLookupItem.Name)].MinimumWidth = 220;
+            grid.Columns[nameof(ConfigLookupItem.Id)].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             grid.Columns[nameof(ConfigLookupItem.Id)].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             grid.Columns[nameof(ConfigLookupItem.Id)].SortMode = DataGridViewColumnSortMode.Programmatic;
             grid.Columns[nameof(ConfigLookupItem.Name)].SortMode = DataGridViewColumnSortMode.Programmatic;
